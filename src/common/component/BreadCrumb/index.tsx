@@ -2,7 +2,8 @@ import { Breadcrumb } from "antd";
 
 import React, { Fragment, PureComponent } from "react";
 import { Link } from "react-router-dom";
-import { iconMap } from "../../common/utils/iconMap";
+import { iconMap } from "../../utils/iconMap";
+
 
 export class Bread extends PureComponent {
   // 生成面包屑

@@ -2,8 +2,9 @@ import React, { Fragment, PureComponent } from 'react'
 import { Avatar, Layout, List, Menu, Popover } from 'antd'
 import { RightOutlined } from '@ant-design/icons'
 import "./index.less"
-import Ellipsis from '../../common/component/Ellipsis'
-import { LoginStatus } from '../../common/routes/guard/loginStatus'
+import { LoginStatus } from '../../routes/guard/loginStatus'
+import Ellipsis from '../Ellipsis'
+
 
 const LayoutHeader = Layout.Header
 const MenuItem = Menu.Item

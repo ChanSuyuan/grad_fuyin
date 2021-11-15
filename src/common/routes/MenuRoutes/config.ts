@@ -1,5 +1,5 @@
 export interface IMenuRoutesBase {
-  key: string;
+  path: string;
   title: string;
   icon?: string;
   component?: string;
@@ -14,7 +14,7 @@ export interface IMenuRoutes extends IMenuRoutesBase {
   subs?: IMenuRoutes[]
 }
 
-export const menus: {
+export const routes: {
   menus: IMenuRoutes[]
   others: IMenuRoutes[] | []
   [index: string]: any
@@ -22,9 +22,22 @@ export const menus: {
   menus: [
     // menu route
     {
-      key: '/dashboard/index',
+      path: '/dashboard/index',
       title: "控制台",
-      component: "Dashboard"
+      icon: 'moblie',
+      component: 'Dashboard'
+    },
+    {
+      path: '/useradmin',
+      title: "用户管理"
+    },
+    {
+      path: '/authuser',
+      title: "角色管理"
+    },
+    {
+      path: '/params',
+      title: '参数管理'
     }
   ],
   others: [] // not related to menu

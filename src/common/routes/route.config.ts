@@ -1,5 +1,4 @@
-
-import { Dashboard } from "../../container";
+import { Dashboard } from "../../container/Dashboard";
 import { Login } from "../../userAccount-admin/login";
 import { Regist } from "../../userAccount-admin/regist";
 import { IRouteConfig } from "./config";

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
-import { Dashboard } from './container'
+import { Dashboard } from './container/Dashboard'
 import { Login } from './userAccount-admin/login'
 import { Regist } from './userAccount-admin/regist'
 

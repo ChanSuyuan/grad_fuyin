@@ -1,14 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { AlitaProvider } from 'redux-alita';
 import './index.less'
 import { Page } from './page';
 
 
 
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode>
+  <AlitaProvider>
     <Page />
-  </React.StrictMode>,
+  </AlitaProvider>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 
