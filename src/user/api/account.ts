@@ -1,8 +1,13 @@
+/**
+ * @file normal account
+ */
+
 import { FYAPI } from "../../common/api/api"
 import { IResponse } from "../../common/model/api"
 import {
   ILoginFeedBackInfo,
   ILoginInfo,
+  ILogOut,
   IModifyBaseInfo,
   IModifyFeedBackInfo,
   IModifyLoginInfo,
@@ -12,7 +17,7 @@ import {
 
 
 // 暂时直接调用 res.data 即可，深层次功能尚未实现 2021.11.12
-const baseURL = "/user"
+const baseURL = '/user'
 class BehaviorApi {
   /**
    * 
@@ -41,6 +46,13 @@ class BehaviorApi {
   }
 
   /**
+   *  @name 登出
+   */
+  logout() {
+    return FYAPI.POST(`${baseURL}/logout`)
+  }
+
+  /**
    * @name 根据旧密码修改密码
    * @return {IModifyLoginInfo}
    */
@@ -49,4 +61,4 @@ class BehaviorApi {
   }
 
 }
-export const behaviorAPI = new BehaviorApi()
+export const behaviorApi = new BehaviorApi()

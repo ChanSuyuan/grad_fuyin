@@ -1,8 +1,8 @@
 /**
- * @file 个人信息监控项
+ * @file self information montior
  */
 
-// 注册所需要的信息
+// regist query
 export interface IRegisterInfo {
   userName: string
   password: string
@@ -11,7 +11,7 @@ export interface IRegisterInfo {
   mail_address?: string
 }
 
-// 注册返回信息
+// regist feeback
 export interface IResgistFeedBackInfo {
   data?: string
   errorCode?: string
@@ -19,14 +19,14 @@ export interface IResgistFeedBackInfo {
   text?: string
 }
 
-// 登录所需要的信息
+// login query
 export interface ILoginInfo {
   userName: string
   password: string
   hobby?: string
 }
 
-// 登录返回信息
+// login feedback
 export interface ILoginFeedBackInfo {
   data?: string
   errorCode?: string
@@ -34,6 +34,18 @@ export interface ILoginFeedBackInfo {
   text?: string
 }
 
+// logOut 
+export interface ILogOut {
+  authorization: string
+}
+
+// logOut FeedBack
+export interface ILogOutFeedBack {
+  data?: string
+  errorCode?: string
+  ok?: boolean
+  text?: string
+}
 // 修改个人信息
 export interface IModifyBaseInfo {
   hobby?: string
