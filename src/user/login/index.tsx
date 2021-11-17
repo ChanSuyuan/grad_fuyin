@@ -7,7 +7,7 @@ import { ApiFilled } from '@ant-design/icons'
 import { Link, useHistory } from 'react-router-dom'
 import { behaviorAPI } from '../api/account'
 import { statusCode } from '../../common/model/statusCode'
-import { setLocalToken, setToken } from '../../common/utils/auth'
+import { setLocalToken } from '../../common/utils/auth'
 import { observer } from 'mobx-react'
 import { notify } from '../../common/message/Notification'
 
@@ -30,9 +30,8 @@ export const Login: React.FC = observer(() => {
         })
         if (res.errorCode === statusCode.success) {
           if (res.data) {
-            setToken(`fuyin${res.data}`)
             setLocalToken(`fuyin${res.data}`)
-            history.push('/dashboard')
+            history.push('/app')
           } else {
             notification.open({
               message: '发生了意想不到的错误啦！',

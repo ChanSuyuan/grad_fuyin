@@ -8,10 +8,14 @@ import queryString from 'query-string'
 import { APIError, IResponse } from '../model/api'
 
 const API_PREFIX = ''
-// const DEFAULT_API_VERSION = ''
 
-// declare function formatURL(url: string, params: any) : string ;
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+let token = window.localStorage.getItem('user_token')
+if (token) {
+  axios.defaults.headers.common['Authorization'] = token
+} else {
+  delete axios.defaults.headers.common['Authorization']
+}
+
 
 type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH"
 
@@ -54,7 +58,7 @@ export class FYAPI {
       url: FYAPI.genURLStr(url),
       method,
       headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=utf-8',
       },
       withCredentials: true,
       data: bodyObj

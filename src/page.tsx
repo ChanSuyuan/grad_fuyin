@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
-import { Dashboard } from './container/Dashboard'
-import { Login } from './userAccount-admin/login'
-import { Regist } from './userAccount-admin/regist'
+import { FuyinApp } from './container/FuyinApp'
+import { Login } from './user/login'
+import { Regist } from './user/regist'
 
 export class Page extends React.Component {
 	render() {
@@ -10,7 +10,7 @@ export class Page extends React.Component {
 			<Router>
 				<Switch>
 					<Route exact path="/" render={() => <Redirect to="/login" push />} />
-					<Route path="/dashboard" component={Dashboard} />
+					<Route path="/fuyin" component={FuyinApp} />
 					<Route path="/login" component={Login} />
 					<Route path="/register" component={Regist} />
 				</Switch>

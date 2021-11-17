@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AlitaProvider } from 'redux-alita';
+import './style/index.less';
+import './style/antd/index.less';
 import './index.less'
 import { Page } from './page';
 

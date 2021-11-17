@@ -1,6 +1,6 @@
 import { Dashboard } from "../../container/Dashboard";
-import { Login } from "../../userAccount-admin/login";
-import { Regist } from "../../userAccount-admin/regist";
+import { Login } from "../../user/login";
+import { Regist } from "../../user/regist";
 import { IRouteConfig } from "./config";
 
 export const routerConfig: IRouteConfig[] = [

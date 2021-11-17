@@ -20,14 +20,3 @@ export function setLocalToken(token: any) {
 export function setSessionToken(token: any) {
   return sessionStorage.setItem('user_token', token)
 }
-
-// export const setAuthToken = () => {
-//   let token = `Authorization${Cookies.get('Authorization')}`
-//   if (token) {
-//     axios.defaults.headers.common['token'] = getToken()
-//   } else {
-//     delete axios.defaults.headers.common['token']
-//   }
-// }
-
-

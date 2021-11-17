@@ -29,7 +29,7 @@ interface IMenu {
 
 const LayoutSider = Layout.Sider
 
-const Sider = (props: SiderCustomProps) => {
+const SiderCustom = (props: SiderCustomProps) => {
   const [collapsed, tCollapsed] = useSwitch();
   const [firstHide, tFirstHide] = useSwitch();
   const [menu, setMenu] = useState<IMenu>({ openKeys: [''], selectedKey: '' });
@@ -80,20 +80,18 @@ const Sider = (props: SiderCustomProps) => {
   };
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <LayoutSider collapsed={collapsed} theme="light" width={200} trigger={null} breakpoint="lg">
-        <SiderMenu
-          mode="inline"
-          selectedKeys={[menu.selectedKey, ...smenus]}
-          onClick={menuClick}
-          onOpenChange={openMenu}
-          menus={[...routes.menus, ...smenus]}
-          openKeys={firstHide ? [] : menu.openKeys}
-        />
-      </LayoutSider>
-    </Layout>
+    <LayoutSider collapsed={collapsed} theme="dark" width={200} trigger={null} breakpoint="lg">
+      <SiderMenu
+        mode="inline"
+        selectedKeys={[menu.selectedKey, ...smenus]}
+        onClick={menuClick}
+        onOpenChange={openMenu}
+        menus={[...routes.menus, ...smenus]}
+        openKeys={firstHide ? [] : menu.openKeys}
+      />
+    </LayoutSider>
   );
 }
 
 
-export default withRouter(Sider);
+export default withRouter(SiderCustom);

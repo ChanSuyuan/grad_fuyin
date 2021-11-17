@@ -81,7 +81,7 @@ const SiderMenu = ({ menus, ...props }: SiderMenuProps) => {
                       provided.dragHandleProps.onDragStart(e as any)
                     }
                   >
-                    <Menu {...props}>
+                    <Menu {...props} theme="dark">
                       {item.subs! ? renderSubMenu(item) : renderMenuItem(item)}
                     </Menu>
                   </div>
