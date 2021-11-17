@@ -1,17 +1,19 @@
 import React from 'react'
-import { Button, Form, Input, notification } from "antd"
+import { Button, Form, Input, notification, Radio } from "antd"
 
 import './index.less'
 
 import { ApiFilled } from '@ant-design/icons'
 import { Link, useHistory } from 'react-router-dom'
-import { behaviorAPI } from '../api/account'
 import { statusCode } from '../../common/model/statusCode'
 import { setLocalToken } from '../../common/utils/auth'
+import { behaviorApi } from '../api/account'
 import { observer } from 'mobx-react'
 import { notify } from '../../common/message/Notification'
 
 const FormItem = Form.Item
+const RadioButton = Radio.Button
+const RadioGroup = Radio.Group
 
 export const Login: React.FC = observer(() => {
 
@@ -24,7 +26,7 @@ export const Login: React.FC = observer(() => {
 
     if (username && password) {
       try {
-        const res = await behaviorAPI.login({
+        const res = await behaviorApi.login({
           userName: username,
           password: password
         })
@@ -56,6 +58,14 @@ export const Login: React.FC = observer(() => {
         <h1 className="text-form">融资风控后台管理系统</h1>
         <div className="form-wrapper">
           <Form form={form}>
+            <FormItem name="账号类型" style={{ width: "100%" }}>
+              <strong>账号类型：</strong>
+              <RadioGroup>
+                <RadioButton value="user">普通用户</RadioButton>
+                <RadioButton value="admin">管理员</RadioButton>
+                <RadioButton value="super-admin">超级管理员</RadioButton>
+              </RadioGroup>
+            </FormItem>
             <FormItem name="userName"
               rules={
                 [

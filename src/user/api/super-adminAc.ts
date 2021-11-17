@@ -4,8 +4,12 @@
  */
 
 import { FYAPI } from "../../common/api/api";
-import { IResponse } from "../../common/model/api";
-import { ISuperAdminLoginFeedbackInfo, ISuperAdminLoginInfo, ISuperAdminModifyUpdatePwdFeedbackInfo, ISuperAdminModifyUpdatePwdInfo } from "../model/super-adminAc";
+import {
+  ISuperAdminLoginFeedbackInfo,
+  ISuperAdminLoginInfo,
+  ISuperAdminModifyUpdatePwdFeedbackInfo,
+  ISuperAdminModifyUpdatePwdInfo
+} from "../model/super-adminAc";
 
 const baseURL = 'superadmin'
 
@@ -13,14 +17,14 @@ class SuperAdminApi {
   /**
    * @name 超级管理员登陆
    */
-  login(params: ISuperAdminLoginInfo): Promise<IResponse<ISuperAdminLoginFeedbackInfo>> {
+  login(params: ISuperAdminLoginInfo): Promise<ISuperAdminLoginFeedbackInfo> {
     return FYAPI.POST(`${baseURL}/login`, params)
   }
 
   /**
    * @name 超级管理员修改自己、管理员或用户密码
    */
-  modify(params: ISuperAdminModifyUpdatePwdInfo): Promise<IResponse<ISuperAdminModifyUpdatePwdFeedbackInfo>> {
+  modify(params: ISuperAdminModifyUpdatePwdInfo): Promise<ISuperAdminModifyUpdatePwdFeedbackInfo> {
     return FYAPI.POST(`${baseURL}/login`, params)
   }
 }

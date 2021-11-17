@@ -3,11 +3,9 @@
  */
 
 import { FYAPI } from "../../common/api/api"
-import { IResponse } from "../../common/model/api"
 import {
   ILoginFeedBackInfo,
   ILoginInfo,
-  ILogOut,
   IModifyBaseInfo,
   IModifyFeedBackInfo,
   IModifyLoginInfo,
@@ -15,8 +13,6 @@ import {
   IResgistFeedBackInfo
 } from "../model/account"
 
-
-// 暂时直接调用 res.data 即可，深层次功能尚未实现 2021.11.12
 const baseURL = '/user'
 class BehaviorApi {
   /**
@@ -24,7 +20,7 @@ class BehaviorApi {
    * @name 注册信息提交
    * @returns {IRegisterInfo}
    */
-  regist(params: IRegisterInfo): Promise<IResponse<IResgistFeedBackInfo>> {
+  regist(params: IRegisterInfo): Promise<IResgistFeedBackInfo> {
     return FYAPI.POST(`${baseURL}/register`, params)
   }
 
@@ -33,7 +29,7 @@ class BehaviorApi {
    * @name 个人信息修改
    * @returns {CharactersInfo}
    */
-  modify(params: IModifyBaseInfo): Promise<IResponse<IModifyFeedBackInfo>> {
+  modify(params: IModifyBaseInfo): Promise<IModifyFeedBackInfo> {
     return FYAPI.POST(``, params)
   }
 
@@ -41,7 +37,7 @@ class BehaviorApi {
    * @name 登录
    * @returns {ILoginFeedBackInfo}
    */
-  login(params: ILoginInfo): Promise<IResponse<ILoginFeedBackInfo>> {
+  login(params: ILoginInfo): Promise<ILoginFeedBackInfo> {
     return FYAPI.POST(`${baseURL}/login`, params)
   }
 
@@ -56,7 +52,7 @@ class BehaviorApi {
    * @name 根据旧密码修改密码
    * @return {IModifyLoginInfo}
    */
-  modifypwdWithOldPwd(params: IModifyLoginInfo): Promise<IResponse<IModifyFeedBackInfo>> {
+  modifypwdWithOldPwd(params: IModifyLoginInfo): Promise<IModifyFeedBackInfo> {
     return FYAPI.POST(`${baseURL}/updatepasswordbyoldpassword`, params)
   }
 

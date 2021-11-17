@@ -1,10 +1,9 @@
 import React from 'react'
 import { CheckCircleTwoTone, FrownOutlined } from '@ant-design/icons';
 import { Button, Form, Input, notification } from 'antd'
-
 import { useHistory } from 'react-router-dom'
-import { behaviorAPI } from '../api/account';
 import { statusCode } from '../../common/model/statusCode';
+import { behaviorApi } from '../api/account';
 
 const FormItem = Form.Item
 
@@ -19,7 +18,7 @@ export const Regist: React.FC = () => {
 
     // console.log(Boolean(username && password))
     if (username && password) {
-      return behaviorAPI.regist({
+      return behaviorApi.regist({
         userName: username,
         password: password
       }).then(res => {

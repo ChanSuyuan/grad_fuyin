@@ -5,7 +5,7 @@
 
 import axios, { AxiosRequestConfig } from 'axios'
 import queryString from 'query-string'
-import { APIError, IResponse } from '../model/api'
+import { APIError } from '../model/api'
 
 const API_PREFIX = ''
 
@@ -32,27 +32,27 @@ interface IExtra {
 }
 
 export class FYAPI {
-  public static GET<IResult>(url: IURL, extras?: IExtra): Promise<IResponse<IResult>> {
+  public static GET<IResult>(url: IURL, extras?: IExtra): Promise<IResult> {
     return this.fetch("GET", url, extras)
   }
 
-  public static POST<IResult>(url: IURL, bodyObj?: any, extras?: IExtra): Promise<IResponse<IResult>> {
+  public static POST<IResult>(url: IURL, bodyObj?: any, extras?: IExtra): Promise<IResult> {
     return this.fetch("POST", url, bodyObj, extras)
   }
 
-  public static PUT<IResult>(url: IURL, bodyObj?: any, extras?: IExtra): Promise<IResponse<IResult>> {
+  public static PUT<IResult>(url: IURL, bodyObj?: any, extras?: IExtra): Promise<IResult> {
     return this.fetch("PUT", url, bodyObj, extras)
   }
 
-  public static PATCH<IResult>(url: IURL, bodyObj?: any, extras?: IExtra): Promise<IResponse<IResult>> {
+  public static PATCH<IResult>(url: IURL, bodyObj?: any, extras?: IExtra): Promise<IResult> {
     return this.fetch("PATCH", url, bodyObj, extras)
   }
 
-  public static DELETE<IResult>(url: IURL, bodyObj?: any, extras?: IExtra): Promise<IResponse<IResult>> {
+  public static DELETE<IResult>(url: IURL, bodyObj?: any, extras?: IExtra): Promise<IResult> {
     return this.fetch("DELETE", url, bodyObj, extras)
   }
 
-  private static async fetch<IResult>(method: HTTPMethod, url: IURL, bodyObj?: any, extras?: IExtra): Promise<IResponse<IResult>> {
+  private static async fetch<IResult>(method: HTTPMethod, url: IURL, bodyObj?: any, extras?: IExtra): Promise<IResult> {
     const cfg: AxiosRequestConfig = {
       baseURL: API_PREFIX,
       url: FYAPI.genURLStr(url),

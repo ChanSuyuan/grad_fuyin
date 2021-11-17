@@ -12,18 +12,14 @@ export interface ILoginInfo {
 // login feedback
 export interface ILoginFeedBackInfo {
   data?: string
-  errorCode?: string
+  errorCode?: number
   ok?: boolean
   text?: string
 }
 
-export interface IAdminLogOutInfo {
-  authorization: string
-}
-
 export interface IAdminLogOutFeedBackInfo {
   data?: string
-  errorCode?: string
+  errorCode?: number
   ok?: boolean
   text?: string
 }
@@ -39,7 +35,7 @@ export interface IAdminUpdatePwdInfo {
 // Update Pwd  FeedBackInfo
 export interface IAdminUpdatePwdFeedBackInfo {
   data?: string
-  errorCode?: string
+  errorCode?: number
   ok?: boolean
   text?: string
 }

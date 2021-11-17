@@ -14,7 +14,7 @@ export interface IRegisterInfo {
 // regist feeback
 export interface IResgistFeedBackInfo {
   data?: string
-  errorCode?: string
+  errorCode: number
   ok?: boolean
   text?: string
 }
@@ -29,20 +29,15 @@ export interface ILoginInfo {
 // login feedback
 export interface ILoginFeedBackInfo {
   data?: string
-  errorCode?: string
+  errorCode: number
   ok?: boolean
   text?: string
-}
-
-// logOut 
-export interface ILogOut {
-  authorization: string
 }
 
 // logOut FeedBack
 export interface ILogOutFeedBack {
   data?: string
-  errorCode?: string
+  errorCode: number
   ok?: boolean
   text?: string
 }
@@ -60,7 +55,7 @@ export interface IModifyLoginInfo extends IModifyBaseInfo {
 
 export interface IModifyFeedBackInfo {
   data?: string
-  errorCode?: string
+  errorCode: number
   ok?: boolean
   text?: string
 }
