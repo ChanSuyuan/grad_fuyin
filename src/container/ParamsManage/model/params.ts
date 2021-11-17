@@ -1,4 +1,3 @@
-
 export interface IParamsRiskReportInfo {
   gpName: string
 }

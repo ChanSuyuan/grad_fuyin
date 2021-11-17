@@ -9,7 +9,7 @@ import { IParamsRiskReportFeedBackInfo, IParamsRiskReportInfo } from "../model/p
 const baseURL = '/user'
 
 
-class paramsApi {
+class ParamsApi {
   /**
    * @name 风控报告
    */
@@ -20,3 +20,5 @@ class paramsApi {
     })
   }
 }
+
+export const paramsApi = new ParamsApi()

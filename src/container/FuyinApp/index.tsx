@@ -1,7 +1,9 @@
 import { Layout } from "antd"
+import { Content } from "antd/lib/layout/layout"
 import React, { useState } from "react"
 import { useAlita } from "redux-alita"
 import { testApi } from "../../common/api/test"
+import { Bread } from "../../common/component/BreadCrumb"
 import { HeaderCustom } from "../../common/component/HeaderCustom"
 import SiderCustom from "../../common/component/SiderCustom"
 
@@ -23,11 +25,11 @@ export const FuyinApp = (props: AppProps) => {
 
   return (
     <Layout>
-      <SiderCustom />
-      <Layout
-        className='fuyin_layout'
-      >
+      <SiderCustom collapsed={collapsed} />
+      <Layout className='fuyin_layout'>
         <HeaderCustom toggle={toggle} collapsed={collapsed} user={auth || {}} />
+        <Content>
+        </Content>
       </Layout>
     </Layout>
   )

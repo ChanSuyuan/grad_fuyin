@@ -15,6 +15,7 @@ import { useAlita } from 'redux-alita';
 import './index.less'
 import { useSwitch } from '../../utils/hooks';
 import { routes } from '../../routes/MenuRoutes/config';
+import ScrollBar from '../ScrollBar';
 
 type SiderCustomProps = RouteComponentProps<any> & {
   popoverHide?: () => void;
@@ -80,15 +81,21 @@ const SiderCustom = (props: SiderCustomProps) => {
   };
 
   return (
-    <LayoutSider collapsed={collapsed} theme="dark" width={200} trigger={null} breakpoint="lg">
-      <SiderMenu
-        mode="inline"
-        selectedKeys={[menu.selectedKey, ...smenus]}
-        onClick={menuClick}
-        onOpenChange={openMenu}
-        menus={[...routes.menus, ...smenus]}
-        openKeys={firstHide ? [] : menu.openKeys}
-      />
+    <LayoutSider collapsed={collapsed} theme="dark" width={256} trigger={null} collapsible>
+      <ScrollBar
+        options={{
+          // Disabled horizontal scrolling, https://github.com/utatti/perfect-scrollbar#options
+          suppressScrollX: true,
+        }}
+      >
+        <SiderMenu
+          selectedKeys={[menu.selectedKey, ...smenus]}
+          onClick={menuClick}
+          onOpenChange={openMenu}
+          menus={[...routes.menus, ...smenus]}
+          openKeys={firstHide ? [] : menu.openKeys}
+        />
+      </ScrollBar>
     </LayoutSider>
   );
 }

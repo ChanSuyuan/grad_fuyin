@@ -12,6 +12,7 @@ import {
   LineOutlined,
   BarChartOutlined,
   AreaChartOutlined,
+  UsergroupDeleteOutlined
 } from '@ant-design/icons'
 import React from 'react'
 
@@ -29,4 +30,5 @@ export const iconMap: any = {
   user: <UserOutlined />,
   api: <ApiOutlined />,
   edit: <EditOutlined />,
+  usersManage: <UsergroupDeleteOutlined />
 }

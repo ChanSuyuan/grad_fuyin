@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useEffect, useState } from 'react';
 import { IMenuRoutes } from '../../routes/MenuRoutes/config';
+import { iconMap } from '../../utils/iconMap';
 
 const MenuItem = Menu.Item
 type SiderMenuProps = MenuProps & {
@@ -22,7 +23,10 @@ type SiderMenuProps = MenuProps & {
 const renderMenuItem = (item: IMenuRoutes) => (
   <MenuItem key={item.path}>
     <Link to={(item.route || item.path) + (item.query || '')}>
-      <span className="nav-text">{item.title}</span>
+      {item.icon && iconMap[item.icon]}
+      <span className="nav-text" >
+        {item.title}
+      </span>
     </Link>
   </MenuItem>
 )
@@ -33,7 +37,10 @@ const renderSubMenu = (item: IMenuRoutes) => {
       key={item.path}
       title={
         <span>
-          <span className="nav-text">{item.title}</span>
+          {item.icon && iconMap[item.icon]}
+          <span className="nav-text" >
+            {item.title}
+          </span>
         </span>
       }
     >
@@ -81,7 +88,7 @@ const SiderMenu = ({ menus, ...props }: SiderMenuProps) => {
                       provided.dragHandleProps.onDragStart(e as any)
                     }
                   >
-                    <Menu {...props} theme="dark">
+                    <Menu {...props} mode="inline" theme="dark" style={{ color: "black" }}>
                       {item.subs! ? renderSubMenu(item) : renderMenuItem(item)}
                     </Menu>
                   </div>

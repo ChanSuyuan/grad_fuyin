@@ -8,6 +8,8 @@ export interface IMenuRoutesBase {
   route?: string;
   /** 是否登录校验，true不进行校验（访客） */
   login?: boolean;
+  menuParentId?: string
+  breadcrumbParentId?: string
 }
 
 export interface IMenuRoutes extends IMenuRoutesBase {
@@ -24,20 +26,23 @@ export const routes: {
     {
       path: '/dashboard/index',
       title: "控制台",
-      icon: 'moblie',
-      component: 'Dashboard'
+      component: 'Dashboard',
+      icon: 'dashboard'
     },
     {
-      path: '/useradmin',
-      title: "用户管理"
+      path: '/userAdmin',
+      title: "用户管理",
+      icon: 'user'
     },
     {
-      path: '/authuser',
-      title: "角色管理"
+      path: '/authUser',
+      title: "角色管理",
+      icon: 'usersManage'
     },
     {
       path: '/params',
-      title: '参数管理'
+      title: '参数管理',
+      icon: 'message'
     }
   ],
   others: [] // not related to menu
