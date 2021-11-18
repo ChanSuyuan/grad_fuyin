@@ -8,7 +8,6 @@ import { Layout } from 'antd';
 import { RouteComponentProps, withRouter } from 'react-router';
 
 import './index.less'
-import ScrollBar from '../ScrollBar';
 import SiderMenu from '../SiderMenu';
 import { routes } from '../../routes/MenuRoutes/config';
 
@@ -25,16 +24,10 @@ const SiderCustom = (props: SiderCustomProps) => {
     <LayoutSider collapsed={collapsed} theme="light" width={256} trigger={null} collapsible>
       <div className="brand">
         <div className="logo">
-          <img alt="logo" />
         </div>
       </div>
-      <ScrollBar
-        options={{
-          suppressScrollX: true,
-        }}
-      >
-        <SiderMenu menus={[...routes.menus]} />
-      </ScrollBar>
+      <div style={{ marginTop: 25 }} />
+      <SiderMenu menus={[...routes.menus]} />
     </LayoutSider>
   );
 }

@@ -1,47 +1,9 @@
-import { Layout } from "antd"
-import { Content } from "antd/lib/layout/layout"
-import React, { useState } from "react"
-import BreadCustom from "../../common/component/BreadCustom"
-import "./index.less"
-import { HeaderCustom } from "../../common/component/HeaderCustom"
-import SiderCustom from "../../common/component/SiderCustom"
-import { routes } from "../../common/routes/MenuRoutes/config"
-import { RouteProps } from "react-router-dom"
-
-type AppProps = RouteProps & {}
-
-// const { pathToRegexp } = require("path-to-regexp")
-
-export const Dashboard = (props: AppProps) => {
-  const [collapsed, setCollapsed] = useState<boolean>(false);
-  const { children } = props
+import React from "react"
 
 
-  const toggle = () => {
-    setCollapsed(!collapsed)
-  }
-
-  // const { location } = props
-  const newRouteList = routes.menus
-  // const currentRoute = newRouteList.find(
-  //   _ => _.path && pathToRegexp(_.path).exec(location.pathname)
-  // )
-
-
+export const Dashboard = () => {
 
   return (
-    <Layout>
-      <SiderCustom collapsed={collapsed} />
-      <Layout className='fuyin_layout'>
-        <HeaderCustom toggle={toggle} collapsed={collapsed} />
-        <Content className="content">
-          <BreadCustom routeList={newRouteList} />
-          {children}
-          <div className="site-layout-background" style={{ padding: 24, height: 500 }}>
-            content
-          </div>
-        </Content>
-      </Layout>
-    </Layout>
+    <div>Hello</div>
   )
 }

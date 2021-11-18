@@ -11,6 +11,7 @@
     "axios": "^0.24.0",
     "classnames": "^2.3.1",
     "core-decorators": "^0.20.0",
+    "dva-model-extend": "^0.1.2",
     "http-proxy-middleware": "^2.0.1",
     "js-cookie": "^3.0.1",
     "lodash": "^4.17.21",

@@ -39,10 +39,10 @@ export const HeaderCustom = (props: HeaderCustomProps) => {
         title={
           <Fragment>
             <span style={{ color: '#999', marginRight: 4 }}>
-              Hi!
+              你好!
             </span>
             <span style={{ color: '#999' }}>
-              Naught Boy
+              Test3
             </span>
             <Avatar style={{ marginLeft: 8 }} />
           </Fragment>
