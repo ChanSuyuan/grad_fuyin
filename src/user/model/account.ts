@@ -32,6 +32,8 @@ export interface ILoginFeedBackInfo {
   errorCode: number
   ok?: boolean
   text?: string
+  // 返回的字段是type, 这里做鉴别用 auth，其他文件同理。
+  auth: number
 }
 
 // logOut FeedBack

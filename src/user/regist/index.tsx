@@ -89,7 +89,7 @@ export const Regist: React.FC = () => {
               hasFeedback>
               <Input type="password" placeholder={`FYFC密保问题（选填）`} size="large" />
             </FormItem>
-            <FormItem>
+            <FormItem name="regist">
               <Button type="primary" htmlType="submit" className="login-form-button" onClick={handleOk}>
                 <div>立即注册</div>
               </Button>

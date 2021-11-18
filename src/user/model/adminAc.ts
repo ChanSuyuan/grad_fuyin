@@ -15,6 +15,7 @@ export interface ILoginFeedBackInfo {
   errorCode?: number
   ok?: boolean
   text?: string
+  auth: number
 }
 
 export interface IAdminLogOutFeedBackInfo {

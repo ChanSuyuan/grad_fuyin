@@ -7,15 +7,12 @@ import axios, { AxiosRequestConfig } from 'axios'
 import queryString from 'query-string'
 import { APIError } from '../model/api'
 
-const API_PREFIX = ''
-
 let token = window.localStorage.getItem('user_token')
 if (token) {
   axios.defaults.headers.common['Authorization'] = token
 } else {
   delete axios.defaults.headers.common['Authorization']
 }
-
 
 type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH"
 
@@ -54,7 +51,6 @@ export class FYAPI {
 
   private static async fetch<IResult>(method: HTTPMethod, url: IURL, bodyObj?: any, extras?: IExtra): Promise<IResult> {
     const cfg: AxiosRequestConfig = {
-      baseURL: API_PREFIX,
       url: FYAPI.genURLStr(url),
       method,
       headers: {
