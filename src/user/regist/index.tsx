@@ -4,6 +4,8 @@ import { Button, Form, Input, notification } from 'antd'
 import { useHistory } from 'react-router-dom'
 import { statusCode } from '../../common/model/statusCode';
 import { behaviorApi } from '../api/account';
+import GlobalFooter from '../../common/component/GlobalFooter';
+import { config } from '../../common/utils/config';
 
 const FormItem = Form.Item
 
@@ -87,7 +89,7 @@ export const Regist: React.FC = () => {
             </FormItem>
             <FormItem name="hobby"
               hasFeedback>
-              <Input type="password" placeholder={`FYFC密保问题（选填）`} size="large" />
+              <Input type="username" placeholder={`FYFC爱好（选填）`} size="large" />
             </FormItem>
             <FormItem name="regist">
               <Button type="primary" htmlType="submit" className="login-form-button" onClick={handleOk}>
@@ -95,6 +97,9 @@ export const Regist: React.FC = () => {
               </Button>
             </FormItem>
           </Form>
+          <div className="footer">
+            <GlobalFooter className="footer" copyright={config.copyright} />
+          </div>
         </div>
       </div>
     </>

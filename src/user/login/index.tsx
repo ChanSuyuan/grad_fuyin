@@ -11,6 +11,8 @@ import { observer } from 'mobx-react'
 import { notify } from '../../common/message/Notification'
 import { adminApi } from '../api/adminAc'
 import { superAdminApi } from '../api/super-adminAc'
+import GlobalFooter from '../../common/component/GlobalFooter'
+import { config } from '../../common/utils/config'
 
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
@@ -159,6 +161,9 @@ export const Login: React.FC = observer(() => {
               </Button>
             </FormItem>
           </Form>
+        </div>
+        <div className="footer">
+          <GlobalFooter className="footer" copyright={config.copyright} />
         </div>
       </div>
     </>

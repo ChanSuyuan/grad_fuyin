@@ -31,32 +31,37 @@ export const HeaderCustom = (props: HeaderCustomProps) => {
   }
 
   const menuClick = (e: any) => {
-    e.key === 'logout' && LogOut()
+    e.key === 'Logout' && LogOut()
   }
 
 
   const rightContent = [
-    <Menu key="user" mode="horizontal" onClick={menuClick}>
+    <Menu key="user" mode="horizontal" onClick={menuClick} style={{ marginTop: 8 }}>
       <SubMenu
         title={
           <Fragment>
             <span style={{ color: '#999', marginRight: 4 }}>
-              Hi
+              Hi!
             </span>
-            <span>Boy</span>
+            <span style={{ color: '#999' }}>
+              Naught Boy
+            </span>
             <Avatar style={{ marginLeft: 8 }} />
           </Fragment>
         }
       >
-        <Menu.Item key="SignOut">
-          Sign out
+        <Menu.Item key="SelfCenter">
+          个人中心
+        </Menu.Item>
+        <Menu.Item key="Logout">
+          立即登出
         </Menu.Item>
       </SubMenu>
-    </Menu>,
+    </Menu >,
   ]
 
   return (
-    <LayoutHeader className="custom-theme header" >
+    <LayoutHeader className="header" >
       <div className="button">
         {props.collapsed ? <MenuUnfoldOutlined onClick={props.toggle} /> : <MenuFoldOutlined onClick={props.toggle} />}
       </div>
