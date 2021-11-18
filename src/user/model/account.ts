@@ -6,9 +6,7 @@
 export interface IRegisterInfo {
   userName: string
   password: string
-  hobby?: string
-  phone_number?: number
-  mail_address?: string
+  email?: string
 }
 
 // regist feeback

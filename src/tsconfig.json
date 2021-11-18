@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ES5",
     "module": "commonjs",
     "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
@@ -9,15 +9,24 @@
     "strictNullChecks": false,
     "strict": false,
     "baseUrl": "./src",
-    "lib": ["es2015", "dom"],
+    "lib": [
+      "es2015",
+      "dom"
+    ],
     "jsx": "react",
     "outDir": ".tmp",
     "skipLibCheck": true,
     "noUnusedLocals": true,
     "downlevelIteration": true,
-    "typeRoots": ["./types", "./node_modules/@types"]
+    "typeRoots": [
+      "./types",
+      "./node_modules/@types"
+    ]
   },
-  "exclude": ["node_modules", "bower_components"],
+  "exclude": [
+    "node_modules",
+    "bower_components"
+  ],
   "compileOnSave": false,
   "buildOnSave": false,
   "atom": {

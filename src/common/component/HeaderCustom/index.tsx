@@ -1,28 +1,26 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment } from 'react'
 import { Avatar, Layout, Menu } from 'antd'
 // import { RightOutlined } from '@ant-design/icons'
 import { useHistory } from 'react-router'
-import { useSwitch } from '../../utils/hooks'
+// import { useSwitch } from '../../utils/hooks'
 import './index.less'
 import MenuUnfoldOutlined from '@ant-design/icons/lib/icons/MenuUnfoldOutlined'
 import MenuFoldOutlined from '@ant-design/icons/lib/icons/MenuFoldOutlined'
 
 const LayoutHeader = Layout.Header
-const MenuItem = Menu.Item
-// const ListItem = List.Item
+
 const SubMenu = Menu.SubMenu
 
 type HeaderCustomProps = {
   toggle: () => void
   collapsed: boolean
-  user: any
   path?: string
 }
 
 export const HeaderCustom = (props: HeaderCustomProps) => {
   const history = useHistory()
-  const [visible, turn] = useSwitch()
-  const [user, setUser] = useState<any>()
+  // const [visible, turn] = useSwitch()
+  // const [user, setUser] = useState<any>()
 
   // Log out
   const LogOut = () => {

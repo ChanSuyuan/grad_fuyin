@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, Input, notification, Radio, Spin } from "antd"
+import { Button, Form, Input, notification, Radio } from "antd"
 
 import './index.less'
 import { ApiFilled } from '@ant-design/icons'

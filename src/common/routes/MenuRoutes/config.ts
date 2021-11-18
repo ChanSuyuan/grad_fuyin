@@ -1,4 +1,5 @@
 export interface IMenuRoutesBase {
+  id: string
   path: string;
   title: string;
   icon?: string;
@@ -10,6 +11,7 @@ export interface IMenuRoutesBase {
   login?: boolean;
   menuParentId?: string
   breadcrumbParentId?: string
+  auth?: boolean
 }
 
 export interface IMenuRoutes extends IMenuRoutesBase {
@@ -18,32 +20,34 @@ export interface IMenuRoutes extends IMenuRoutesBase {
 
 export const routes: {
   menus: IMenuRoutes[]
-  others: IMenuRoutes[] | []
-  [index: string]: any
 } = {
   menus: [
     // menu route
     {
-      path: '/dashboard/index',
+      id: "1",
+      path: '/dashboard',
       title: "控制台",
-      component: 'Dashboard',
-      icon: 'dashboard'
+      icon: 'dashboard',
+      auth: true
     },
     {
-      path: '/userAdmin',
+      id: "2",
+      path: '/user',
       title: "用户管理",
-      icon: 'user'
+      icon: 'user',
+      breadcrumbParentId: '1'
     },
     {
+      id: "3",
       path: '/authUser',
       title: "角色管理",
       icon: 'usersManage'
     },
     {
+      id: "4",
       path: '/params',
       title: '参数管理',
       icon: 'message'
     }
-  ],
-  others: [] // not related to menu
+  ]
 }

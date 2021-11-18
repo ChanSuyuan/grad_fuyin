@@ -1,109 +1,70 @@
-/**
- * @file Menu related
- */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Menu } from "antd"
+import React, { Fragment } from "react"
+import { RouteComponentProps, withRouter } from "react-router"
+import { arrayToTree, queryAncestors } from "../../utils/query"
+import { pathToRegexp } from 'path-to-regexp'
+import { iconMap } from "../../utils/iconMap"
+import { NavLink } from "react-router-dom"
 
-import * as React from 'react'
-import { Menu, MenuProps } from 'antd'
-
-import { Link } from 'react-router-dom';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { useEffect, useState } from 'react';
-import { IMenuRoutes } from '../../routes/MenuRoutes/config';
-import { iconMap } from '../../utils/iconMap';
-
-const MenuItem = Menu.Item
-type SiderMenuProps = MenuProps & {
+type SiderMenuProps = RouteComponentProps<any> & {
+  openKeys?: any
   menus: any
-  onClick: (e: any) => void
-  selectedKeys: string[]
-  openKeys?: string[]
-  onOpenChange: (v: string[]) => void
 }
 
-const renderMenuItem = (item: IMenuRoutes) => (
-  <MenuItem key={item.path}>
-    <Link to={(item.route || item.path) + (item.query || '')}>
-      {item.icon && iconMap[item.icon]}
-      <span className="nav-text" >
-        {item.title}
-      </span>
-    </Link>
-  </MenuItem>
-)
+const { SubMenu } = Menu
 
-const renderSubMenu = (item: IMenuRoutes) => {
-  return (
-    <Menu.SubMenu
-      key={item.path}
-      title={
-        <span>
-          {item.icon && iconMap[item.icon]}
-          <span className="nav-text" >
-            {item.title}
-          </span>
-        </span>
+const SiderMenu = (props: SiderMenuProps) => {
+  const { menus, location } = props
+
+  const generateMenus = (data: any) => {
+    return data.map((item: any) => {
+      if (item.children) {
+        return (
+          <SubMenu
+            key={item.id}
+            title={
+              <Fragment>
+                {item.icon && iconMap[item.icon]}
+                <span>{item.title}</span>
+              </Fragment>
+            }
+          >
+            {generateMenus(item.children)}
+          </SubMenu>
+        )
       }
-    >
-      {item.subs!.map((sub) => (sub.subs ? renderSubMenu(sub) : renderMenuItem(sub)))}
-    </Menu.SubMenu>
+      return (
+        <Menu.Item key={item.id}>
+          <NavLink to={item.path || '#'}>
+            {item.icon && iconMap[item.icon]}
+            <span>{item.title}</span>
+          </NavLink>
+        </Menu.Item>
+      )
+    })
+  }
+
+  const menuTree = arrayToTree(menus, 'id', 'menuParentId')
+
+  const currentMenu = menus.find(
+    (_: any) => _.path && pathToRegexp(_.path).exec(location.pathname)
   )
-}
 
-const SiderMenu = ({ menus, ...props }: SiderMenuProps) => {
-  const [dragItems, setDragItems] = useState<any>([])
+  const selectedKeys = currentMenu
+    ? queryAncestors(menus, currentMenu, 'menuParentId').map(_ => _.id)
+    : []
 
-  useEffect(() => {
-    setDragItems(menus)
-  }, [menus]);
-
-  const reorder = (list: any, startIndex: number, endIndex: number) => {
-    const result = Array.from(list)
-    const [removed] = result.splice(startIndex, 1)
-    result.splice(endIndex, 0, removed)
-    return result
-  }
-  const onDragEnd = (result: any) => {
-    // dropped outside the list
-    if (!result.destination) {
-      return;
-    }
-
-    const _items = reorder(dragItems, result.source.index, result.destination.index);
-    setDragItems(_items);
-  }
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="droppable">
-        {(provided, snapshot) => (
-          <div ref={provided.innerRef} {...provided.droppableProps}>
-            {dragItems.map((item: IMenuRoutes, index: number) => (
-              <Draggable key={item.path} draggableId={item.path} index={index}>
-                {(provided, snapshot) => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    onDragStart={(e: React.DragEvent<any>) =>
-                      provided.dragHandleProps &&
-                      provided.dragHandleProps.onDragStart(e as any)
-                    }
-                  >
-                    <Menu {...props} mode="inline" theme="dark" style={{ color: "black" }}>
-                      {item.subs! ? renderSubMenu(item) : renderMenuItem(item)}
-                    </Menu>
-                  </div>
-                )}
-              </Draggable>
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <Menu
+      mode="inline"
+      theme="light"
+      selectedKeys={selectedKeys}
+    >
+      {generateMenus(menuTree)}
+    </Menu>
   )
 }
-export default React.memo(SiderMenu)
 
-
-
+export default withRouter(SiderMenu)
 

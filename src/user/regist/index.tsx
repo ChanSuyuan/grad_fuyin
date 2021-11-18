@@ -1,6 +1,6 @@
 import React from 'react'
 import { CheckCircleTwoTone, FrownOutlined } from '@ant-design/icons';
-import { Button, Form, Input, notification } from 'antd'
+import { Button, Form, Input, notification, Select } from 'antd'
 import { useHistory } from 'react-router-dom'
 import { statusCode } from '../../common/model/statusCode';
 import { behaviorApi } from '../api/account';
@@ -8,21 +8,32 @@ import GlobalFooter from '../../common/component/GlobalFooter';
 import { config } from '../../common/utils/config';
 
 const FormItem = Form.Item
+const { Option } = Select;
 
 export const Regist: React.FC = () => {
-
   const [form] = Form.useForm()
   const history = useHistory()
+
+  const selectAfter = (
+    <Select defaultValue="@qq.com" className="select-after">
+      <Option value="qq">@qq.com</Option>
+      <Option value="163">@163.com</Option>
+      <Option value="126">@126.com</Option>
+    </Select>
+  );
+
   function handleOk() {
 
     const username = form.getFieldValue('userName')
     const password = form.getFieldValue('password')
+    // const email = form.getFieldValue('email')
 
     // console.log(Boolean(username && password))
     if (username && password) {
       return behaviorApi.regist({
         userName: username,
-        password: password
+        password: password,
+        // email: email
       }).then(res => {
         if (res.errorCode === statusCode.success) {
           notification.open({
@@ -87,9 +98,9 @@ export const Regist: React.FC = () => {
               hasFeedback>
               <Input type="password" placeholder={`FYFC密码`} size="large" />
             </FormItem>
-            <FormItem name="hobby"
+            <FormItem name="email"
               hasFeedback>
-              <Input type="username" placeholder={`FYFC爱好（选填）`} size="large" />
+              <Input type="email" placeholder={`邮箱密保(暂时选填)`} addonAfter={selectAfter} size="large" />
             </FormItem>
             <FormItem name="regist">
               <Button type="primary" htmlType="submit" className="login-form-button" onClick={handleOk}>
