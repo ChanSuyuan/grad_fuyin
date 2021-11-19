@@ -14,8 +14,6 @@ if (token) {
   delete axios.defaults.headers.common['Authorization']
 }
 
-const API_PREFIX = '/fuyin'
-
 type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH"
 
 type IURL =
@@ -53,7 +51,6 @@ export class FYAPI {
 
   private static async fetch<IResult>(method: HTTPMethod, url: IURL, bodyObj?: any, extras?: IExtra): Promise<IResult> {
     const cfg: AxiosRequestConfig = {
-      baseURL: API_PREFIX,
       url: FYAPI.genURLStr(url),
       method,
       headers: {

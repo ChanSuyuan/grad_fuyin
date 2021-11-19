@@ -51,7 +51,7 @@ export const Login: React.FC = observer(() => {
           if (res.errorCode === statusCode.success) {
             if (res.data) {
               setLocalToken(`fuyin${res.data}`)
-              history.push('/fuyin')
+              history.push('/app')
             } else {
               notification.open({
                 message: '发生了意想不到的错误啦！',
