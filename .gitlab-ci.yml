@@ -52,9 +52,8 @@ deploy-job:
     stage: deploy
     only: 
       - develop
-    before_scirpt:
-      - echo "发送到目标服务器🔥🔥🔥"
     script:
+      - echo "发送到目标服务器🔥🔥🔥"
       - sshpass -p $PASSWORD scp -o StrictHostKeyChecking=no -r ./dist $USERNAME@$HOST:$UPLOADDIR/   # 将打包完成的文件复制到目标服务器
       - sshpass -p $PASSWORD ssh -o StrictHostKeyChecking=no $USERNAME@$HOST rm -rf $UPLOADDIR/xxxx # 删除原有文件
       - sshpass -p $PASSWORD ssh -o StrictHostKeyChecking=no $USERNAME@$HOST mv $UPLOADDIR/dist $UPLOADDIR/xxxx # 将目标文件改为服务端真正文件。
