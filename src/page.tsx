@@ -10,7 +10,7 @@ export class Page extends React.Component {
 			<Router>
 				<Switch>
 					<Route exact path="/" render={() => <Redirect to="/login" push />} />
-					<Route path="/fuyin" component={FuyinApp} />
+					<Route path="/app" component={FuyinApp} />
 					<Route path="/login" component={Login} />
 					<Route path="/register" component={Regist} />
 				</Switch>
