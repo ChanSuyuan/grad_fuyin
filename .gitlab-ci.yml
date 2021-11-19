@@ -37,16 +37,16 @@ dependencies_build:
   only:
     - develop
 
-items_deploy:
-  stage: deploy
-  tags:
-    - fuyinv1
-  script:
-    - mkdir -p ~/.ssh
-    - echo "$TEST100_DEPLOY_SSH" >> ~/.ssh/id_rsa
-    - chmod 600 ~/.ssh/id_rsa
-    #- echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-    - rsync -rav --delete dist/ "$TEST100_DEPLOY_USER"@"$TEST100_DEPLOY_HOST:"$TEST100_DEPLOY_PATH"
-    - sh $TEST100_UPDATE_SHELL
-  only: 
-    - develop
+# items_deploy:
+#   stage: deploy
+#   tags:
+#     - fuyinv1
+#   script:
+#     - mkdir -p ~/.ssh
+#     - echo "$TEST100_DEPLOY_SSH" >> ~/.ssh/id_rsa
+#     - chmod 600 ~/.ssh/id_rsa
+#     #- echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+#     - rsync -rav --delete dist/ "$TEST100_DEPLOY_USER"@"$TEST100_DEPLOY_HOST:"$TEST100_DEPLOY_PATH"
+#     - sh $TEST100_UPDATE_SHELL
+#   only: 
+#     - develop
