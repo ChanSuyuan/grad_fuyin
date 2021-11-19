@@ -12,6 +12,7 @@ class TestApi {
   POST() {
     return FYAPI.POST("user/login")
   }
+  // test
 }
 
 export const testApi = new TestApi()
