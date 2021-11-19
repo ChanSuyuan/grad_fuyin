@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import { FuyinApp } from './container/FuyinApp'
 import { Login } from './user/login'
 import { Regist } from './user/regist'
-
+// test
 export class Page extends React.Component {
 	render() {
 		return (
