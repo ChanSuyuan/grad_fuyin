@@ -16,6 +16,8 @@ if (token) {
 
 type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH"
 
+// const API_PREFIX = '/fuyin'
+
 type IURL =
   | string
   | {
@@ -51,6 +53,7 @@ export class FYAPI {
 
   private static async fetch<IResult>(method: HTTPMethod, url: IURL, bodyObj?: any, extras?: IExtra): Promise<IResult> {
     const cfg: AxiosRequestConfig = {
+      // baseURL: API_PREFIX,
       url: FYAPI.genURLStr(url),
       method,
       headers: {

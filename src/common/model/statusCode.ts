@@ -13,4 +13,9 @@ export enum statusCode {
 
   // The registered user name is duplicate
   registFailure = 416,
+
+  // email
+  emailNotExist = 419,
+  tooFrequently = 406,
+  noEffectLink = 401
 }

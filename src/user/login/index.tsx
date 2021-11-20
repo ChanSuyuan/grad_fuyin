@@ -148,9 +148,9 @@ export const Login: React.FC = observer(() => {
               <Input type="password" placeholder={`FYFC密码`} size="large" />
             </FormItem>
             <FormItem name="account">
-              <a href="/">
+              <Link to="/reset" target="_blank">
                 <strong>重置密码 / 忘记密码</strong>
-              </a>
+              </Link>
               <Link to="/register" target="_blank" style={{ float: 'right' }}>
                 <strong>注册账号</strong>
               </Link>

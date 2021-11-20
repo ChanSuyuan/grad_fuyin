@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import { FuyinApp } from './container/FuyinApp'
 import { Login } from './user/login'
 import { Regist } from './user/regist'
+import { Reset } from './user/reset'
+import { ResetPwd } from './user/reset/resetPwd'
+
 // test
 export class Page extends React.Component {
 	render() {
@@ -13,6 +16,8 @@ export class Page extends React.Component {
 					<Route path="/app" component={FuyinApp} />
 					<Route path="/login" component={Login} />
 					<Route path="/register" component={Regist} />
+					<Route path="/reset" component={Reset} />
+					<Route path="/resetPwd" component={ResetPwd} />
 				</Switch>
 			</Router>
 		)

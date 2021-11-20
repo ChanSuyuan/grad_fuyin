@@ -55,6 +55,5 @@ class BehaviorApi {
   modifypwdWithOldPwd(params: IModifyLoginInfo): Promise<IModifyFeedBackInfo> {
     return FYAPI.POST(`${baseURL}/updatepasswordbyoldpassword`, params)
   }
-
 }
 export const behaviorApi = new BehaviorApi()
