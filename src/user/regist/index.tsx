@@ -1,65 +1,46 @@
-import React from 'react'
-import { CheckCircleTwoTone, FrownOutlined } from '@ant-design/icons';
-import { Button, Form, Input, notification, Select } from 'antd'
-import { useHistory } from 'react-router-dom'
+import React, { useState } from 'react'
+import { FrownOutlined } from '@ant-design/icons';
+import { Button, Form, Input, notification, Result } from 'antd'
 import { statusCode } from '../../common/model/statusCode';
 import { behaviorApi } from '../api/account';
 import GlobalFooter from '../../common/component/GlobalFooter';
 import { config } from '../../common/utils/config';
 
 const FormItem = Form.Item
-const { Option } = Select;
+// eslint-disable-next-line
+const patternReg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
 export const Regist: React.FC = () => {
   const [form] = Form.useForm()
-  const history = useHistory()
+  const [isShow, setShow] = useState<boolean>(false)
 
-  const selectAfter = (
-    <Select defaultValue="@qq.com" className="select-after">
-      <Option value="qq">@qq.com</Option>
-      <Option value="163">@163.com</Option>
-      <Option value="126">@126.com</Option>
-    </Select>
-  );
 
   function handleOk() {
-
     const username = form.getFieldValue('userName')
     const password = form.getFieldValue('password')
-    // const email = form.getFieldValue('email')
+    const email = form.getFieldValue('email')
 
-    // console.log(Boolean(username && password))
     if (username && password) {
       return behaviorApi.regist({
         userName: username,
         password: password,
-        // email: email
+        email: email
       }).then(res => {
-        if (res.errorCode === statusCode.success) {
-          notification.open({
-            message: "注册成功！",
-            description: `您已经成功为普通用户！页面将在3秒内跳转！`,
-            icon: <CheckCircleTwoTone twoToneColor="#52c41a" />
-          })
-          setTimeout(() => {
-            history.push('/')
-          }, 3000)
-        } else if (res.errorCode === statusCode.registFailure) {
-          notification.open({
-            message: "注册失败！",
-            description: "该用户名已经存在！",
-            icon: <FrownOutlined twoToneColor="#52c41a" />
-          })
-        } else {
-          notification.open({
-            message: "注册失败！",
-            description: "请确认是否填写所有必选项！",
-            icon: <FrownOutlined twoToneColor="#52c41a" />
-          })
-        }
-      }).catch(err => {
-        console.log(err)
+        res.errorCode === statusCode.success && setShow(true)
+        res.errorCode === statusCode.registFailure && notification.open({
+          message: "注册失败！",
+          description: "该用户名已经存在！",
+          icon: <FrownOutlined twoToneColor="#52c41a" />
+        })
+        res.errorCode === statusCode.hasRegistered && notification.open({
+          message: "注册失败！",
+          description: "该邮箱已被注册！",
+          icon: <FrownOutlined twoToneColor="#52c41a" />
+        })
       })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 
@@ -71,47 +52,53 @@ export const Regist: React.FC = () => {
         </a>
       </div>
       <div className="form-container">
-        <h1 className="text-form">融资风控后台管理注册系统</h1>
-        <div className="form-wrapper">
-          <Form form={form}>
-            <FormItem name="userName"
-              rules={
-                [
-                  {
+        {isShow ?
+          <Result
+            status="success"
+            title="注册表单提交成功！"
+            subTitle="注册表单已提交，请移步到邮箱进行验证，否则注册不生效哦！"
+          />
+          : <>
+            <h1 className="text-form">融资风控后台管理注册系统</h1>
+            <div className="form-wrapper">
+              <Form form={form}>
+                <FormItem name="userName"
+                  rules={[{
                     required: true,
                     message: '请输入FYFC用户名!'
-                  }
-                ]
-              }
-              hasFeedback>
-              <Input type="username" placeholder={`FYFC用户名`} size="large" />
-            </FormItem>
-            <FormItem name="password"
-              rules={
-                [
-                  {
+                  }]}
+                  hasFeedback>
+                  <Input type="username" placeholder={`FYFC用户名`} size="large" />
+                </FormItem>
+                <FormItem name="password"
+                  rules={[{
                     required: true,
                     message: '请输入FYFC密码!'
-                  }
-                ]
-              }
-              hasFeedback>
-              <Input type="password" placeholder={`FYFC密码`} size="large" />
-            </FormItem>
-            <FormItem name="email"
-              hasFeedback>
-              <Input type="email" placeholder={`邮箱密保(暂时选填)`} addonAfter={selectAfter} size="large" />
-            </FormItem>
-            <FormItem name="regist">
-              <Button type="primary" htmlType="submit" className="login-form-button" onClick={handleOk}>
-                <div>立即注册</div>
-              </Button>
-            </FormItem>
-          </Form>
-          <div className="footer">
-            <GlobalFooter className="footer" copyright={config.copyright} />
-          </div>
-        </div>
+                  }]}
+                  hasFeedback>
+                  <Input type="password" placeholder={`FYFC密码`} size="large" />
+                </FormItem>
+                <FormItem name="email" hasFeedback
+                  rules={[{
+                    required: true,
+                    pattern: patternReg,
+                    message: '请输入正确的邮箱地址！'
+                  }]}
+                >
+                  <Input type="email" placeholder={`邮箱密保`} size="large" />
+                </FormItem>
+                <FormItem name="regist">
+                  <Button type="primary" htmlType="submit" className="login-form-button" onClick={handleOk}>
+                    <div>立即注册</div>
+                  </Button>
+                </FormItem>
+              </Form>
+              <div className="footer">
+                <GlobalFooter className="footer" copyright={config.copyright} />
+              </div>
+            </div>
+          </>
+        }
       </div>
     </>
   )

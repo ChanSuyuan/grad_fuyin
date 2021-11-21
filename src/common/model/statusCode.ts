@@ -17,5 +17,6 @@ export enum statusCode {
   // email
   emailNotExist = 419,
   tooFrequently = 406,
-  noEffectLink = 401
+  noEffectLink = 401,
+  hasRegistered = 420
 }

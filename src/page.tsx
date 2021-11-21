@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
+import { RegistFeedBack } from './common/component/BackResult'
 import { FuyinApp } from './container/FuyinApp'
 import { Login } from './user/login'
 import { Regist } from './user/regist'
@@ -18,6 +19,7 @@ export class Page extends React.Component {
 					<Route path="/register" component={Regist} />
 					<Route path="/reset" component={Reset} />
 					<Route path="/resetPwd" component={ResetPwd} />
+					<Route path="/register_feedback" component={RegistFeedBack} />
 				</Switch>
 			</Router>
 		)

@@ -124,26 +124,18 @@ export const Login: React.FC = observer(() => {
               </RadioGroup>
             </FormItem>
             <FormItem name="userName"
-              rules={
-                [
-                  {
-                    required: true,
-                    message: '请输入FYFC用户名!'
-                  }
-                ]
-              }
+              rules={[{
+                required: true,
+                message: '请输入FYFC用户名!'
+              }]}
               hasFeedback>
               <Input type="username" placeholder={`FYFC用户名`} size="large" />
             </FormItem>
             <FormItem name="password"
-              rules={
-                [
-                  {
-                    required: true,
-                    message: '请输入FYFC密码!'
-                  }
-                ]
-              }
+              rules={[{
+                required: true,
+                message: '请输入FYFC密码!'
+              }]}
               hasFeedback>
               <Input type="password" placeholder={`FYFC密码`} size="large" />
             </FormItem>
