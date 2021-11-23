@@ -50,8 +50,9 @@ export const Login: React.FC = observer(() => {
           })
           if (res.errorCode === statusCode.success) {
             if (res.data) {
-              setLocalToken(`fuyin${res.data}`)
-              history.push('/app')
+              setLocalToken('user_token', `fuyin${res.data.token}`)
+              setLocalToken('user_type', res.data.type)
+              history.push('/fyapp/dashboard')
             } else {
               notification.open({
                 message: '发生了意想不到的错误啦！',
@@ -69,8 +70,8 @@ export const Login: React.FC = observer(() => {
           })
           if (res.errorCode === statusCode.success) {
             if (res.data) {
-              setLocalToken(`fuyin${res.data}`)
-              history.push('/fuyin')
+              setLocalToken('user_token', `fuyin${res.data}`)
+              history.push('/fyapp/dashboard')
             } else {
               notification.open({
                 message: '发生了意想不到的错误啦！',
@@ -88,8 +89,8 @@ export const Login: React.FC = observer(() => {
           })
           if (res.errorCode === statusCode.success) {
             if (res.data) {
-              setLocalToken(`fuyin${res.data}`)
-              history.push('/fuyin')
+              setLocalToken('user_tokne', `fuyin${res.data}`)
+              history.push('/fyapp/dashboard')
             } else {
               notification.open({
                 message: '发生了意想不到的错误啦！',

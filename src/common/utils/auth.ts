@@ -13,8 +13,8 @@ export function removeToken() {
   return Cookies.remove(TokenKey)
 }
 
-export function setLocalToken(token: any) {
-  return localStorage.setItem('user_token', token)
+export function setLocalToken(key: string, token: any) {
+  return localStorage.setItem(key, token)
 }
 
 export function setSessionToken(token: any) {

@@ -1,9 +1,13 @@
 import React from "react"
 
 
-export const Dashboard = () => {
+export const Dashboard: React.FC = () => {
 
   return (
-    <div>Hello</div>
+    <>
+      <div className="site-layout-background" style={{ padding: 24, margin: 0, minHeight: 280, background: "#fff" }}>
+        Content
+      </div>
+    </>
   )
 }

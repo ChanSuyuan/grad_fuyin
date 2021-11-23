@@ -2,8 +2,6 @@
 import { Menu } from "antd"
 import React, { Fragment } from "react"
 import { RouteComponentProps, withRouter } from "react-router"
-import { arrayToTree, queryAncestors } from "../../utils/query"
-import { pathToRegexp } from 'path-to-regexp'
 import { iconMap } from "../../utils/iconMap"
 import { NavLink } from "react-router-dom"
 
@@ -14,15 +12,15 @@ type SiderMenuProps = RouteComponentProps<any> & {
 
 const { SubMenu } = Menu
 
-const SiderMenu = (props: SiderMenuProps) => {
-  const { menus, location } = props
+const SiderMenu: React.FC<SiderMenuProps> = (props) => {
+  const { menus } = props
 
   const generateMenus = (data: any) => {
     return data.map((item: any) => {
       if (item.children) {
         return (
           <SubMenu
-            key={item.id}
+            key={item.path}
             title={
               <Fragment>
                 {item.icon && iconMap[item.icon]}
@@ -35,7 +33,7 @@ const SiderMenu = (props: SiderMenuProps) => {
         )
       }
       return (
-        <Menu.Item key={item.id}>
+        <Menu.Item key={item.path}>
           <NavLink to={item.path || '#'}>
             {item.icon && iconMap[item.icon]}
             <span>{item.title}</span>
@@ -45,23 +43,17 @@ const SiderMenu = (props: SiderMenuProps) => {
     })
   }
 
-  const menuTree = arrayToTree(menus, 'id', 'menuParentId')
 
-  const currentMenu = menus.find(
-    (_: any) => _.path && pathToRegexp(_.path).exec(location.pathname)
-  )
-
-  const selectedKeys = currentMenu
-    ? queryAncestors(menus, currentMenu, 'menuParentId').map(_ => _.id)
-    : []
+  const menuSelected = props.location.pathname
 
   return (
+
     <Menu
       mode="inline"
       theme="light"
-      selectedKeys={selectedKeys}
+      selectedKeys={[menuSelected]}
     >
-      {generateMenus(menuTree)}
+      {generateMenus(menus)}
     </Menu>
   )
 }

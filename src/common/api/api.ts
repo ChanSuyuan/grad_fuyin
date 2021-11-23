@@ -75,8 +75,8 @@ export class FYAPI {
           }
         }
       })
-  }
 
+  }
   private static genURLStr(url: IURL): string {
     if (typeof url === "string") {
       return url

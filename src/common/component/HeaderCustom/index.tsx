@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react'
-import { Avatar, Layout, Menu } from 'antd'
+import { Avatar, Layout, Menu, message } from 'antd'
 // import { RightOutlined } from '@ant-design/icons'
 import { useHistory } from 'react-router'
 // import { useSwitch } from '../../utils/hooks'
 import './index.less'
 import MenuUnfoldOutlined from '@ant-design/icons/lib/icons/MenuUnfoldOutlined'
 import MenuFoldOutlined from '@ant-design/icons/lib/icons/MenuFoldOutlined'
+import { behaviorApi } from '../../../user/api/account'
 
 const LayoutHeader = Layout.Header
 
@@ -17,21 +18,19 @@ type HeaderCustomProps = {
   path?: string
 }
 
-export const HeaderCustom = (props: HeaderCustomProps) => {
+export const HeaderCustom: React.FC<HeaderCustomProps> = (props) => {
   const history = useHistory()
-  // const [visible, turn] = useSwitch()
-  // const [user, setUser] = useState<any>()
 
-  // Log out
   const LogOut = () => {
+    behaviorApi.logout()
     localStorage.removeItem('user_token')
     history.push('/login')
+    message.success('登出成功！')
   }
 
   const menuClick = (e: any) => {
     e.key === 'Logout' && LogOut()
   }
-
 
   const rightContent = [
     <Menu key="user" mode="horizontal" onClick={menuClick} style={{ marginTop: 8 }}>

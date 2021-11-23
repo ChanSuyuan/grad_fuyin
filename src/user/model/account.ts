@@ -26,12 +26,17 @@ export interface ILoginInfo {
 
 // login feedback
 export interface ILoginFeedBackInfo {
-  data?: string
+  data: ILoginFeedBackData
   errorCode: number
   ok?: boolean
   text?: string
   // 返回的字段是type, 这里做鉴别用 auth，其他文件同理。
   auth: number
+}
+
+export interface ILoginFeedBackData {
+  token: string
+  type: number
 }
 
 // logOut FeedBack

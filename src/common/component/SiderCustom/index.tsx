@@ -9,7 +9,8 @@ import { RouteComponentProps, withRouter } from 'react-router';
 
 import './index.less'
 import SiderMenu from '../SiderMenu';
-import { routes } from '../../routes/MenuRoutes/config';
+import { menus } from '../../routes/MenuRoutes/config';
+
 
 type SiderCustomProps = RouteComponentProps<any> & {
   collapsed?: boolean;
@@ -17,7 +18,7 @@ type SiderCustomProps = RouteComponentProps<any> & {
 
 const LayoutSider = Layout.Sider
 
-const SiderCustom = (props: SiderCustomProps) => {
+const SiderCustom: React.FC<SiderCustomProps> = (props) => {
   const { collapsed } = props
 
   return (
@@ -27,7 +28,7 @@ const SiderCustom = (props: SiderCustomProps) => {
         </div>
       </div>
       <div style={{ marginTop: 25 }} />
-      <SiderMenu menus={[...routes.menus]} />
+      <SiderMenu menus={menus} />
     </LayoutSider>
   );
 }
