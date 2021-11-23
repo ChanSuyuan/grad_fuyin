@@ -43,19 +43,12 @@ export const menus = [
     icon: 'message'
   },
   {
-    path: '/fyapp/error',
-    title: '错误页面',
-    icon: 'switcher',
-    children: [
-      {
-        path: '/error/404',
-        title: '404'
-      },
-      {
-        path: '/error/500',
-        title: '500'
-      }
-    ]
+    path: '/fyapp/myRecord',
+    title: '我的记录',
   },
+  {
+    path: '/fyapp/analysis',
+    title: '智能分析'
+  }
 ]
 
