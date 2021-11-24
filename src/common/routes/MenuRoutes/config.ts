@@ -65,6 +65,12 @@ export const menus = [
         icon: 'team'
       }
     ]
+  },
+  {
+    path: '/fyapp/systemlog',
+    title: '系统日志',
+    icon: 'team',
+    permission: 1
   }
 ]
 
