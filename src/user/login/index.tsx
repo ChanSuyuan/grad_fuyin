@@ -51,6 +51,7 @@ export const Login: React.FC = observer(() => {
           if (res.errorCode === statusCode.success) {
             if (res.data) {
               localStorage.removeItem('user_token')
+              localStorage.removeItem('user_type')
               setLocalToken('user_token', `fuyin${res.data.token}`)
               setLocalToken('user_type', res.data.type)
               history.push('/fyapp/dashboard')

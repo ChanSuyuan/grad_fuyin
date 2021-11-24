@@ -11,7 +11,7 @@ export interface IMenuRoutesBase {
   route?: string;
   /** 是否登录校验，true不进行校验（访客） */
   exact?: boolean
-  auth?: boolean
+  permission?: boolean
 }
 
 export interface IMenuRoutes extends IMenuRoutesBase {
@@ -25,22 +25,24 @@ export const menus = [
     path: '/fyapp/dashboard',
     title: "首页",
     icon: 'dashboard',
-    auth: true,
   },
   {
     path: '/fyapp/user',
     title: "用户管理",
     icon: 'user',
+    permission: 1
   },
   {
     path: '/fyapp/authUser',
     title: "角色管理",
-    icon: 'usersManage'
+    icon: 'usersManage',
+    permission: 1
   },
   {
     path: '/fyapp/params',
     title: '参数管理',
-    icon: 'message'
+    icon: 'message',
+    permission: 1
   },
   {
     path: '/fyapp/myRecord',
