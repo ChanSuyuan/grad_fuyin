@@ -19,10 +19,10 @@ type SiderCustomProps = RouteComponentProps<any> & {
 const LayoutSider = Layout.Sider
 
 const SiderCustom: React.FC<SiderCustomProps> = (props) => {
-  const { collapsed } = props
+  // const { collapsed } = props
 
   return (
-    <LayoutSider collapsed={collapsed} theme="light" width={200} trigger={null} collapsible>
+    <LayoutSider theme="light" width={200} trigger={null} style={{ position: 'fixed', height: "100vh", overflow: 'auto', left: 0, }}>
       <div className="brand">
         <div className="logo">
         </div>

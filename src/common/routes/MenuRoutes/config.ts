@@ -52,7 +52,19 @@ export const menus = [
   {
     path: '/fyapp/analysis',
     title: '智能分析',
-    icon: 'team'
+    icon: 'team',
+    children: [
+      {
+        path: '/fyapp/analysis/FC',
+        title: '融资模型评估',
+        icon: 'team'
+      },
+      {
+        path: '/fyapp/analysis/FRC',
+        title: '融资风控模型评估',
+        icon: 'team'
+      }
+    ]
   }
 ]
 

@@ -5,7 +5,7 @@ import './index.less'
 import { ApiFilled } from '@ant-design/icons'
 import { Link, useHistory } from 'react-router-dom'
 import { statusCode } from '../../common/model/statusCode'
-import { setLocalToken } from '../../common/utils/auth'
+import { ChangeHeader, removeLocalToken, setLocalToken } from '../../common/utils/auth'
 import { behaviorApi } from '../api/account'
 import { observer } from 'mobx-react'
 import { notify } from '../../common/message/Notification'
@@ -50,10 +50,10 @@ export const Login: React.FC = observer(() => {
           })
           if (res.errorCode === statusCode.success) {
             if (res.data) {
-              localStorage.removeItem('user_token')
-              localStorage.removeItem('user_type')
+              removeLocalToken()
               setLocalToken('user_token', `fuyin${res.data.token}`)
               setLocalToken('user_type', res.data.type)
+              ChangeHeader()
               history.push('/fyapp/dashboard')
             } else {
               notification.open({

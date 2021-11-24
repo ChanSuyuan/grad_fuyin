@@ -10,44 +10,6 @@ interface IRiskReportProps {
 export const RiskReport: React.FC<IRiskReportProps> = (props) => {
   const companyInfo = props.store?.data.gpDetails.companyInfo
 
-  const getTableConfig = () => {
-    const columns = [
-      {
-        title: '序号',
-        dataIndex: 'id'
-      },
-      {
-        title: '股东名称',
-        dataIndex: 'holderName'
-      },
-      {
-        title: '股份类型',
-        dataIndex: 'sharesType'
-      },
-      {
-        title: '持股数（股）',
-        dataIndex: 'holdNum'
-      },
-      {
-        title: '持股比例',
-        dataIndex: 'freeHoldnumRatio'
-      },
-      {
-        title: '变动比例',
-        dataIndex: 'changeRatio'
-      },
-      {
-        title: '股票代码',
-        dataIndex: 'securityCode'
-      }
-    ]
-
-    const tableConfig = {
-      columns
-    }
-    return tableConfig
-  }
-
   return (
     <>
       <div className="riskReport">
@@ -68,8 +30,56 @@ export const RiskReport: React.FC<IRiskReportProps> = (props) => {
         </Row>
         <br />
         <Row>
-          <Col span={24} ><strong>企业股权结构</strong><Table {...getTableConfig()} /></Col>
+          <Col span={24} ><strong>企业股权结构</strong><br /><br />
+            <Table
+              bordered
+              dataSource={props.store?.data.gpDetails.qygqjgs}
+              pagination={false}
+              columns={[
+                {
+                  title: '股东名称',
+                  dataIndex: 'holderName',
+                },
+                {
+                  title: '股份类型',
+                  dataIndex: 'sharesType'
+                },
+                {
+                  title: '股东性质',
+                  dataIndex: 'holderType'
+                },
+                {
+                  title: '持股数（股）',
+                  dataIndex: 'holdNum'
+                },
+                {
+                  title: '持股比例(%)',
+                  dataIndex: 'freeHoldnumRatio'
+                },
+                {
+                  title: '变动比例',
+                  dataIndex: 'changeRatio'
+                },
+                {
+                  title: '占总流通股本持股比例',
+                  dataIndex: 'freeHoldnumRatio'
+                },
+                {
+                  title: '增减（股）',
+                  dataIndex: 'holdNumChange'
+                },
+                {
+                  title: '股票代码',
+                  dataIndex: 'securityCode'
+                }
+              ]}
+            />
+          </Col>
         </Row>
+        <br />
+        <h1><strong>企业财务</strong></h1>
+        <div >
+        </div>
       </div>
     </>
   )

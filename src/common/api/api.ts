@@ -7,12 +7,12 @@ import axios, { AxiosRequestConfig } from 'axios'
 import queryString from 'query-string'
 import { APIError } from '../model/api'
 
-let token = window.localStorage.getItem('user_token')
-if (token) {
-  axios.defaults.headers.common['Authorization'] = token
-} else {
-  delete axios.defaults.headers.common['Authorization']
-}
+// let token = window.localStorage.getItem('user_token')
+// if (token) {
+//   axios.defaults.headers.common['Authorization'] = token
+// } else {
+//   delete axios.defaults.headers.common['Authorization']
+// }
 
 type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH"
 

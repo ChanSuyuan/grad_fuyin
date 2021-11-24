@@ -1,11 +1,7 @@
 import React, { Fragment } from 'react'
 import { Avatar, Layout, Menu, message } from 'antd'
-// import { RightOutlined } from '@ant-design/icons'
 import { useHistory } from 'react-router'
-// import { useSwitch } from '../../utils/hooks'
 import './index.less'
-import MenuUnfoldOutlined from '@ant-design/icons/lib/icons/MenuUnfoldOutlined'
-import MenuFoldOutlined from '@ant-design/icons/lib/icons/MenuFoldOutlined'
 import { behaviorApi } from '../../../user/api/account'
 import { adminApi } from '../../../user/api/adminAc'
 import { superAdminApi } from '../../../user/api/super-adminAc'
@@ -15,8 +11,8 @@ const LayoutHeader = Layout.Header
 const SubMenu = Menu.SubMenu
 
 type HeaderCustomProps = {
-  toggle: () => void
-  collapsed: boolean
+  // toggle: () => void
+  // collapsed: boolean
   path?: string
 }
 
@@ -29,7 +25,7 @@ export const HeaderCustom: React.FC<HeaderCustomProps> = (props) => {
       behaviorApi.logout()
     } else if (userType === '1') {
       adminApi.logOut()
-    } else {
+    } else if (userType === '2') {
       superAdminApi.logOut()
     }
     localStorage.removeItem('user_token')
@@ -68,10 +64,10 @@ export const HeaderCustom: React.FC<HeaderCustomProps> = (props) => {
   ]
 
   return (
-    <LayoutHeader className="header" >
-      <div className="button">
+    <LayoutHeader className="header" style={{ position: 'fixed', width: "100%", zIndex: 1 }}>
+      {/* <div className="button">
         {props.collapsed ? <MenuUnfoldOutlined onClick={props.toggle} /> : <MenuFoldOutlined onClick={props.toggle} />}
-      </div>
+      </div> */}
       <div className="rightContainer">{rightContent}</div>
     </LayoutHeader>
   )

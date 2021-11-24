@@ -32,7 +32,7 @@ export interface IGPDetail {
   companyInfo: IComponyInfo
   mainzbs: IMainzbsInfo
   profiles: IProfilesInfo
-  qygqjgs: IQygqjsInfo
+  qygqjgs: IQygqjsInfo[]
   xjlls: IXjjlsInfo
   zcfzs: IZcfzsInfo
   id: number

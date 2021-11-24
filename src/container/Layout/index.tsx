@@ -1,5 +1,5 @@
 import { BackTop, Layout } from "antd"
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import "./index.less"
 import { HeaderCustom } from "../../common/component/HeaderCustom"
 import SiderCustom from "../../common/component/SiderCustom"
@@ -10,13 +10,13 @@ import BreadCustom from "../../common/component/BreadCustom"
 
 
 export const DefaultLayout: React.FC<RouteProps> = (props) => {
-  const [collapsed, setCollapsed] = useState<boolean>(false);
+  // const [collapsed, setCollapsed] = useState<boolean>(false);
 
   const history = useHistory()
 
-  const toggle = () => {
-    setCollapsed(!collapsed)
-  }
+  // const toggle = () => {
+  //   setCollapsed(!collapsed)
+  // }
 
   const isLogin = () => {
     if (!localStorage.getItem('user_token')) {
@@ -29,11 +29,11 @@ export const DefaultLayout: React.FC<RouteProps> = (props) => {
   });
 
   return (
-    <Layout className="fuyinApp">
+    <Layout className="fuyinApp" style={{ minHeight: "100vh" }}>
       <BackTop />
-      <SiderCustom collapsed={collapsed} />
-      <Layout className='fuyin_layout'>
-        <HeaderCustom toggle={toggle} collapsed={collapsed} />
+      <SiderCustom />
+      <Layout className='fuyin_layout' style={{ minHeight: document.documentElement.clientHeight }}>
+        <HeaderCustom />
         <BreadCustom />
         <MainContent />
       </Layout>

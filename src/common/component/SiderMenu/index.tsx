@@ -63,6 +63,7 @@ const SiderMenu: React.FC<SiderMenuProps> = (props) => {
       mode="inline"
       theme="light"
       selectedKeys={[menuSelected]}
+      style={{ color: 'black' }}
     >
       {generateMenus(menus)}
     </Menu>

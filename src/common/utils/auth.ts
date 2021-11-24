@@ -1,3 +1,4 @@
+import axios from 'axios'
 import Cookies from 'js-cookie'
 const TokenKey = 'Authorization'
 
@@ -17,6 +18,20 @@ export function setLocalToken(key: string, token: any) {
   return localStorage.setItem(key, token)
 }
 
+export function removeLocalToken() {
+  localStorage.removeItem('user_token')
+  localStorage.removeItem('user_type')
+}
+
 export function setSessionToken(token: any) {
   return sessionStorage.setItem('user_token', token)
+}
+
+export function ChangeHeader() {
+  let token = window.localStorage.getItem('user_token')
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = token
+  } else {
+    delete axios.defaults.headers.common['Authorization']
+  }
 }

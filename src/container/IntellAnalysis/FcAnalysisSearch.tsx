@@ -6,11 +6,9 @@ import { analysisApi } from "./api/analysis";
 import { IParamsRiskReportFeedBackInfo } from "./model/analysis";
 import { ApiFilled } from '@ant-design/icons';
 
-
-
 const FormItem = Form.Item
 
-export const AnalysisSearch: React.FC = () => {
+export const FcAnalysisSearch: React.FC = () => {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState<boolean>(false)
   const [isShow, setShow] = useState<boolean>(false)
@@ -55,7 +53,7 @@ export const AnalysisSearch: React.FC = () => {
             </Col>
           </Row>
         </Form>
-        {isShow && (
+        {/* {isShow && (
           <>
             {loading ? <div style={{ textAlign: "center" }}><Spin tip="数据正在加载中，请稍后。" size="default" /></div> :
               store ? <RiskReport store={store} /> : notification.open({
@@ -65,7 +63,7 @@ export const AnalysisSearch: React.FC = () => {
               })
             }
           </>
-        )}
+        )} */}
       </div>
     </>
   )
