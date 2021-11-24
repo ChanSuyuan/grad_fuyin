@@ -1,7 +1,18 @@
-import React from "react"
+import React, { useEffect } from "react"
+import { useHistory } from "react-router"
 
 
 export const Dashboard: React.FC = () => {
+  const history = useHistory()
+  const isLogin = () => {
+    if (!localStorage.getItem('user_token')) {
+      history.push('/login')
+    }
+  }
+
+  useEffect(() => {
+    isLogin()
+  });
 
   return (
     <>

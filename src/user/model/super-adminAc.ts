@@ -26,7 +26,14 @@ export interface ISuperAdminModifyUpdatePwdInfo {
 
 export interface ISuperAdminModifyUpdatePwdFeedbackInfo {
   data?: string
-  errorCode?: string
+  errorCode?: number
+  ok?: boolean
+  text?: string
+}
+
+export interface ISuperAdminLogOutInfo {
+  data?: string
+  errorCode?: number
   ok?: boolean
   text?: string
 }

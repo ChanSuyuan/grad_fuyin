@@ -22,7 +22,7 @@ const SiderCustom: React.FC<SiderCustomProps> = (props) => {
   const { collapsed } = props
 
   return (
-    <LayoutSider collapsed={collapsed} theme="light" width={256} trigger={null} collapsible>
+    <LayoutSider collapsed={collapsed} theme="light" width={200} trigger={null} collapsible>
       <div className="brand">
         <div className="logo">
         </div>

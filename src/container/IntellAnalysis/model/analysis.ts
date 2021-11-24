@@ -10,8 +10,8 @@ export interface IParamsRiskReportFeedBackInfo {
 }
 
 export interface IParamsRisk {
-  analysis?: IAnaylsis
-  gpDetail?: IGPDetail
+  analysis: IAnaylsis
+  gpDetails: IGPDetail
 }
 
 // anaysis

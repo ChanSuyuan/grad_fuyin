@@ -7,6 +7,7 @@ import { FYAPI } from "../../common/api/api";
 import {
   ISuperAdminLoginFeedbackInfo,
   ISuperAdminLoginInfo,
+  ISuperAdminLogOutInfo,
   ISuperAdminModifyUpdatePwdFeedbackInfo,
   ISuperAdminModifyUpdatePwdInfo
 } from "../model/super-adminAc";
@@ -26,6 +27,13 @@ class SuperAdminApi {
    */
   modify(params: ISuperAdminModifyUpdatePwdInfo): Promise<ISuperAdminModifyUpdatePwdFeedbackInfo> {
     return FYAPI.POST(`${baseURL}/login`, params)
+  }
+
+  /**
+   * @name 超级管理员登出
+   */
+  logOut(): Promise<ISuperAdminLogOutInfo> {
+    return FYAPI.POST(`${baseURL}/logout`)
   }
 }
 

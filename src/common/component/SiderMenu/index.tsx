@@ -15,6 +15,10 @@ const { SubMenu } = Menu
 const SiderMenu: React.FC<SiderMenuProps> = (props) => {
   const { menus } = props
 
+  const handleFilter = (permission: any) => {
+    const roleType = localStorage.getItem('user_token') && localStorage.getItem('user_type')
+  }
+
   const generateMenus = (data: any) => {
     return data.map((item: any) => {
       if (item.children) {

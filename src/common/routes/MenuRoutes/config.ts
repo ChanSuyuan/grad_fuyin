@@ -45,10 +45,12 @@ export const menus = [
   {
     path: '/fyapp/myRecord',
     title: '我的记录',
+    icon: 'edit'
   },
   {
     path: '/fyapp/analysis',
-    title: '智能分析'
+    title: '智能分析',
+    icon: 'team'
   }
 ]
 

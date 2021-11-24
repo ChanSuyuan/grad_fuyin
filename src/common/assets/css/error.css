@@ -1,13 +1,13 @@
 .wrap-404,
 .wrap-500 {
-  max-height: 450px;
+  min-height: 500px;
   padding-top: 100px;
 }
 
 .wrap-404 .img-box,
 .wrap-500 .img-box {
   height: 360px;
-  max-width: 430px;
+  max-width: 300px;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: contain;
@@ -38,7 +38,7 @@
 
 .wrap-404 .img-box {
   height: 360px;
-  max-width: 430px;
+  max-width: 380px;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: contain;

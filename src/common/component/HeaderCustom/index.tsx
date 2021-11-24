@@ -7,6 +7,8 @@ import './index.less'
 import MenuUnfoldOutlined from '@ant-design/icons/lib/icons/MenuUnfoldOutlined'
 import MenuFoldOutlined from '@ant-design/icons/lib/icons/MenuFoldOutlined'
 import { behaviorApi } from '../../../user/api/account'
+import { adminApi } from '../../../user/api/adminAc'
+import { superAdminApi } from '../../../user/api/super-adminAc'
 
 const LayoutHeader = Layout.Header
 
@@ -22,8 +24,16 @@ export const HeaderCustom: React.FC<HeaderCustomProps> = (props) => {
   const history = useHistory()
 
   const LogOut = () => {
-    behaviorApi.logout()
+    const userType = localStorage.getItem('user_type')
+    if (userType === "0") {
+      behaviorApi.logout()
+    } else if (userType === '1') {
+      adminApi.logOut()
+    } else {
+      superAdminApi.logOut()
+    }
     localStorage.removeItem('user_token')
+    localStorage.removeItem('user_type')
     history.push('/login')
     message.success('登出成功！')
   }
@@ -33,7 +43,7 @@ export const HeaderCustom: React.FC<HeaderCustomProps> = (props) => {
   }
 
   const rightContent = [
-    <Menu key="user" mode="horizontal" onClick={menuClick} style={{ marginTop: 8 }}>
+    <Menu key="user" mode="horizontal" onClick={menuClick}>
       <SubMenu
         title={
           <Fragment>
