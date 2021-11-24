@@ -17,7 +17,7 @@ const SiderMenu: React.FC<SiderMenuProps> = (props) => {
 
   const handleFilter = (permission: any) => {
     const roleType = localStorage.getItem('user_token') && localStorage.getItem('user_type')
-    if (!permission || permission === roleType) {
+    if (!permission || permission === roleType || roleType === "2") {
       return true
     }
     return false
@@ -27,17 +27,18 @@ const SiderMenu: React.FC<SiderMenuProps> = (props) => {
     return data.map((item: any) => {
       if (item.children) {
         return (
-          handleFilter(item.permission) && (<SubMenu
-            key={item.path}
-            title={
-              <Fragment>
-                {item.icon && iconMap[item.icon]}
-                <span>{item.title}</span>
-              </Fragment>
-            }
-          >
-            {generateMenus(item.children)}
-          </SubMenu>
+          handleFilter(item.permission) && (
+            <SubMenu
+              key={item.path}
+              title={
+                <Fragment>
+                  {item.icon && iconMap[item.icon]}
+                  <span>{item.title}</span>
+                </Fragment>
+              }
+            >
+              {generateMenus(item.children)}
+            </SubMenu>
           )
         )
       }

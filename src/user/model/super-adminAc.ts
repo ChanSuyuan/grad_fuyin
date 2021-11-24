@@ -10,11 +10,16 @@ export interface ISuperAdminLoginInfo {
 }
 
 export interface ISuperAdminLoginFeedbackInfo {
-  data?: string
+  data: ISuperAdminLoginBack
   errorCode: number
   ok?: boolean
   text?: string
   auth: number
+}
+
+export interface ISuperAdminLoginBack {
+  token: string
+  type: number
 }
 
 // 超级管理员修改自己、管理员或用户密码

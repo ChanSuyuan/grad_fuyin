@@ -30,19 +30,19 @@ export const menus = [
     path: '/fyapp/user',
     title: "用户管理",
     icon: 'user',
-    permission: 1
+    permission: "1"
   },
   {
     path: '/fyapp/authUser',
     title: "角色管理",
     icon: 'usersManage',
-    permission: 1
+    permission: "1"
   },
   {
     path: '/fyapp/params',
     title: '参数管理',
     icon: 'message',
-    permission: 1
+    permission: "1"
   },
   {
     path: '/fyapp/myRecord',
@@ -70,7 +70,7 @@ export const menus = [
     path: '/fyapp/systemlog',
     title: '系统日志',
     icon: 'team',
-    permission: 1
+    permission: "1"
   }
 ]
 

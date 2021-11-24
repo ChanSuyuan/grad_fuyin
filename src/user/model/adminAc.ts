@@ -11,11 +11,16 @@ export interface ILoginInfo {
 
 // login feedback
 export interface ILoginFeedBackInfo {
-  data?: string
+  data: ILoginDataBack
   errorCode?: number
   ok?: boolean
   text?: string
   auth: number
+}
+
+export interface ILoginDataBack {
+  token: string
+  type: number
 }
 
 export interface IAdminLogOutFeedBackInfo {

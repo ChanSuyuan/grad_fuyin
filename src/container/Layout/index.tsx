@@ -10,14 +10,7 @@ import BreadCustom from "../../common/component/BreadCustom"
 
 
 export const DefaultLayout: React.FC<RouteProps> = (props) => {
-  // const [collapsed, setCollapsed] = useState<boolean>(false);
-
   const history = useHistory()
-
-  // const toggle = () => {
-  //   setCollapsed(!collapsed)
-  // }
-
   const isLogin = () => {
     if (!localStorage.getItem('user_token')) {
       history.push('/login')
@@ -29,10 +22,10 @@ export const DefaultLayout: React.FC<RouteProps> = (props) => {
   });
 
   return (
-    <Layout className="fuyinApp" style={{ minHeight: "100vh" }}>
+    <Layout className="fuyinApp">
       <BackTop />
       <SiderCustom />
-      <Layout className='fuyin_layout' style={{ minHeight: document.documentElement.clientHeight }}>
+      <Layout className='fuyin_layout'>
         <HeaderCustom />
         <BreadCustom />
         <MainContent />

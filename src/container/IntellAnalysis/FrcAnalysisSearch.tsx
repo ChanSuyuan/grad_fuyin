@@ -32,7 +32,7 @@ export const FrcAnalysisSearch: React.FC = () => {
       <div className="site-layout-background" style={{ padding: 24, margin: 0, minHeight: 100, background: "#fff" }}>
         <Form form={form}>
           <Row>
-            <Col span={13}>
+            <Col>
               <FormItem label="企业名称" name="gpName"
                 rules={[{
                   required: true,
@@ -42,9 +42,11 @@ export const FrcAnalysisSearch: React.FC = () => {
                 <Input style={{ width: "400px" }} size="middle" />
               </FormItem>
             </Col>
-            <Col >
+            &nbsp;
+            &nbsp;
+            <Col>
               <FormItem>
-                <span style={{ marginLeft: 20 }}>
+                <span>
                   <Button type="primary" onClick={handleOk} htmlType="submit">
                     查询
                   </Button>

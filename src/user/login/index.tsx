@@ -5,7 +5,7 @@ import './index.less'
 import { ApiFilled } from '@ant-design/icons'
 import { Link, useHistory } from 'react-router-dom'
 import { statusCode } from '../../common/model/statusCode'
-import { ChangeHeader, removeLocalToken, setLocalToken } from '../../common/utils/auth'
+import { removeLocalToken, setLocalToken } from '../../common/utils/auth'
 import { behaviorApi } from '../api/account'
 import { observer } from 'mobx-react'
 import { notify } from '../../common/message/Notification'
@@ -53,7 +53,7 @@ export const Login: React.FC = observer(() => {
               removeLocalToken()
               setLocalToken('user_token', `fuyin${res.data.token}`)
               setLocalToken('user_type', res.data.type)
-              ChangeHeader()
+              // ChangeHeader()
               history.push('/fyapp/dashboard')
             } else {
               notification.open({
@@ -72,7 +72,9 @@ export const Login: React.FC = observer(() => {
           })
           if (res.errorCode === statusCode.success) {
             if (res.data) {
-              setLocalToken('user_token', `fuyin${res.data}`)
+              removeLocalToken()
+              setLocalToken('user_token', `fuyin${res.data.token}`)
+              setLocalToken('user_type', res.data.type)
               history.push('/fyapp/dashboard')
             } else {
               notification.open({
@@ -91,7 +93,9 @@ export const Login: React.FC = observer(() => {
           })
           if (res.errorCode === statusCode.success) {
             if (res.data) {
-              setLocalToken('user_tokne', `fuyin${res.data}`)
+              removeLocalToken()
+              setLocalToken('user_token', `fuyin${res.data.token}`)
+              setLocalToken('user_type', res.data.type)
               history.push('/fyapp/dashboard')
             } else {
               notification.open({
@@ -115,7 +119,7 @@ export const Login: React.FC = observer(() => {
         <span>富银LOGO 预留位置</span>
       </div>
       <div className="form-container">
-        <h1 className="text-form">融资风控后台管理系统</h1>
+        <h1 className="text-form">FYFC&FC</h1>
         <div className="form-wrapper">
           <Form form={form}>
             <FormItem name="账号类型">
