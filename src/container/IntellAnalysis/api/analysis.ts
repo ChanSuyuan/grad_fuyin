@@ -4,19 +4,34 @@
  */
 
 import { FYAPI } from "../../../common/api/api";
-import { IParamsRiskReportFeedBackInfo, IParamsRiskReportInfo } from "../model/analysis";
+import {
+  IParamsFcModelReportFeedBackInfo,
+  IParamsRiskReportFeedBackInfo,
+  IParamsRiskReportInfo,
+  IQueryBodyModelReport,
+  IQueryModelReport
+} from "../model/analysis";
 
 const baseURL = '/user'
 
 
 class AnalysisApi {
   /**
-   * @name 风控报告
+   * @name 融资风控报告
    */
   getRiskReport(params: IParamsRiskReportInfo): Promise<IParamsRiskReportFeedBackInfo> {
     return FYAPI.GET({
       url: `${baseURL}/getriskreport`,
       query: params
+    })
+  }
+  /**
+   * @name 融资模型报告
+   */
+  getmodelReport(params: IQueryModelReport): Promise<IParamsFcModelReportFeedBackInfo> {
+    return FYAPI.GET({
+      url: `${baseURL}/getmodelreport`,
+      query: params,
     })
   }
 }

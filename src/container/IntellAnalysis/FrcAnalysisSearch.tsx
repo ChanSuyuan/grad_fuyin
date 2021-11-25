@@ -20,10 +20,14 @@ export const FrcAnalysisSearch: React.FC = () => {
       setShow(true)
       setLoading(true)
       setStore(undefined)
-      const res = await analysisApi.getRiskReport({
-        gpName: gpName
-      })
-      res.errorCode === statusCode.success && setStore(res)
+      try {
+        const res = await analysisApi.getRiskReport({
+          gpName: gpName
+        })
+        res.errorCode === statusCode.success && setStore(res)
+      } catch (err) {
+        console.log(err)
+      }
       setLoading(false)
     }
   }

@@ -31,7 +31,7 @@ interface IExtra {
 }
 
 export class FYAPI {
-  public static GET<IResult>(url: IURL, extras?: IExtra): Promise<IResult> {
+  public static GET<IResult>(url: IURL, extras?: IExtra, bodyObj?: any): Promise<IResult> {
     return this.fetch("GET", url, extras)
   }
 

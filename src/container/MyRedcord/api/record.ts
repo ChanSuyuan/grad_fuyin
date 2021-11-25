@@ -1,5 +1,5 @@
 import { FYAPI } from "../../../common/api/api";
-import { queryRecordFeedBack } from "../model/record";
+import { IQueryRecordFeedBack } from "../model/record";
 
 const baseURL = '/user'
 const pageNum = 10
@@ -8,8 +8,8 @@ class RecordApi {
   /**
    * @name 获取操作报告
    */
-  getRecordInfo(): Promise<queryRecordFeedBack> {
-    return FYAPI.GET(`${baseURL}/getreportinfo/${pageNum}/${pageSize}`)
+  getRecordInfo(params: any): Promise<IQueryRecordFeedBack> {
+    return FYAPI.GET(`${baseURL}/getreportinfo/${pageNum}/${pageSize}/${params}`)
   }
 }
 

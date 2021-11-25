@@ -9,7 +9,7 @@ interface IRiskReportProps {
 }
 const { Step } = Steps
 
-export const RiskReport: React.FC<IRiskReportProps> = (props) => {
+export const FcModelReport: React.FC<IRiskReportProps> = (props) => {
   const companyInfo = props.store?.data.gpDetails.companyInfo
   const [current, setCurrent] = React.useState(0);
 

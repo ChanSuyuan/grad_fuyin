@@ -10,14 +10,14 @@ export interface IParamsRiskReportFeedBackInfo {
 }
 
 export interface IParamsRisk {
-  analysis: IAnaylsis
+  analysis: IAnaylsis[]
   gpDetails: IGPDetail
 }
 
 // anaysis
 export interface IAnaylsis {
   advise: string
-  resultZbDtos: IResultZbDtos
+  resultZbDtos: IResultZbDtos[]
   risk: string
   type: number
 }
@@ -33,7 +33,7 @@ export interface IGPDetail {
   mainzbs: IMainzbsInfo
   profiles: IProfilesInfo[]
   qygqjgs: IQygqjsInfo[]
-  xjlls: IXjjlsInfo
+  xjlls: IXjjlsInfo[]
   zcfzs: IZcfzsInfo[]
   id: number
 }
@@ -277,4 +277,30 @@ export interface IZcfzsInfo {
   unassignRpofit: number // 未分配利润
   updateTime: string
   userightAsset: number // 使用权资产
+}
+
+
+export interface IQueryModelReport {
+  gpName: string
+}
+export interface IQueryBodyModelReport {
+  rzNeed: IRzNeed
+}
+export interface IRzNeed {
+  collateral: string
+  createTime: string
+  fiMode: string
+  guarantee: string
+  purpose: string
+  quota: number,
+  period: string
+  repayMode: string
+  updateTime: string
+}
+
+export interface IParamsFcModelReportFeedBackInfo {
+  data: IParamsRisk
+  errorCode?: number
+  ok?: boolean
+  text?: string
 }

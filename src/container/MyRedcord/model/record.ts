@@ -1,23 +1,21 @@
 import { IParamsRisk } from "../../IntellAnalysis/model/analysis";
 
-export interface queryRecord {
-  pageNum: number
-  pageSize: number
+export interface IQueryRecord {
+  type: number
 }
 
-export interface queryRecordFeedBack {
-  data: RecordInfo
+export interface IQueryRecordFeedBack {
+  data: IRecordInfo[]
   errorCode: number
   ok: boolean
   text: string
 }
 
-export interface RecordInfo {
-  createTime: string
+export interface IRecordInfo {
   id: number
   report: IParamsRisk
   type: number
   title: string
-  updateTime: string
+  createTime: string
   userId: number
 }

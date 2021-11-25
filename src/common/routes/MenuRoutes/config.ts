@@ -47,7 +47,19 @@ export const menus = [
   {
     path: '/fyapp/myRecord',
     title: '我的记录',
-    icon: 'edit'
+    icon: 'edit',
+    children: [
+      {
+        path: '/fyapp/myRecord/FC',
+        title: '融资类',
+        icon: 'team'
+      },
+      {
+        path: '/fyapp/myRecord/FRC',
+        title: '融资风控类',
+        icon: 'team'
+      }
+    ]
   },
   {
     path: '/fyapp/analysis',

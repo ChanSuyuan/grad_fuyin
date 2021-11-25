@@ -22,15 +22,17 @@ export const DefaultLayout: React.FC<RouteProps> = (props) => {
   });
 
   return (
-    <Layout className="fuyinApp">
-      <BackTop />
-      <SiderCustom />
-      <Layout className='fuyin_layout'>
-        <HeaderCustom />
-        <BreadCustom />
-        <MainContent />
-      </Layout>
-    </Layout>
+    <div className="layout">
+      <Layout style={{ minHeight: '100vh' }}>
+        <BackTop />
+        <SiderCustom />
+        <Layout style={{ marginLeft: 200 }}>
+          <HeaderCustom />
+          <BreadCustom />
+          <MainContent />
+        </Layout>
+      </Layout >
+    </div>
   )
 }
 

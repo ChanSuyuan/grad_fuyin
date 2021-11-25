@@ -6,12 +6,10 @@ import { routes } from "../../routes/MenuRoutes/routes";
 
 
 const MainContent = ({ location }: any) => {
-  // const roleType = localStorage.getItem('user_token') && JSON.parse(localStorage.getItem('user_token')).role.type;
-
   return (
     // <TransitionGroup>
     //   <CSSTransition key={location.pathname} timeout={500}>
-    <Content style={{ margin: '10px 16px 0', overflow: 'initial' }}>
+    <Content style={{ padding: '15px' }}>
       <Switch location={location}>
         {routes.map(ele => (
           <Route render={() => <ele.component />} key={ele.path} path={ele.path} />
