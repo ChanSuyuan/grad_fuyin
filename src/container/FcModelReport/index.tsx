@@ -1,18 +1,17 @@
 /* eslint-disable array-callback-return */
 import { Button, Col, Row, Steps, Table } from "antd"
 import React from "react"
-import { IParamsRiskReportFeedBackInfo } from "../IntellAnalysis/model/analysis"
+import { IParamsFcModelReportFeedBackInfo } from "../IntellAnalysis/model/analysis"
 import "./index.less"
 
 interface IRiskReportProps {
-  store: IParamsRiskReportFeedBackInfo | undefined
+  store: IParamsFcModelReportFeedBackInfo | undefined
 }
 const { Step } = Steps
 
 export const FcModelReport: React.FC<IRiskReportProps> = (props) => {
   const companyInfo = props.store?.data.gpDetails.companyInfo
   const [current, setCurrent] = React.useState(0);
-
 
   const next = () => {
     setCurrent(current + 1);
@@ -1079,53 +1078,10 @@ export const FcModelReport: React.FC<IRiskReportProps> = (props) => {
     )
   }
 
-  const transform: any = {
-    0: '运营能力分析',
-    1: '盈利能力分析',
-    2: '偿债能力分析'
-  }
-
   const CompanyAnalysisOperatingInfo = () => {
     return (
       <>
-        {props.store?.data.analysis.map((item) => (
-          <>
-            <h1><strong>{transform[item.type]}</strong></h1>
-            <Row>
-              <Col span={12}><strong>存在的风险：</strong><span style={{ color: 'red' }}>{item.risk}</span></Col>
-              <Col span={12}><strong>风险控制建议：</strong>{item.advise}</Col>
-            </Row>
-            <br />
-            <Table
-              size="small"
-              pagination={{ pageSize: 3 }}
-              dataSource={item.resultZbDtos}
-              columns={[
-                {
-                  title: '评估结果',
-                  dataIndex: 'evaluateResult',
-                  key: 'evaluateResulet',
-                  width: 150,
-                  align: 'center'
-                },
-                {
-                  title: '最新值',
-                  dataIndex: 'newestValue',
-                  key: 'newestValue',
-                  width: 150,
-                  align: 'center'
-                },
-                {
-                  title: '指标',
-                  dataIndex: 'zbKey',
-                  key: 'zbKey',
-                  width: 150,
-                  align: 'center'
-                }
-              ]}
-            />
-          </>
-        ))}
+        <h1><strong>{props.store?.data.analysis}</strong></h1>
       </>
     )
   }
@@ -1152,7 +1108,7 @@ export const FcModelReport: React.FC<IRiskReportProps> = (props) => {
       content: <CompanyCashIndicatorInfo />
     },
     {
-      title: '运营能力分析',
+      title: '能力分析',
       content: <CompanyAnalysisOperatingInfo />
     },
     {

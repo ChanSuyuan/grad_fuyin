@@ -1152,7 +1152,7 @@ export const RiskReport: React.FC<IRiskReportProps> = (props) => {
       content: <CompanyCashIndicatorInfo />
     },
     {
-      title: '运营能力分析',
+      title: '能力分析',
       content: <CompanyAnalysisOperatingInfo />
     },
     {

@@ -8,7 +8,6 @@ import {
   IParamsFcModelReportFeedBackInfo,
   IParamsRiskReportFeedBackInfo,
   IParamsRiskReportInfo,
-  IQueryBodyModelReport,
   IQueryModelReport
 } from "../model/analysis";
 
@@ -28,11 +27,8 @@ class AnalysisApi {
   /**
    * @name 融资模型报告
    */
-  getmodelReport(params: IQueryModelReport): Promise<IParamsFcModelReportFeedBackInfo> {
-    return FYAPI.GET({
-      url: `${baseURL}/getmodelreport`,
-      query: params,
-    })
+  getmodelReport(params: IQueryModelReport, gpName: string): Promise<IParamsFcModelReportFeedBackInfo> {
+    return FYAPI.POST(`${baseURL}/getmodelreport?gpName=${gpName}`, params)
   }
 }
 

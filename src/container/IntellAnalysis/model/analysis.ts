@@ -281,25 +281,21 @@ export interface IZcfzsInfo {
 
 
 export interface IQueryModelReport {
-  gpName: string
-}
-export interface IQueryBodyModelReport {
-  rzNeed: IRzNeed
-}
-export interface IRzNeed {
   collateral: string
-  createTime: string
   fiMode: string
   guarantee: string
   purpose: string
   quota: number,
   period: string
   repayMode: string
-  updateTime: string
 }
 
+export interface IParamsFcModel {
+  analysis: string
+  gpDetails: IGPDetail
+}
 export interface IParamsFcModelReportFeedBackInfo {
-  data: IParamsRisk
+  data: IParamsFcModel
   errorCode?: number
   ok?: boolean
   text?: string

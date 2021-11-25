@@ -11,8 +11,6 @@ const LayoutHeader = Layout.Header
 const SubMenu = Menu.SubMenu
 
 type HeaderCustomProps = {
-  // toggle: () => void
-  // collapsed: boolean
   path?: string
 }
 
@@ -39,7 +37,7 @@ export const HeaderCustom: React.FC<HeaderCustomProps> = (props) => {
   }
 
   const rightContent = [
-    <Menu key="user" mode="horizontal" onClick={menuClick}>
+    <Menu key="user" mode="horizontal" onClick={menuClick} >
       <SubMenu
         title={
           <Fragment>
@@ -53,9 +51,6 @@ export const HeaderCustom: React.FC<HeaderCustomProps> = (props) => {
           </Fragment>
         }
       >
-        <Menu.Item key="SelfCenter">
-          个人中心
-        </Menu.Item>
         <Menu.Item key="Logout">
           立即登出
         </Menu.Item>
@@ -65,9 +60,6 @@ export const HeaderCustom: React.FC<HeaderCustomProps> = (props) => {
 
   return (
     <LayoutHeader className="header" style={{ position: 'fixed', width: "100%", zIndex: 1 }}>
-      {/* <div className="button">
-        {props.collapsed ? <MenuUnfoldOutlined onClick={props.toggle} /> : <MenuFoldOutlined onClick={props.toggle} />}
-      </div> */}
       <div className="rightContainer">{rightContent}</div>
     </LayoutHeader>
   )

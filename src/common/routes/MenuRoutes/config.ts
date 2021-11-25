@@ -27,6 +27,11 @@ export const menus = [
     icon: 'dashboard',
   },
   {
+    path: 'fyapp/selfCenter',
+    title: '个人中心',
+    icon: 'user'
+  },
+  {
     path: '/fyapp/user',
     title: "用户管理",
     icon: 'user',
@@ -42,7 +47,19 @@ export const menus = [
     path: '/fyapp/params',
     title: '参数管理',
     icon: 'message',
-    permission: "1"
+    permission: "1",
+    children: [
+      {
+        path: '/fyapp/params/FC',
+        title: '融资参数',
+        icon: 'team'
+      },
+      {
+        path: '/fyapp/params/FRC',
+        title: '融资风控参数',
+        icon: 'team'
+      }
+    ]
   },
   {
     path: '/fyapp/myRecord',
@@ -83,6 +100,11 @@ export const menus = [
     title: '系统日志',
     icon: 'team',
     permission: "1"
+  },
+  {
+    path: '/fyapp/donate',
+    title: '支持与捐献',
+    icon: 'team'
   }
 ]
 

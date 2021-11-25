@@ -13,8 +13,12 @@ export const FrcRecord = () => {
   }, [])
   const getRes = async () => {
     setLoading(true)
-    const res = await recordApi.getRecordInfo(0)
-    setRes(res.data)
+    try {
+      const res = await recordApi.getRecordInfo(0)
+      setRes(res.data)
+    } catch (error) {
+      console.log(error)
+    }
     setLoading(false)
   }
   return (

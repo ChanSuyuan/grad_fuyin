@@ -16,22 +16,29 @@ export const FcAnalysisSearch: React.FC = () => {
   const [store, setStore] = useState<IParamsFcModelReportFeedBackInfo>()
   async function handleOk() {
     const gpName = form.getFieldValue('gpName')
-    // const collateral = form.getFieldValue('collateral')
-    // const purpose = form.getFieldValue('purpose')
-    // const fiMode = form.getFieldValue('fiMode')
-    // const quota = form.getFieldValue('quota')
-    // const repayMode = form.getFieldValue('repayMode')
-    // const guarantee = form.getFieldValue('guarantee')
-    // const period = form.getFieldValue('form')
+    const collateral = form.getFieldValue('collateral')
+    const purpose = form.getFieldValue('purpose')
+    const fiMode = form.getFieldValue('fiMode')
+    const quota = form.getFieldValue('quota')
+    const repayMode = form.getFieldValue('repayMode')
+    const guarantee = form.getFieldValue('guarantee')
+    const period = form.getFieldValue('period')
 
+    console.log(period)
     if (gpName) {
       setShow(true)
       setLoading(true)
       setStore(undefined)
       try {
         const res = await analysisApi.getmodelReport({
-          gpName: gpName
-        })
+          collateral: collateral,
+          purpose: purpose,
+          fiMode: fiMode,
+          quota: quota,
+          repayMode: repayMode,
+          guarantee: guarantee,
+          period: period
+        }, gpName)
         res.errorCode === statusCode.success && setStore(res)
       } catch (error) {
         console.log(error)
@@ -66,86 +73,89 @@ export const FcAnalysisSearch: React.FC = () => {
               </FormItem>
             </Col>
           </Row>
-          <br />
-          <h1><strong>企业融资需求</strong></h1>
-          <Row>
-            <Col span={12}>
-              <FormItem label="融资额度（元）" name='quota'
-                rules={[{
-                  required: true,
-                }]}
-                hasFeedback
-              >
-                <Input name="quota" size="small" />
-              </FormItem>
-            </Col>
-            <Col span={12}>
-              <FormItem label="计划融资期限" name='period'
-                rules={[{
-                  required: true,
-                }]}
-                hasFeedback
-              >
-                <Input name="period" size="small" />
-              </FormItem>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={12}>
-              <FormItem label="融资方式" name='fiMode'
-                rules={[{
-                  required: true,
-                }]}
-                hasFeedback
-              >
-                <Input name="fiMode" size="small" />
-              </FormItem>
-            </Col>
-            <Col span={12}>
-              <FormItem label="还款方式" name='repayMode'
-                rules={[{
-                  required: true,
-                }]}
-                hasFeedback
-              >
-                <Input name="repayMode" size="small" />
-              </FormItem>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={24}>
-              <FormItem label="资金用途" name='purpose'
-                rules={[{
-                  required: true,
-                }]}
-                hasFeedback
-              >
-                <Input name="purpose" size="small" />
-              </FormItem>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={24}>
-              <FormItem label="抵押物简介" name='collateral'
-                rules={[{
-                  required: true,
-                }]}
-                hasFeedback>
-                <Input name="collateral" size="small" />
-              </FormItem>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={24}>
-              <FormItem label="融资担保人简介" name='guarantee'
-                rules={[{
-                  required: true,
-                }]}
-                hasFeedback>
-                <Input name="guarantee" size="small" />
-              </FormItem>
-            </Col>
-          </Row>
+          {!isShow && (
+            <>
+              <h1><strong>企业融资需求</strong></h1>
+              <Row>
+                <Col span={12}>
+                  <FormItem label="融资额度（元）" name='quota'
+                    rules={[{
+                      required: true,
+                    }]}
+                    hasFeedback
+                  >
+                    <Input name="quota" size="small" />
+                  </FormItem>
+                </Col>
+                <Col span={12}>
+                  <FormItem label="计划融资期限" name='period'
+                    rules={[{
+                      required: true,
+                    }]}
+                    hasFeedback
+                  >
+                    <Input name="period" size="small" />
+                  </FormItem>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={12}>
+                  <FormItem label="融资方式" name='fiMode'
+                    rules={[{
+                      required: true,
+                    }]}
+                    hasFeedback
+                  >
+                    <Input name="fiMode" size="small" />
+                  </FormItem>
+                </Col>
+                <Col span={12}>
+                  <FormItem label="还款方式" name='repayMode'
+                    rules={[{
+                      required: true,
+                    }]}
+                    hasFeedback
+                  >
+                    <Input name="repayMode" size="small" />
+                  </FormItem>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={24}>
+                  <FormItem label="资金用途" name='purpose'
+                    rules={[{
+                      required: true,
+                    }]}
+                    hasFeedback
+                  >
+                    <Input name="purpose" size="small" />
+                  </FormItem>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={24}>
+                  <FormItem label="抵押物简介" name='collateral'
+                    rules={[{
+                      required: true,
+                    }]}
+                    hasFeedback>
+                    <Input name="collateral" size="small" />
+                  </FormItem>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={24}>
+                  <FormItem label="融资担保人简介" name='guarantee'
+                    rules={[{
+                      required: true,
+                    }]}
+                    hasFeedback>
+                    <Input name="guarantee" size="small" />
+                  </FormItem>
+                </Col>
+              </Row>
+            </>
+          )}
         </Form>
         {isShow && (
           <>
