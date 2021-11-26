@@ -14,6 +14,7 @@ if (token) {
   delete axios.defaults.headers.common['Authorization']
 }
 
+
 type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH"
 
 // const API_PREFIX = '/fuyin'

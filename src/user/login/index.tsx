@@ -5,7 +5,7 @@ import './index.less'
 import { ApiFilled } from '@ant-design/icons'
 import { Link, useHistory } from 'react-router-dom'
 import { statusCode } from '../../common/model/statusCode'
-import { removeLocalToken, setLocalToken } from '../../common/utils/auth'
+import { ChangeHeader, removeLocalToken, setLocalToken } from '../../common/utils/auth'
 import { behaviorApi } from '../api/account'
 import { observer } from 'mobx-react'
 import { notify } from '../../common/message/Notification'
@@ -53,7 +53,7 @@ export const Login: React.FC = observer(() => {
               removeLocalToken()
               setLocalToken('user_token', `fuyin${res.data.token}`)
               setLocalToken('user_type', res.data.type)
-              // ChangeHeader()
+              ChangeHeader()
               history.push('/fyapp/dashboard')
             } else {
               notification.open({
@@ -75,6 +75,7 @@ export const Login: React.FC = observer(() => {
               removeLocalToken()
               setLocalToken('user_token', `fuyin${res.data.token}`)
               setLocalToken('user_type', res.data.type)
+              ChangeHeader()
               history.push('/fyapp/dashboard')
             } else {
               notification.open({
@@ -96,6 +97,7 @@ export const Login: React.FC = observer(() => {
               removeLocalToken()
               setLocalToken('user_token', `fuyin${res.data.token}`)
               setLocalToken('user_type', res.data.type)
+              ChangeHeader()
               history.push('/fyapp/dashboard')
             } else {
               notification.open({

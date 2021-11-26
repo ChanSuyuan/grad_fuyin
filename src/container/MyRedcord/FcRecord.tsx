@@ -32,7 +32,7 @@ export const FCRecord = () => {
             },
             {
               title: '时间',
-              dataIndex: 'time',
+              dataIndex: 'createTime',
               align: 'center'
             },
             {

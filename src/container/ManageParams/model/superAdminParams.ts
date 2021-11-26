@@ -1,5 +1,5 @@
 export interface ISuperAdminCustomRisk {
-  cjzzl?: string
+  chzzl?: string
   chzzts?: string
   dbnl?: string
   id?: number
@@ -8,8 +8,8 @@ export interface ISuperAdminCustomRisk {
   roejq?: string
   sd?: string
   toazzl?: string
-  createTime: string
-  updateTiem: string
+  createTime?: string
+  updateTime?: string
   xjllb?: string
   xsjll?: string
   xsmll?: string
@@ -19,6 +19,7 @@ export interface ISuperAdminCustomRisk {
   zcfzl?: string
   zzcjll?: string
   zzczzts?: string
+  ld?: string
 }
 
 export interface ISuperAdminCustomRiskFeedBack {

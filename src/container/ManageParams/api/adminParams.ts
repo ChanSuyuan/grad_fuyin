@@ -13,7 +13,7 @@ export class AdminParmsApi {
    * @name 管理员自定义模型指标
    */
   customFrc(params: IAdminCustomFrc): Promise<IAdminCustomFrcFeedBack> {
-    return FYAPI.POST(`${baseURL}/updatezdyzbomodel`, params)
+    return FYAPI.POST(`${baseURL}/updatezdyzbmodel`, params)
   }
 }
 
