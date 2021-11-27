@@ -51,13 +51,53 @@ export const menus = [
     children: [
       {
         path: '/fyapp/params/FC',
-        title: '融资参数',
-        icon: 'team'
+        title: '融资模型',
+        icon: 'team',
+        children: [
+          {
+            path: '/fyapp/params/FC/customMatchDegree',
+            title: '融资匹配度',
+            icon: 'team'
+          },
+          {
+            path: '/fyapp/params/FC/paydebt',
+            title: '偿债能力',
+            icon: 'team'
+          },
+          {
+            path: '/fyapp/params/FC/profit',
+            title: '盈利能力',
+            icon: 'team'
+          }
+        ]
       },
       {
         path: '/fyapp/params/FRC',
-        title: '融资风控参数',
-        icon: 'team'
+        title: '融资风控模型',
+        icon: 'team',
+        children: [
+          {
+            path: '/fyapp/params/FRC/operate',
+            title: '营运能力',
+            icon: 'team'
+          },
+          {
+            path: '/fyapp/params/FRC/profit',
+            title: '盈利能力',
+            icon: 'team'
+          },
+          {
+            path: '/fyapp/params/FRC/paydebt',
+            title: '偿债能力',
+            icon: 'team'
+          },
+          {
+            path: '/fyapp/params/FRC/guarantee',
+            title: '担保能力',
+            icon: 'team'
+          }
+
+        ]
       }
     ]
   },
@@ -100,11 +140,6 @@ export const menus = [
     title: '系统日志',
     icon: 'team',
     permission: "1"
-  },
-  {
-    path: '/fyapp/donate',
-    title: '支持与捐献',
-    icon: 'team'
   }
 ]
 

@@ -2,6 +2,7 @@ import * as React from 'react'
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import { RegistFeedBack } from './common/component/BackResult'
 import { DefaultLayout } from './container/Layout'
+import { AdminLogin } from './user/adminLogin'
 
 import { Login } from './user/login'
 import { Regist } from './user/regist'
@@ -15,6 +16,7 @@ export class Page extends React.Component {
 			<Router>
 				<Switch>
 					<Route exact path="/" render={() => <Redirect to="/fyapp/dashboard" push />} />
+					<Route path='/adlogin' component={AdminLogin} />
 					<Route path="/fyapp" component={DefaultLayout} />
 					<Route path="/login" component={Login} />
 					<Route path="/register" component={Regist} />

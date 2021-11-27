@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, Input, notification, Radio } from "antd"
+import { Button, Form, Input, notification } from "antd"
 
 import './index.less'
 import { ApiFilled } from '@ant-design/icons'
@@ -9,33 +9,14 @@ import { ChangeHeader, removeLocalToken, setLocalToken } from '../../common/util
 import { behaviorApi } from '../api/account'
 import { observer } from 'mobx-react'
 import { notify } from '../../common/message/Notification'
-import { adminApi } from '../api/adminAc'
-import { superAdminApi } from '../api/super-adminAc'
 import GlobalFooter from '../../common/component/GlobalFooter'
 import { config } from '../../common/utils/config'
 
 const FormItem = Form.Item
-const RadioGroup = Radio.Group
 
 export const Login: React.FC = observer(() => {
   const [form] = Form.useForm()
   const history = useHistory()
-  let authLevel = 0
-
-  const setAuthLevel = (n: number) => {
-    authLevel = n
-    return authLevel
-  }
-
-  const handleChange = (e: any) => {
-    if (e.target.value === 'user') {
-      setAuthLevel(0)
-    } else if (e.target.value === 'admin') {
-      setAuthLevel(1)
-    } else {
-      setAuthLevel(2)
-    }
-  }
 
   async function handleOk() {
     const username = form.getFieldValue('userName')
@@ -43,73 +24,27 @@ export const Login: React.FC = observer(() => {
 
     if (username && password) {
       try {
-        if (authLevel === 0) {
-          const res = await behaviorApi.login({
-            userName: username,
-            password: password
-          })
-          if (res.errorCode === statusCode.success) {
-            if (res.data) {
-              removeLocalToken()
-              setLocalToken('user_token', `fuyin${res.data.token}`)
-              setLocalToken('user_type', res.data.type)
-              ChangeHeader()
-              history.push('/fyapp/dashboard')
-            } else {
-              notification.open({
-                message: '发生了意想不到的错误啦！',
-                description: '请稍等，后台小哥哥正在努力解决问题中！',
-                icon: <ApiFilled style={{ color: '#108ee9' }} />,
-                duration: 3
-              })
-            }
+        const res = await behaviorApi.login({
+          userName: username,
+          password: password
+        })
+        if (res.errorCode === statusCode.success) {
+          if (res.data) {
+            removeLocalToken()
+            setLocalToken('user_token', `fuyin${res.data.token}`)
+            setLocalToken('user_type', res.data.type)
+            ChangeHeader()
+            history.push('/fyapp/dashboard')
+          } else {
+            notification.open({
+              message: '发生了意想不到的错误啦！',
+              description: '请稍等，后台小哥哥正在努力解决问题中！',
+              icon: <ApiFilled style={{ color: '#108ee9' }} />,
+              duration: 3
+            })
           }
-          notify(res.errorCode)
-        } else if (authLevel === 1) {
-          const res = await adminApi.login({
-            userName: username,
-            password: password
-          })
-          if (res.errorCode === statusCode.success) {
-            if (res.data) {
-              removeLocalToken()
-              setLocalToken('user_token', `fuyin${res.data.token}`)
-              setLocalToken('user_type', res.data.type)
-              ChangeHeader()
-              history.push('/fyapp/dashboard')
-            } else {
-              notification.open({
-                message: '发生了意想不到的错误啦！',
-                description: '请稍等，后台小哥哥正在努力解决问题中！',
-                icon: <ApiFilled style={{ color: '#108ee9' }} />,
-                duration: 3
-              })
-            }
-          }
-          notify(res.errorCode)
-        } else if (authLevel === 2) {
-          const res = await superAdminApi.login({
-            userName: username,
-            password: password
-          })
-          if (res.errorCode === statusCode.success) {
-            if (res.data) {
-              removeLocalToken()
-              setLocalToken('user_token', `fuyin${res.data.token}`)
-              setLocalToken('user_type', res.data.type)
-              ChangeHeader()
-              history.push('/fyapp/dashboard')
-            } else {
-              notification.open({
-                message: '发生了意想不到的错误啦！',
-                description: '请稍等，后台小哥哥正在努力解决问题中！',
-                icon: <ApiFilled style={{ color: '#108ee9' }} />,
-                duration: 3
-              })
-            }
-          }
-          notify(res.errorCode)
         }
+        notify(res.errorCode)
       } catch (err) {
         console.log(err)
       }
@@ -124,14 +59,6 @@ export const Login: React.FC = observer(() => {
         <h1 className="text-form">FYFC&FC</h1>
         <div className="form-wrapper">
           <Form form={form}>
-            <FormItem name="账号类型">
-              <strong>账号类型：</strong>
-              <RadioGroup defaultValue="user" buttonStyle='solid' style={{ marginLeft: 6 }} onChange={handleChange}>
-                <Radio.Button value="user">普通用户</Radio.Button>
-                <Radio.Button value="admin">管理员</Radio.Button>
-                <Radio.Button value="super-admin">超级管理员</Radio.Button>
-              </RadioGroup>
-            </FormItem>
             <FormItem name="userName"
               rules={[{
                 required: true,

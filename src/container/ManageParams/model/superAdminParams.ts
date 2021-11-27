@@ -42,3 +42,24 @@ export interface ISuperAdminCustomFrcFeedBack {
   ok?: boolean
   text?: string
 }
+
+export interface ISuperAdminCustomMatchDegree {
+  oldRzppd: IRzppd
+  newRzppd: IRzppd
+}
+
+interface IRzppd {
+  bz: string
+  createTime?: string
+  cznl: number
+  ppd: number
+  updateTime?: string
+  ylnl: number
+}
+
+export interface ISuperAdminCustomMathcDegreeFeedBack {
+  data?: string
+  errorCode: number
+  ok?: boolean
+  text?: string
+}
