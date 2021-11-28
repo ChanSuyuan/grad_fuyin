@@ -1,5 +1,5 @@
 import { FYAPI } from "../../../common/api/api";
-import { IAdminCustomFrc, IAdminCustomFrcFeedBack, IAdminCustomRisk, IAdminCustomRiskFeedBack } from "../model/adminParams";
+import { IAdminCustomFrc, IAdminCustomFrcFeedBack, IAdminCustomRisk, IAdminCustomRiskFeedBack, IAdminGetMatchDegreeFeedBack } from "../model/adminParams";
 
 const baseURL = '/admin'
 export class AdminParmsApi {
@@ -14,6 +14,12 @@ export class AdminParmsApi {
    */
   customFrc(params: IAdminCustomFrc): Promise<IAdminCustomFrcFeedBack> {
     return FYAPI.POST(`${baseURL}/updatezdyzbmodel`, params)
+  }
+  /**
+   * @name 管理员获取融资匹配度
+   */
+  getMatchDegree(): Promise<IAdminGetMatchDegreeFeedBack> {
+    return FYAPI.GET(`${baseURL}/getrzppd`)
   }
 }
 

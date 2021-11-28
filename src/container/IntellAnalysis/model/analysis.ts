@@ -30,7 +30,7 @@ export interface IResultZbDtos {
 
 export interface IGPDetail {
   companyInfo: IComponyInfo
-  mainzbs: IMainzbsInfo
+  mainzbs: IMainzbsInfo[]
   profiles: IProfilesInfo[]
   qygqjgs: IQygqjsInfo[]
   xjlls: IXjjlsInfo[]

@@ -42,3 +42,19 @@ export interface IAdminCustomFrcFeedBack {
   ok?: boolean
   text?: string
 }
+
+export interface IAdminGetMatchDegreeFeedBack {
+  data?: IMatchDegree[]
+  errorCode?: number
+  ok?: boolean
+  text?: string
+}
+
+export interface IMatchDegree {
+  id: number
+  bz: string
+  cznl: number
+  ppd: number
+  ylnl: number
+}
+

@@ -16,7 +16,7 @@ export class Page extends React.Component {
 			<Router>
 				<Switch>
 					<Route exact path="/" render={() => <Redirect to="/fyapp/dashboard" push />} />
-					<Route path='/adlogin' component={AdminLogin} />
+					<Route path='/loginAdmin' component={AdminLogin} />
 					<Route path="/fyapp" component={DefaultLayout} />
 					<Route path="/login" component={Login} />
 					<Route path="/register" component={Regist} />
