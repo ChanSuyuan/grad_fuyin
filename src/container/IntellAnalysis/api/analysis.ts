@@ -12,7 +12,8 @@ import {
 } from "../model/analysis";
 
 const baseURL = '/user'
-
+const adminURL = '/admin'
+const superadminURL = '/superadmin'
 
 class AnalysisApi {
   /**

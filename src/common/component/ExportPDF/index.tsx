@@ -8,6 +8,9 @@ interface IExportPDFProps {
 
 export const ExportFrcPDFModal: React.FC<IExportPDFProps> = (props) => {
 
+  const exportPdf = async () => {
+
+  }
   return (
     <>
       <div id="export-pdf">
