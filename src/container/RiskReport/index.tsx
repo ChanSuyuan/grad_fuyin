@@ -1,11 +1,12 @@
 /* eslint-disable array-callback-return */
-import { Button, Card, Col, Row, Steps, Table } from "antd"
-import React from "react"
+import { Button, Card, Col, Modal, Row, Steps, Table } from "antd"
+import React, { useState } from "react"
+import { ExportFrcPDFModal } from "../../common/component/ExportPDF"
 import { IParamsRiskReportFeedBackInfo } from "../IntellAnalysis/model/analysis"
 import "./index.less"
 
 interface IRiskReportProps {
-  store: IParamsRiskReportFeedBackInfo | undefined
+  store: IParamsRiskReportFeedBackInfo
 }
 const { Step } = Steps
 
@@ -25,14 +26,14 @@ export const RiskReport: React.FC<IRiskReportProps> = (props) => {
   const CompanyBasicInfo = () => {
     return (
       <>
-        <Row>
-          <Col span={8}><strong>企业名称：</strong>{companyInfo?.gsmc}</Col>
-          <Col span={8}><strong>企业法人代表：</strong>{companyInfo?.frdb}</Col>
-          <Col span={8}><strong>企业注册资本：</strong>{companyInfo?.zczb}</Col>
+        <Row key='struct1'>
+          <Col span={8} key='companyName'><strong>企业名称：</strong>{companyInfo?.gsmc}</Col>
+          <Col span={8} key='represent'><strong>企业法人代表：</strong>{companyInfo?.frdb}</Col>
+          <Col span={8} key='registerCapital'><strong>企业注册资本：</strong>{companyInfo?.zczb}</Col>
         </Row>
-        <Row>
-          <Col span={8}><strong>成立时间：</strong>{companyInfo?.clrq}</Col>
-          <Col span={8}><strong>社会信用代码：</strong>{companyInfo?.gsdj}</Col>
+        <Row key='struct2'>
+          <Col span={8} key='setOffTime'><strong>成立时间：</strong>{companyInfo?.clrq}</Col>
+          <Col span={8} key='SocietyCode'><strong>社会信用代码：</strong>{companyInfo?.gsdj}</Col>
         </Row>
         <br />
         <Row>
@@ -45,6 +46,7 @@ export const RiskReport: React.FC<IRiskReportProps> = (props) => {
   const CompanyStructure = () => {
     return (
       <Table
+        key='CompanyStructure'
         bordered
         size="small"
         dataSource={props.store?.data.gpDetails.qygqjgs}
@@ -117,8 +119,9 @@ export const RiskReport: React.FC<IRiskReportProps> = (props) => {
   const CompanyReportInfo = () => {
     return (
       <>
-        <Card title='利润表'>
+        <Card title='利润表' key='CompanyReportInfo'>
           <Table
+            key='CompanyReportInfo'
             pagination={{ pageSize: 5 }}
             size="small"
             dataSource={props.store?.data.gpDetails.profiles}
@@ -364,8 +367,9 @@ export const RiskReport: React.FC<IRiskReportProps> = (props) => {
             ]}
           />
         </Card>
-        <Card title='资产负债表' style={{ marginTop: 20 }}>
+        <Card title='资产负债表' style={{ marginTop: 20 }} key='debt'>
           <Table
+            key='debt'
             pagination={{ pageSize: 5 }}
             size="small"
             dataSource={props.store?.data.gpDetails.zcfzs}
@@ -403,14 +407,14 @@ export const RiskReport: React.FC<IRiskReportProps> = (props) => {
                 align: 'center'
               },
               {
-                title: '其它应收款合计',
+                title: '其他应收款合计',
                 dataIndex: 'totalOtherRece',
                 key: 'totalOtherRece',
                 width: 150,
                 align: 'center'
               },
               {
-                title: '其它应付款合计',
+                title: '其他应付款合计',
                 dataIndex: 'totalOtherPayable',
                 key: 'totalOtherPayable',
                 width: 150,
@@ -550,21 +554,21 @@ export const RiskReport: React.FC<IRiskReportProps> = (props) => {
                 align: 'center'
               },
               {
-                title: '其它非流动资产',
+                title: '其他非流动资产',
                 dataIndex: 'otherNoncurrentAsset',
                 key: 'otherNoncurrentAsset',
                 width: 150,
                 align: 'center'
               },
               {
-                title: '其它流动负债',
+                title: '其他流动负债',
                 dataIndex: 'otherCurrentLiab',
                 key: 'otherCurrentLiab',
                 width: 150,
                 align: 'center'
               },
               {
-                title: '其它流动资产',
+                title: '其他流动资产',
                 dataIndex: 'otherCurrentAsset',
                 key: 'otherCurrentAsset',
                 width: 150,
@@ -627,14 +631,14 @@ export const RiskReport: React.FC<IRiskReportProps> = (props) => {
                 align: 'center'
               },
               {
-                title: '持有代售负债',
+                title: '持有待售负债',
                 dataIndex: 'holdsaleLiab',
                 key: 'holdsaleLiab',
                 width: 150,
                 align: 'center'
               },
               {
-                title: '持有代售资产',
+                title: '持有待售资产',
                 dataIndex: 'holdsaleAsset',
                 key: 'holdsaleAsset',
                 width: 150,
@@ -715,8 +719,9 @@ export const RiskReport: React.FC<IRiskReportProps> = (props) => {
             ]}
           />
         </Card>
-        <Card title='现金流量表' style={{ marginTop: 20 }} bordered>
+        <Card title='现金流量表' style={{ marginTop: 20 }} bordered key='cash'>
           <Table
+            key='cash'
             bordered
             pagination={{ pageSize: 5 }}
             size="small"
@@ -1089,12 +1094,13 @@ export const RiskReport: React.FC<IRiskReportProps> = (props) => {
         {props.store?.data.analysis.map((item) => (
           <>
             <h1><strong>{transform[item.type]}</strong></h1>
-            <Row>
-              <Col span={12}><strong>存在的风险：</strong><span style={{ color: 'red' }}>{item.risk}</span></Col>
-              <Col span={12}><strong>风险控制建议：</strong>{item.advise}</Col>
+            <Row key='advice'>
+              <Col span={12} key='exist_risk'><strong>存在的风险：</strong><span style={{ color: 'red' }}>{item.risk}</span></Col>
+              <Col span={12} key='risk_advice'><strong>风险控制建议：</strong>{item.advise}</Col>
             </Row>
             <br />
             <Table
+              key='operate'
               size="small"
               pagination={{ pageSize: 3 }}
               dataSource={item.resultZbDtos}
@@ -1131,6 +1137,7 @@ export const RiskReport: React.FC<IRiskReportProps> = (props) => {
   const CompanyMainZBInfo = () => {
     return (
       <Table
+        key='MainZb'
         bordered
         size="small"
         dataSource={props.store?.data.gpDetails.mainzbs}
@@ -1393,28 +1400,38 @@ export const RiskReport: React.FC<IRiskReportProps> = (props) => {
   const steps = [
     {
       title: '企业基本信息',
+      key: 'baseInfo',
       content: <CompanyBasicInfo />,
     },
     {
       title: '企业股票结构',
+      key: 'struct',
       content: <CompanyStructure />
     },
     {
       title: '报表',
+      key: 'report',
       content: <CompanyReportInfo />,
     },
     {
       title: '主要指标',
+      key: 'mainZb',
       content: <CompanyMainZBInfo />
     },
     {
       title: '能力分析',
+      key: 'analysis',
       content: <CompanyAnalysisOperatingInfo />
     },
     {
-      title: '生成报告'
+      title: '生成报告',
+      key: 'makeReport'
     }
   ];
+
+  // 窗口
+  const [createModalVisible, handleModalVisible] = useState<boolean>(false)
+
   return (
     <>
       <Steps current={current} progressDot style={{ marginBottom: 30 }} size="small" responsive>
@@ -1435,10 +1452,21 @@ export const RiskReport: React.FC<IRiskReportProps> = (props) => {
           </Button>
         )}
         {current === steps.length - 1 && (
-          <Button type="primary" size="middle">
-            生成报告 TODO
-          </Button>
+          <>
+            <Button type="primary" size="middle" onClick={() => handleModalVisible(true)}>
+              生成报告
+            </Button>
+          </>
         )}
+        <Modal
+          title='生成报告PDF'
+          width='1200px'
+          visible={createModalVisible}
+          footer={[]}
+          onCancel={() => handleModalVisible(false)}
+        >
+          <ExportFrcPDFModal data={props.store.data} />
+        </Modal>
       </div>
     </>
   )

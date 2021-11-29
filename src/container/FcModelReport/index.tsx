@@ -1371,6 +1371,7 @@ export const FcModelReport: React.FC<IRiskReportProps> = (props) => {
       title: '生成报告'
     }
   ];
+
   return (
     <>
       <Card>

@@ -1,0 +1,88 @@
+#export-pdf {
+  .pdf-container-header{
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .header-info {
+    flex:1;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    margin-right: 20px;
+    padding-left: 16px;
+
+    span{
+      font-size: 18px;
+    }
+
+    img{
+      width: 300px;
+      height: 200px;
+    }
+  }
+
+  .export-action {
+    text-align: right;
+    margin-bottom: 10px;
+  }
+
+  #pdf-container {
+    .ant-table {
+      font-size: 16px;
+    }
+
+    .comp-info-table_table .title {
+      width: auto;
+    }
+
+    .ant-table-row-expand-icon {
+      display: none;
+    }
+
+    .ant-table-row-level-1 {
+      background: rgb(255,250,250);
+      font-size: 12px;
+      border-bottom: none;
+
+      td {
+        border-bottom: none;
+      }
+
+      tr:hover td {
+        background: transparent !important;
+      }
+    }
+
+    .company {
+      margin-top: 20px;
+      .company-struct {
+        margin-top: 20px;
+        font-size: 14px;
+      }
+    }
+    .table-footer {
+      display: flex;
+      font-size: 16px;
+    }
+  
+    .table-footer-text {
+      display: block;
+      font-size: 16px;
+  
+      span {
+        font-size: 14px;
+      }
+    }
+  
+    .comp-info-table_table {
+      color: rgba(0, 0, 0, 0.6);
+    }
+  
+    .comp-info-table_table .title {
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+}
