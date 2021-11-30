@@ -1,7 +1,6 @@
-/* eslint-disable array-callback-return */
 import { Button, Card, Col, Modal, Row, Steps, Table } from "antd"
 import React, { useState } from "react"
-import { ExportFrcPDFModal } from "../../common/component/ExportPDF"
+import { ExportPDFModal } from "../../common/component/ExportPDF/exportPDF"
 import { IParamsRiskReportFeedBackInfo } from "../IntellAnalysis/model/analysis"
 import "./index.less"
 
@@ -1404,7 +1403,7 @@ export const RiskReport: React.FC<IRiskReportProps> = (props) => {
       content: <CompanyBasicInfo />,
     },
     {
-      title: '企业股票结构',
+      title: '企业股权结构',
       key: 'struct',
       content: <CompanyStructure />
     },
@@ -1460,12 +1459,12 @@ export const RiskReport: React.FC<IRiskReportProps> = (props) => {
         )}
         <Modal
           title='生成报告PDF'
-          width='1200px'
+          width='1300px'
           visible={createModalVisible}
           footer={[]}
           onCancel={() => handleModalVisible(false)}
         >
-          <ExportFrcPDFModal data={props.store.data} />
+          <ExportPDFModal data={props.store.data} />
         </Modal>
       </div>
     </>

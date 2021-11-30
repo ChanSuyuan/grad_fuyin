@@ -15,6 +15,7 @@ export const FcAnalysis: React.FC = () => {
   const [isShow, setShow] = useState<boolean>(false)
 
   const [store, setStore] = useState<IParamsFcModelReportFeedBackInfo>()
+
   async function handleOk() {
     const gpName = form.getFieldValue('gpName')
     const collateral = form.getFieldValue('collateral')
@@ -25,26 +26,52 @@ export const FcAnalysis: React.FC = () => {
     const guarantee = form.getFieldValue('guarantee')
     const period = form.getFieldValue('period')
 
-    console.log(period)
     if (gpName) {
       setShow(true)
       setLoading(true)
       setStore(undefined)
       try {
-        const res = await analysisApi.getmodelReport({
-          collateral: collateral,
-          purpose: purpose,
-          fiMode: fiMode,
-          quota: quota,
-          repayMode: repayMode,
-          guarantee: guarantee,
-          period: period
-        }, gpName)
-        res.errorCode === statusCode.success && setStore(res)
+        const type = localStorage.getItem('user_type')
+        if (type === '0') {
+          const res = await analysisApi.getmodelReport({
+            collateral: collateral,
+            purpose: purpose,
+            fiMode: fiMode,
+            quota: quota,
+            repayMode: repayMode,
+            guarantee: guarantee,
+            period: period
+          }, gpName)
+          res.errorCode === statusCode.success && setStore(res)
+        } else if (type === '1') {
+          const res = await analysisApi.getAdminmodelReport({
+            collateral: collateral,
+            purpose: purpose,
+            fiMode: fiMode,
+            quota: quota,
+            repayMode: repayMode,
+            guarantee: guarantee,
+            period: period
+          }, gpName)
+          res.errorCode === statusCode.success && setStore(res)
+        } else if (type === '2') {
+          const res = await analysisApi.getSuperAdminmodelReport({
+            collateral: collateral,
+            purpose: purpose,
+            fiMode: fiMode,
+            quota: quota,
+            repayMode: repayMode,
+            guarantee: guarantee,
+            period: period
+          }, gpName)
+          res.errorCode === statusCode.success && setStore(res)
+        }
       } catch (error) {
         console.log(error)
       }
       setLoading(false)
+    } else {
+      console.log('no_type')
     }
   }
 

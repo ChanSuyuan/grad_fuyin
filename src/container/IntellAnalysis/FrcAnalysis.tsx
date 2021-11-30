@@ -13,6 +13,8 @@ export const FrcAnalysis: React.FC = () => {
   const [isShow, setShow] = useState<boolean>(false)
 
   const [store, setStore] = useState<IParamsRiskReportFeedBackInfo>()
+
+
   async function handleOk() {
     const gpName = form.getFieldValue('gpName')
     if (gpName) {
@@ -20,14 +22,29 @@ export const FrcAnalysis: React.FC = () => {
       setLoading(true)
       setStore(undefined)
       try {
-        const res = await analysisApi.getRiskReport({
-          gpName: gpName
-        })
-        res.errorCode === statusCode.success && setStore(res)
+        const type = localStorage.getItem('user_type')
+        if (type === '0') {
+          const res = await analysisApi.getRiskReport({
+            gpName: gpName
+          })
+          res.errorCode === statusCode.success && setStore(res)
+        } else if (type === '1') {
+          const res = await analysisApi.getAdminRiskReport({
+            gpName: gpName
+          })
+          res.errorCode === statusCode.success && setStore(res)
+        } else if (type === '2') {
+          const res = await analysisApi.getSuperAdminRiskReport({
+            gpName: gpName
+          })
+          res.errorCode === statusCode.success && setStore(res)
+        }
       } catch (err) {
         console.log(err)
       }
       setLoading(false)
+    } else {
+      console.log('no_type')
     }
   }
   return (

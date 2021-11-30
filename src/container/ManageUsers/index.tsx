@@ -8,7 +8,6 @@ export const ManageUsers: React.FC = () => {
 
   const [loading, setLoading] = useState<boolean>(false)
   const [store, setStore] = useState<IAllUsersFB>()
-  const type = localStorage.getItem('user_type')
 
   useEffect(() => {
     loadPage()
@@ -17,13 +16,16 @@ export const ManageUsers: React.FC = () => {
 
   const loadPage = async () => {
     try {
-      setLoading(true)
-      if (type === '1') {
-        const res = await adminUsersApi.getAllUser()
-        setStore(res)
-      } else if (type === '2') {
-        const res = await superAdminUsersApi.getAllUser()
-        setStore(res)
+      const type = localStorage.getItem('user_type')
+      if (type) {
+        setLoading(true)
+        if (type === '1') {
+          const res = await adminUsersApi.getAllUser()
+          setStore(res)
+        } else if (type === '2') {
+          const res = await superAdminUsersApi.getAllUser()
+          setStore(res)
+        }
       }
     } catch (err) {
       console.log(err)

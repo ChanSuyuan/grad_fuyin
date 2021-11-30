@@ -1,6 +1,7 @@
 /* eslint-disable array-callback-return */
-import { Button, Card, Col, Row, Steps, Table } from "antd"
-import React from "react"
+import { Button, Card, Col, Modal, Row, Steps, Table } from "antd"
+import React, { useState } from "react"
+import { ExportPDFModal } from "../../common/component/ExportPDF/exportPDF"
 import { IParamsFcModelReportFeedBackInfo } from "../IntellAnalysis/model/analysis"
 import "./index.less"
 
@@ -1372,6 +1373,8 @@ export const FcModelReport: React.FC<IRiskReportProps> = (props) => {
     }
   ];
 
+  // 窗口
+  const [createModalVisible, handleModalVisible] = useState<boolean>(false)
   return (
     <>
       <Card>
@@ -1393,10 +1396,21 @@ export const FcModelReport: React.FC<IRiskReportProps> = (props) => {
             </Button>
           )}
           {current === steps.length - 1 && (
-            <Button type="primary" size="middle">
-              生成报告 TODO
-            </Button>
+            <>
+              <Button type="primary" size="middle" onClick={() => handleModalVisible(true)}>
+                生成报告 TODO
+              </Button>
+            </>
           )}
+          <Modal
+            title='生成报告PDF'
+            width='1300px'
+            visible={createModalVisible}
+            footer={[]}
+            onCancel={() => handleModalVisible(false)}
+          >
+            <ExportPDFModal fcdata={props.store.data} />
+          </Modal>
         </div>
       </Card>
     </>

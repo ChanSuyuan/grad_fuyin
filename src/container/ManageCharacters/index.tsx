@@ -7,7 +7,6 @@ import { IAllUsersFB } from './model/adminUser'
 export const ManageCharacters: React.FC = () => {
   const [store, setStore] = useState<IAllUsersFB>()
   const [loading, setLoading] = useState<boolean>(false)
-  const type = localStorage.getItem('user_type')
 
   useEffect(() => {
     loadPage()
@@ -16,13 +15,16 @@ export const ManageCharacters: React.FC = () => {
 
   const loadPage = async () => {
     try {
-      setLoading(true)
-      if (type === "1") {
-        const res = await adminUsersApi.getAllUser()
-        setStore(res)
-      } else if (type === "2") {
-        const res = await superAdminUsersApi.getAllUser()
-        setStore(res)
+      const type = localStorage.getItem('user_type')
+      if (type) {
+        setLoading(true)
+        if (type === "1") {
+          const res = await adminUsersApi.getAllUser()
+          setStore(res)
+        } else if (type === "2") {
+          const res = await superAdminUsersApi.getAllUser()
+          setStore(res)
+        }
       }
     } catch (err) {
       console.log(err)
