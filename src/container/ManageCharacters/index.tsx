@@ -34,13 +34,14 @@ export const ManageCharacters: React.FC = () => {
   }
 
   return (
-    <Card title="角色管理">
+    <Card bordered={false}>
       <Table
         size='middle'
         loading={loading}
-        dataSource={store.data}
-        pagination={{ pageSize: 10 }}
-        key='ManageCharacters'
+        dataSource={store?.data}
+        pagination={{ pageSize: 5 }}
+        rowKey="Characters"
+        bordered={true}
         columns={[
           {
             title: "用户名",
@@ -53,6 +54,12 @@ export const ManageCharacters: React.FC = () => {
             dataIndex: 'type',
             key: 'type',
             align: 'center'
+          },
+          {
+            title: "操作",
+            dataIndex: "operate",
+            key: "operate",
+            align: "center"
           }
         ]}
       />

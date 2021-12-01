@@ -32,13 +32,13 @@ export const menus = [
     icon: 'user'
   },
   {
-    path: '/fyapp/user',
+    path: '/fyapp/users',
     title: "用户管理",
     icon: 'user',
     permission: "1"
   },
   {
-    path: '/fyapp/authUser',
+    path: '/fyapp/characters',
     title: "角色管理",
     icon: 'usersManage',
     permission: "1"

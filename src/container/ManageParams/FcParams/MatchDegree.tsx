@@ -17,6 +17,7 @@ export const MatchDegree = () => {
   const [loading, setLoading] = useState<boolean>(false)
 
   const [store, setStore] = useState<IAdminGetMatchDegreeFeedBack>()
+
   useEffect(() => {
     getMatchDegree()
   }, [])
