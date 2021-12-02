@@ -35,3 +35,11 @@ export function ChangeHeader() {
     delete axios.defaults.headers.common['Authorization']
   }
 }
+
+export function setIpAddress(ipAddress: string) {
+  localStorage.setItem('ip_address', ipAddress)
+  let ip = ipAddress
+  if (ip) {
+    axios.defaults.headers.common['Ip-Address'] = ip
+  }
+}

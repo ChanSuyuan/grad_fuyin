@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Button, Col, Form, Input, notification, Radio, Row } from "antd"
 
 import './index.less'
@@ -91,7 +91,7 @@ export const AdminLogin: React.FC = observer(() => {
     }
   }
   return (
-    <>
+    <Fragment key='loginadimin-container'>
       <div className="container-fluid">
         <span>富银LOGO 预留位置</span>
       </div>
@@ -99,19 +99,17 @@ export const AdminLogin: React.FC = observer(() => {
         <h1 className="text-form">FYFC&FC</h1>
         <div className="form-wrapper">
           <Form form={form}>
-            <FormItem name="账号类型">
-              <strong>账号类型：</strong>
-              <RadioGroup defaultValue="admin" buttonStyle='solid' style={{ marginLeft: 10 }} onChange={handleChange}>
-                <Row>
-                  <Col>
-                    <Radio.Button value="admin">管理员</Radio.Button>
-                  </Col>
-                  <Col>
-                    <Radio.Button value="super-admin">超级管理员</Radio.Button>
-                  </Col>
-                </Row>
-              </RadioGroup>
-            </FormItem>
+            <strong>账号类型：</strong>
+            <RadioGroup defaultValue="admin" buttonStyle='solid' style={{ marginLeft: 10, marginBottom: 20 }} onChange={handleChange}>
+              <Row>
+                <Col>
+                  <Radio.Button value="admin">管理员</Radio.Button>
+                </Col>
+                <Col>
+                  <Radio.Button value="super-admin">超级管理员</Radio.Button>
+                </Col>
+              </Row>
+            </RadioGroup>
             <FormItem name="userName"
               rules={[{
                 required: true,
@@ -128,26 +126,22 @@ export const AdminLogin: React.FC = observer(() => {
               hasFeedback>
               <Input type="password" placeholder={`FYFC密码`} size="large" />
             </FormItem>
-            <FormItem name="account">
-              <Link to="/reset" target="_blank">
-                <strong>重置密码 / 忘记密码</strong>
-              </Link>
-              <Link to="/register" target="_blank" style={{ float: 'right' }}>
-                <strong>注册账号</strong>
-              </Link>
-            </FormItem>
-            <FormItem name="login">
-              <Button type="primary" htmlType="submit" className="login-form-button" onClick={handleOk}>
-                <div>立即登录</div>
-              </Button>
-            </FormItem>
+            <Link to="/reset" target="_blank">
+              <strong>重置密码 / 忘记密码</strong>
+            </Link>
+            <Link to="/register" target="_blank" style={{ float: 'right' }}>
+              <strong>注册账号</strong>
+            </Link>
+            <Button type="primary" htmlType="submit" className="login-form-button" onClick={handleOk}>
+              <div>立即登录</div>
+            </Button>
           </Form>
         </div>
         <div className="footer">
           <GlobalFooter className="footer" copyright={config.copyright} />
         </div>
       </div>
-    </>
+    </Fragment>
   )
 })
 

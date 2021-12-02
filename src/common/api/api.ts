@@ -14,6 +14,12 @@ if (token) {
   delete axios.defaults.headers.common['Authorization']
 }
 
+fetch('https://api.ipify.org')
+  .then(res => res.text())
+  .then(res => {
+    axios.defaults.headers.common['ip_address'] = res
+  })
+
 
 type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH"
 

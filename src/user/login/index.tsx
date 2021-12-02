@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Button, Form, Input, notification } from "antd"
 
 import './index.less'
@@ -11,6 +11,7 @@ import { observer } from 'mobx-react'
 import { notify } from '../../common/message/Notification'
 import GlobalFooter from '../../common/component/GlobalFooter'
 import { config } from '../../common/utils/config'
+import axios from 'axios'
 
 const FormItem = Form.Item
 
@@ -51,7 +52,7 @@ export const Login: React.FC = observer(() => {
     }
   }
   return (
-    <>
+    <Fragment key='login-container'>
       <div className="container-fluid">
         <span>富银LOGO 预留位置</span>
       </div>
@@ -75,26 +76,22 @@ export const Login: React.FC = observer(() => {
               hasFeedback>
               <Input type="password" placeholder={`FYFC密码`} size="large" />
             </FormItem>
-            <FormItem name="account">
-              <Link to="/reset" target="_blank">
-                <strong>重置密码 / 忘记密码</strong>
-              </Link>
-              <Link to="/register" target="_blank" style={{ float: 'right' }}>
-                <strong>注册账号</strong>
-              </Link>
-            </FormItem>
-            <FormItem name="login">
-              <Button type="primary" htmlType="submit" className="login-form-button" onClick={handleOk}>
-                <div>立即登录</div>
-              </Button>
-            </FormItem>
+            <Link to="/reset" target="_blank">
+              <strong>重置密码 / 忘记密码</strong>
+            </Link>
+            <Link to="/register" target="_blank" style={{ float: 'right' }}>
+              <strong>注册账号</strong>
+            </Link>
+            <Button type="primary" htmlType="submit" className="login-form-button" onClick={handleOk}>
+              <div>立即登录</div>
+            </Button>
           </Form>
         </div>
         <div className="footer">
           <GlobalFooter className="footer" copyright={config.copyright} />
         </div>
       </div>
-    </>
+    </Fragment>
   )
 })
 

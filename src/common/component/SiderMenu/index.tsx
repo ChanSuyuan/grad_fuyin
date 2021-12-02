@@ -23,8 +23,8 @@ const SiderMenu: React.FC<SiderMenuProps> = (props) => {
     return false
   }
 
-  const generateMenus = (data: any) => {
-    return data.map((item: any) => {
+  const generateMenus = (data) => {
+    return data.map((item) => {
       if (item.children) {
         return (
           handleFilter(item.permission) && (

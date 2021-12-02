@@ -12,7 +12,7 @@ import { Page } from './page';
 ReactDOM.render(
   // <React.StrictMode>
   <AlitaProvider>
-    <Page />
+    <Page key='page' />
   </AlitaProvider>,
   // </React.StrictMode>,
   document.getElementById('root')

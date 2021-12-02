@@ -15,6 +15,7 @@ import { FcPayDebt } from "../../../container/ManageParams/FcParams/paydebt";
 import { FcProfit } from "../../../container/ManageParams/FcParams/profit";
 import { ManageUsers } from "../../../container/ManageUsers";
 import { ManageCharacters } from "../../../container/ManageCharacters";
+import { SystemLog } from "../../../container/SystemLog";
 
 
 export const routes = [
@@ -31,6 +32,7 @@ export const routes = [
   { path: '/fyapp/params/FRC/profit', component: Profit },
   { path: '/fyapp/params/FRC/paydebt', component: PayDebt },
   { path: '/fyapp/params/FRC/guarantee', component: Guarantee },
+  { path: '/fyapp/systemlog', component: SystemLog },
   { path: '/fyapp/users', component: ManageUsers },
   { path: '/fyapp/characters', component: ManageCharacters },
   { path: '/fyapp/error/404', component: Error404 },
