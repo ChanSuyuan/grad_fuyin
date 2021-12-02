@@ -1,11 +1,12 @@
 import ApiFilled from "@ant-design/icons/lib/icons/ApiFilled";
-import { Button, Card, Col, Form, Input, notification, Row, Spin } from "antd";
+import { Button, Card, Col, Form, Input, message, notification, Row, Spin } from "antd";
 import React, { useState } from "react";
 import { statusCode } from "../../common/model/statusCode";
 import { FcModelReport } from "../FcModelReport";
 import { analysisApi } from "./api/analysis";
 import { IParamsFcModelReportFeedBackInfo } from "./model/analysis";
 import './index.less'
+import { useHistory } from "react-router";
 
 const FormItem = Form.Item
 
@@ -13,7 +14,7 @@ export const FcAnalysis: React.FC = () => {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState<boolean>(false)
   const [isShow, setShow] = useState<boolean>(false)
-
+  const history = useHistory()
   const [store, setStore] = useState<IParamsFcModelReportFeedBackInfo>()
 
   async function handleOk() {
@@ -43,6 +44,10 @@ export const FcAnalysis: React.FC = () => {
             period: period
           }, gpName)
           res.errorCode === statusCode.success && setStore(res)
+          if (res.errorCode === statusCode.tokenIsNotVaild) {
+            message.error('登录信息过期，请重新登陆！')
+            history.push('/login')
+          }
         } else if (type === '1') {
           const res = await analysisApi.getAdminmodelReport({
             collateral: collateral,
@@ -54,6 +59,10 @@ export const FcAnalysis: React.FC = () => {
             period: period
           }, gpName)
           res.errorCode === statusCode.success && setStore(res)
+          if (res.errorCode === statusCode.tokenIsNotVaild) {
+            message.error('登录信息过期，请重新登陆！')
+            history.push('/loginadmin')
+          }
         } else if (type === '2') {
           const res = await analysisApi.getSuperAdminmodelReport({
             collateral: collateral,
@@ -65,6 +74,10 @@ export const FcAnalysis: React.FC = () => {
             period: period
           }, gpName)
           res.errorCode === statusCode.success && setStore(res)
+          if (res.errorCode === statusCode.tokenIsNotVaild) {
+            message.error('登录信息过期，请重新登陆！')
+            history.push('/loginadmin')
+          }
         }
       } catch (error) {
         console.log(error)
@@ -74,8 +87,6 @@ export const FcAnalysis: React.FC = () => {
       console.log('no_type')
     }
   }
-
-
 
   return (
     <>

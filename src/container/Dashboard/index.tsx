@@ -7,6 +7,8 @@ export const Dashboard: React.FC = () => {
   const isLogin = () => {
     if (!localStorage.getItem('user_token')) {
       history.push('/login')
+    } else {
+
     }
   }
 

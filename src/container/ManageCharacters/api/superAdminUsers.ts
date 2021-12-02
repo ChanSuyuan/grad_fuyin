@@ -2,8 +2,8 @@ import { FYAPI } from "../../../common/api/api"
 import { IAllUsersFB, IModifyParams, IModifyParamsFB } from "../model/adminUser"
 
 
-const PageNum = 10
-const PageSize = 5
+const PageNum = 10000
+const PageSize = 10000
 
 const baseURL = '/superadmin'
 class SuperAdminUserApi {

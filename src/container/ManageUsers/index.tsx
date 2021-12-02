@@ -1,7 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Card, Col, Form, Input, message, Modal, Row, Table } from 'antd'
+import ApiFilled from '@ant-design/icons/lib/icons/ApiFilled'
+import { Alert, Button, Col, Form, Input, message, Modal, notification, Radio, Row, Select, Table, Tag } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import React, { Fragment, useEffect, useState } from 'react'
+import { useHistory } from 'react-router'
+import { statusCode } from '../../common/model/statusCode'
 import { superAdminUsersApi } from '../ManageCharacters/api/superAdminUsers'
 import { IAllUsersInfo } from '../ManageCharacters/model/adminUser'
 import { adminUsersApi } from './api/adminUsers'
@@ -9,6 +12,7 @@ import { adminUsersApi } from './api/adminUsers'
 
 
 const FormItem = Form.Item
+const RadioGroup = Radio.Group
 
 export const ManageUsers: React.FC = () => {
   const [form] = useForm()
@@ -16,6 +20,10 @@ export const ManageUsers: React.FC = () => {
   const [store, setStore] = useState<IAllUsersInfo[]>()
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false)
   const [currentRow, setCurrentRow] = useState<IAllUsersInfo>()
+  const [omitLoading, setOmitLoading] = useState<boolean>(false)
+  const auth = localStorage.getItem('user_type')
+  const history = useHistory()
+
 
   useEffect(() => {
     loadPage()
@@ -24,14 +32,19 @@ export const ManageUsers: React.FC = () => {
 
   const loadPage = async () => {
     try {
-      const type = localStorage.getItem('user_type')
-      if (type) {
+      if (auth) {
         setLoading(true)
-        if (type === '1') {
+        if (auth === '1') {
           const res = await adminUsersApi.getAllUser()
+          if (res.erroCode === statusCode.tokenIsNotVaild) {
+            history.push('/loginadmin')
+          }
           setStore(res.data)
-        } else if (type === '2') {
+        } else if (auth === '2') {
           const res = await superAdminUsersApi.getAllUser()
+          if (res.erroCode === statusCode.tokenIsNotVaild) {
+            history.push('/loginadmin')
+          }
           setStore(res.data)
         }
       }
@@ -42,99 +55,167 @@ export const ManageUsers: React.FC = () => {
     }
   }
 
-  const handleUpdate = () => {
-    const hide = message.loading('正在配置中')
-    const userName = form.getFieldValue('userName')
+  const handleUpdate = (username?: string, mail?: string) => {
     const email = form.getFieldValue('email')
+    const password = form.getFieldValue('password')
     const state = form.getFieldValue('state')
     const type = form.getFieldValue('type')
     const User_type = localStorage.getItem('user_type')
     try {
+      message.loading('正在配置中...', 3)
+      setOmitLoading(true)
       if (User_type === '1') {
         adminUsersApi.modifyUsrs({
-          userName: userName,
+          userName: username,
           email: email,
           state: state,
-          type: type
+          type: type,
+          password: password
+        }).then(res => {
+          if (res.errorCode === statusCode.success) {
+            message.success('配置成功')
+            if (email) {
+              notification.open({
+                message: '提示',
+                description: '如果修改了邮箱，请前往邮箱进行验证!否则不更新！',
+                icon: <ApiFilled style={{ color: '#108ee9' }} />,
+                duration: 3
+              })
+            }
+            loadPage()
+          } else if (res.errorCode === statusCode.tooFrequently) {
+            message.error('操作过于频繁，请稍后再试！')
+          }
         })
-        handleUpdateModalVisible(false);
-        setCurrentRow(undefined)
-        hide()
-        message.success('配置成功')
-        loadPage()
       } else if (User_type === '2') {
         superAdminUsersApi.modifyUsrs({
-          userName: userName,
+          userName: username,
           email: email,
           state: state,
-          type: type
+          type: type,
+          password: password
+        }).then(res => {
+          if (res.errorCode === statusCode.success) {
+            message.success('配置成功')
+            if (email) {
+              notification.open({
+                message: '提示',
+                description: '如果修改了邮箱，请前往邮箱进行验证!否则不更新！',
+                icon: <ApiFilled style={{ color: '#108ee9' }} />,
+                duration: 3
+              })
+            }
+            loadPage()
+          } else if (res.errorCode === statusCode.tooFrequently) {
+            message.error('操作过于频繁，请稍后再试！')
+          }
         })
-        handleUpdateModalVisible(false);
-        setCurrentRow(undefined)
-        hide()
-        message.success('配置成功')
-        loadPage()
       }
     } catch (err) {
       message.error('配置失败请重试！')
+    } finally {
+      setOmitLoading(false)
     }
   }
 
   const UpdateForm = (record: IAllUsersInfo) => {
-    console.log('状态', record.state)
-    console.log('邮箱的值', record.email)
     return (
       <Fragment>
         <Form
           form={form}
-          layout="vertical"
+          layout="inline"
           style={{ padding: 20 }}
           key='modifyForm'
+          initialValues={{
+            email: record.email,
+            state: record.state
+          }}
         >
           <Modal
             title={<strong>信息编辑</strong>}
             width={640}
             visible={updateModalVisible}
+            okButtonProps={(auth === "1" && record.type === 1) || (auth === "2" && record.type === 2) ? { disabled: true } : { disabled: false }}
             destroyOnClose
             cancelText="取消"
             okText="提交"
             key='modify'
+            centered
             onCancel={() => {
               handleUpdateModalVisible(false);
               setCurrentRow(undefined)
             }}
-            onOk={handleUpdate}
+            onOk={() => {
+              if (record.email === form.getFieldValue('email')) {
+                message.error('邮箱重复了！')
+              } else {
+                handleUpdateModalVisible(false);
+                setCurrentRow(undefined)
+                handleUpdate(record.userName, record.email)
+              }
+            }}
+          // footer={[
+          //   <Button key='cancel'>取消</Button>,
+          //   <Button key='ok' type='primary' disabled={}>提交</Button>
+          // ]}
           >
-            <Row key='Users' style={{ padding: '12px' }}>
-              <Col span={8} key='state'>
+            {((auth === "1" && record.type === 1) || (auth === "2" && record.type === 2)) && (
+              <Alert type='warning'
+                message="同等级管理员不允许相互修改"
+              />
+            )}
+            <Row key='state' style={{ padding: '12px' }}>
+              <Col span={12} key='state' style={{ marginTop: 20 }}>
                 <FormItem
                   label={<strong><h3>状态</h3></strong>}
                   colon={false}
                   name='state'
                   key='state'
                 >
-                  <Input />
+                  <RadioGroup value={record.state} buttonStyle='solid' style={{ marginLeft: 10, marginBottom: 20 }}
+                    disabled={(auth === "1" && record.type === 1) || (auth === "2" && record.type === 2) ? true : false}>
+                    <Row key='useable'>
+                      <Col>
+                        <Radio.Button value={0}>可用</Radio.Button>
+                      </Col>
+                      <Col>
+                        <Radio.Button value={-1}>注销</Radio.Button>
+                      </Col>
+                    </Row>
+                  </RadioGroup>
                 </FormItem>
               </Col>
-              <Col span={8} key='mail' style={{ marginLeft: 80 }}>
+            </Row>
+            <Row key='email' style={{ padding: '12px' }}>
+              <Col span={12} key='email' >
                 <FormItem
                   label={<strong><h3>邮箱</h3></strong>}
                   colon={false}
-                  name='mail'
-                  key='mail'
-                  rules={[
-                    ({ getFieldValue }) => ({
-                      validator(_, value) {
-                        if (record.email === value) {
-                          return Promise.reject(new Error('重复邮箱！'));
-                        }
-                        return Promise.resolve();
-                      },
-                    }),
-                  ]}
-                  hasFeedback
+                  name='email'
+                  key='email'
+                  rules={[{
+                    validator: (_, value) => {
+                      if (record.email === value) {
+                        return Promise.reject(new Error("请勿填入重复邮箱！"))
+                      } else {
+                        return Promise.resolve()
+                      }
+                    }
+                  }]}
                 >
-                  <Input />
+                  <Input disabled={(auth === "1" && record.type === 1) || (auth === "2" && record.type === 2) ? true : false} />
+                </FormItem>
+              </Col>
+            </Row>
+            <Row key='password' style={{ padding: '12px' }}>
+              <Col span={12} key='password' >
+                <FormItem
+                  label={<strong><h3>密码</h3></strong>}
+                  colon={false}
+                  name='password'
+                  key='password'
+                >
+                  <Input disabled={(auth === "1" && record.type === 1) || (auth === "2" && record.type === 2) ? true : false} />
                 </FormItem>
               </Col>
             </Row>
@@ -143,8 +224,9 @@ export const ManageUsers: React.FC = () => {
       </Fragment>
     )
   }
+
   return (
-    <Card key='UserManage-Container'>
+    <div key='UserManage-Container' style={{ padding: 24, margin: 0, height: 400, background: "#fff" }}>
       <Table
         pagination={{ pageSize: 5 }}
         size='middle'
@@ -170,13 +252,57 @@ export const ManageUsers: React.FC = () => {
             dataIndex: 'state',
             key: 'state',
             align: 'center',
+            render: (_: any, record: IAllUsersInfo) => {
+              if (record.state === 0) {
+                return (
+                  <Tag color='green'>可用</Tag>
+                )
+              } else {
+                return (
+                  <Tag color='grey'>注销</Tag>
+                )
+              }
+            }
 
           },
           {
             title: "用户角色",
             dataIndex: 'type',
             key: 'type',
-            align: 'center'
+            align: 'center',
+            render: (_: any, record: IAllUsersInfo) => {
+              if (record.type === 1) {
+                if (record.state !== -1) {
+                  return (
+                    <Tag color='geekblue'>管理员</Tag>
+                  )
+                } else {
+                  return (
+                    <Tag color='grey'>管理员</Tag>
+                  )
+                }
+              } else if (record.type === 2) {
+                if (record.state !== -1) {
+                  return (
+                    <Tag color='volcano'>超级管理员</Tag>
+                  )
+                } else {
+                  return (
+                    <Tag color='grey'>超级管理员</Tag>
+                  )
+                }
+              } else {
+                if (record.state !== -1) {
+                  return (
+                    <Tag color='pink'>普通用户</Tag>
+                  )
+                } else {
+                  return (
+                    <Tag color='grey'>普通用户</Tag>
+                  )
+                }
+              }
+            }
           },
           {
             title: "操作",
@@ -203,6 +329,6 @@ export const ManageUsers: React.FC = () => {
       {currentRow && <UpdateForm email={currentRow.email} hobby={currentRow.hobby}
         id={currentRow.id} password={currentRow.password} state={currentRow.state}
         type={currentRow.type} userName={currentRow.userName} />}
-    </Card>
+    </div>
   )
 }

@@ -1,4 +1,4 @@
-import { Button, Card, Col, Form, Input, notification, Row, Spin } from "antd"
+import { Button, Card, Col, Form, Input, message, notification, Row, Spin } from "antd"
 import FormItem from "antd/lib/form/FormItem"
 import React, { useState } from "react"
 import { statusCode } from "../../common/model/statusCode"
@@ -6,12 +6,13 @@ import { RiskReport } from "../RiskReport"
 import { analysisApi } from "./api/analysis"
 import { ApiFilled } from '@ant-design/icons';
 import { IParamsRiskReportFeedBackInfo } from "./model/analysis"
+import { useHistory } from "react-router"
 
 export const FrcAnalysis: React.FC = () => {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState<boolean>(false)
   const [isShow, setShow] = useState<boolean>(false)
-
+  const history = useHistory()
   const [store, setStore] = useState<IParamsRiskReportFeedBackInfo>()
 
 
@@ -28,16 +29,28 @@ export const FrcAnalysis: React.FC = () => {
             gpName: gpName
           })
           res.errorCode === statusCode.success && setStore(res)
+          if (res.errorCode === statusCode.tokenIsNotVaild) {
+            message.error('登录信息过期，请重新登陆！')
+            history.push('/login')
+          }
         } else if (type === '1') {
           const res = await analysisApi.getAdminRiskReport({
             gpName: gpName
           })
           res.errorCode === statusCode.success && setStore(res)
+          if (res.errorCode === statusCode.tokenIsNotVaild) {
+            message.error('登录信息过期，请重新登陆！')
+            history.push('/loginadmin')
+          }
         } else if (type === '2') {
           const res = await analysisApi.getSuperAdminRiskReport({
             gpName: gpName
           })
           res.errorCode === statusCode.success && setStore(res)
+          if (res.errorCode === statusCode.tokenIsNotVaild) {
+            message.error('登录信息过期，请重新登陆！')
+            history.push('/loginadmin')
+          }
         }
       } catch (err) {
         console.log(err)

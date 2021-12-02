@@ -17,7 +17,6 @@ export const RegistFeedBack: React.FC = () => {
   const code = queryParams('register_result')
   code === "1" && setShow(true)
 
-
   const handleChange = (v: number) => {
     v === 1 ? history.push('/login') : history.push('/register')
   }

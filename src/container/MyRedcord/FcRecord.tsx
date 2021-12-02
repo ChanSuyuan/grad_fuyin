@@ -1,4 +1,4 @@
-import { Table } from "antd"
+import { message, Table } from "antd"
 import React, { useEffect, useState } from "react"
 import { recordApi } from "./api/record"
 import { IRecordInfo } from "./model/record"
@@ -13,9 +13,14 @@ export const FCRecord = () => {
   }, [])
   const getRes = async () => {
     setLoading(true)
-    const res = await recordApi.getRecordInfo(1)
-    setRes(res.data)
-    setLoading(false)
+    try {
+      const res = await recordApi.getRecordInfo(1)
+      setRes(res.data)
+    } catch (err) {
+      message.error('出现了意想不到的问题', err)
+    } finally {
+      setLoading(false)
+    }
   }
   return (
     <>

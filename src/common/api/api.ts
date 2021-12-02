@@ -2,7 +2,6 @@
  * @file fy_api
  * 
  */
-
 import axios, { AxiosRequestConfig } from 'axios'
 import queryString from 'query-string'
 import { APIError } from '../model/api'

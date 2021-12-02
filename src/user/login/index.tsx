@@ -11,7 +11,6 @@ import { observer } from 'mobx-react'
 import { notify } from '../../common/message/Notification'
 import GlobalFooter from '../../common/component/GlobalFooter'
 import { config } from '../../common/utils/config'
-import axios from 'axios'
 
 const FormItem = Form.Item
 

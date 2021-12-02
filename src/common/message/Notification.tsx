@@ -21,5 +21,12 @@ export const notify = (errorCode: any) => {
       icon: <ApiFilled style={{ color: 'red' }} />,
       duration: 3
     })
+  } else if (errorCode === statusCode.disabledAccount) {
+    notification.open({
+      message: Message.DisabledAccount,
+      description: Description.DiabledMessage,
+      icon: <ApiFilled style={{ color: 'red' }} />,
+      duration: 3
+    })
   }
 }

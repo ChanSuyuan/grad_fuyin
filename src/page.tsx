@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import { RegistFeedBack } from './common/component/BackResult'
+import { UpdateEmailFeedBack } from './common/component/UpdateEmailResult'
 import { DefaultLayout } from './container/Layout'
 import { AdminLogin } from './user/adminLogin'
 
@@ -23,6 +24,7 @@ export class Page extends React.Component {
 					<Route path="/reset" component={Reset} />
 					<Route path="/resetPwd" component={ResetPwd} />
 					<Route path="/register_feedback" component={RegistFeedBack} />
+					<Route path="/update_email_feedback" component={UpdateEmailFeedBack} />
 				</Switch>
 			</Router>
 		)

@@ -22,5 +22,8 @@ export enum statusCode {
 
   // stock
   noInfoOffered = 418,
-  ParamsWrong = 400
+  ParamsWrong = 400,
+
+  // authonToken
+  tokenIsNotVaild = 401
 }
