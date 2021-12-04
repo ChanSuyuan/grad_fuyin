@@ -1,5 +1,7 @@
 import { message, Table } from "antd"
 import React, { useEffect, useState } from "react"
+import { useHistory } from "react-router-dom"
+import { statusCode } from "../../common/model/statusCode"
 import { recordApi } from "./api/record"
 import { IRecordInfo } from "./model/record"
 
@@ -8,14 +10,38 @@ export const FCRecord = () => {
 
   const [loading, setLoading] = useState<boolean>(false)
   const [res, setRes] = useState<IRecordInfo[]>()
+  const history = useHistory()
+  const userType = localStorage.getItem('user_type')
+
   useEffect(() => {
     getRes()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const getRes = async () => {
     setLoading(true)
     try {
-      const res = await recordApi.getRecordInfo(1)
-      setRes(res.data)
+      if (userType === '0') {
+        const res = await recordApi.getRecordInfo(1)
+        if (res.errorCode === statusCode.tokenIsNotVaild) {
+          message.error('登录信息过期，请重新登陆！')
+          history.push('/login')
+        }
+        setRes(res.data)
+      } else if (userType === '1') {
+        const res = await recordApi.adminGetRecordInfo(1)
+        if (res.errorCode === statusCode.tokenIsNotVaild) {
+          message.error('登录信息过期，请重新登陆！')
+          history.push('/loginadmin')
+        }
+        setRes(res.data)
+      } else if (userType === '2') {
+        const res = await recordApi.superAdminGetRecordInfo(1)
+        if (res.errorCode === statusCode.tokenIsNotVaild) {
+          message.error('登录信息过期，请重新登陆！')
+          history.push('/loginadmin')
+        }
+        setRes(res.data)
+      }
     } catch (err) {
       message.error('出现了意想不到的问题', err)
     } finally {
@@ -24,10 +50,12 @@ export const FCRecord = () => {
   }
   return (
     <>
-      <div className="site-layout-background" style={{ padding: 24, margin: 0, minHeight: 280, background: "#fff" }} >
+      <div className="site-layout-background" style={{ padding: 24, margin: 0, height: 350, background: "#fff" }} >
         <Table
           loading={loading}
           dataSource={res}
+          size="small"
+          pagination={{ pageSize: 5 }}
           columns={[
             {
               title: '标题',

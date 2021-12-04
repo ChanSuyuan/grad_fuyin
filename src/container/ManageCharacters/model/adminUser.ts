@@ -1,20 +1,20 @@
 export interface IAllUsersFB {
   data: IAllUsersInfo[]
-  erroCode: number
+  errorCode: number
   ok?: boolean
   text?: string
 }
 
 export interface IAllUsersInfo {
   creatTime?: string
-  email: string
-  hobby: string
-  id: number
-  password: string
-  state: number
-  type: number
+  email?: string
+  hobby?: string
+  id?: number
+  password?: string
+  state?: number
+  type?: number
   updateTime?: string
-  userName: string
+  userName?: string
 }
 
 export interface IModifyParams {

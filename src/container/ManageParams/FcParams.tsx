@@ -1,5 +1,6 @@
 import { Button, Card, Col, Form, Input, message, Row } from "antd"
 import React from "react"
+import { useHistory } from "react-router"
 import { statusCode } from "../../common/model/statusCode"
 import { adminParamsApi } from "./api/adminParams"
 import { superAdminParamsApi } from "./api/superAdminParams"
@@ -9,6 +10,7 @@ const FormItem = Form.Item
 
 export const FcParams = () => {
   const [form] = Form.useForm()
+  const history = useHistory()
 
   const handleOk = () => {
     const equation = form.getFieldValue('equation')
@@ -27,7 +29,10 @@ export const FcParams = () => {
           if (res.errorCode === statusCode.success) {
             message.success('提交成功!')
           }
-        } else {
+        } else if (res.errorCode === statusCode.tokenIsNotVaild) {
+          history.push('/loginadmin')
+        }
+        else {
           message.error('服务器出现故障！请稍后。。。。')
         }
       })

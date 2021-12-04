@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { FrownOutlined } from '@ant-design/icons';
-import { Button, Form, Input, notification, Result } from 'antd'
+import { Button, Form, Input, notification, Result, Tooltip } from 'antd'
 import { statusCode } from '../../common/model/statusCode';
 import { behaviorApi } from '../api/account';
 import GlobalFooter from '../../common/component/GlobalFooter';
@@ -9,6 +9,7 @@ import { config } from '../../common/utils/config';
 const FormItem = Form.Item
 // eslint-disable-next-line
 const patternReg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+const passwordReg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-,./?#]).{8,16}$/
 
 export const Regist: React.FC = () => {
   const [form] = Form.useForm()
@@ -68,15 +69,20 @@ export const Regist: React.FC = () => {
                     message: '请输入FYFC用户名!'
                   }]}
                   hasFeedback>
-                  <Input type="username" placeholder={`FYFC用户名`} size="large" />
+                  <Tooltip title='请输入小于16位的用户名'>
+                    <Input type="username" placeholder={`FYFC用户名`} size="large" />
+                  </Tooltip>
                 </FormItem>
                 <FormItem name="password"
                   rules={[{
                     required: true,
-                    message: '请输入FYFC密码!'
+                    pattern: passwordReg,
+                    message: '请输入正确格式的密码！'
                   }]}
                   hasFeedback>
-                  <Input type="password" placeholder={`FYFC密码`} size="large" />
+                  <Tooltip title='8~16 位，包含数字、大小写字母和字符  # ? ! @ $ % ^ & * - , . / ?'>
+                    <Input type="password" placeholder={`FYFC密码`} size="large" />
+                  </Tooltip>
                 </FormItem>
                 <FormItem name="email" hasFeedback
                   rules={[{
@@ -85,7 +91,7 @@ export const Regist: React.FC = () => {
                     message: '请输入正确的邮箱地址！'
                   }]}
                 >
-                  <Input type="email" placeholder={`邮箱密保`} size="large" />
+                  <Input type="email" placeholder={`邮箱`} size="large" />
                 </FormItem>
                 <FormItem name="regist">
                   <Button type="primary" htmlType="submit" className="login-form-button" onClick={handleOk}>

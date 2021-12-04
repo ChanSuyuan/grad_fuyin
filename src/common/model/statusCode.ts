@@ -9,7 +9,8 @@ export enum statusCode {
   disabledAccount = 413,
   // the password or the username is wrong
   wrongParams = 414,
-
+  // not the right auth
+  notUserAsk = 403,
 
   // The registered user name is duplicate
   registFailure = 416,

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import ApiFilled from '@ant-design/icons/lib/icons/ApiFilled'
-import { Alert, Button, Col, Form, Input, message, Modal, notification, Radio, Row, Select, Table, Tag } from 'antd'
+import { Alert, Col, Form, Input, message, Modal, notification, Radio, Row, Table, Tag } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import React, { Fragment, useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
@@ -20,10 +20,9 @@ export const ManageUsers: React.FC = () => {
   const [store, setStore] = useState<IAllUsersInfo[]>()
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false)
   const [currentRow, setCurrentRow] = useState<IAllUsersInfo>()
-  const [omitLoading, setOmitLoading] = useState<boolean>(false)
+  // const [omitLoading, setOmitLoading] = useState<boolean>(false)
   const auth = localStorage.getItem('user_type')
   const history = useHistory()
-
 
   useEffect(() => {
     loadPage()
@@ -36,13 +35,13 @@ export const ManageUsers: React.FC = () => {
         setLoading(true)
         if (auth === '1') {
           const res = await adminUsersApi.getAllUser()
-          if (res.erroCode === statusCode.tokenIsNotVaild) {
+          if (res.errorCode === statusCode.tokenIsNotVaild) {
             history.push('/loginadmin')
           }
           setStore(res.data)
         } else if (auth === '2') {
           const res = await superAdminUsersApi.getAllUser()
-          if (res.erroCode === statusCode.tokenIsNotVaild) {
+          if (res.errorCode === statusCode.tokenIsNotVaild) {
             history.push('/loginadmin')
           }
           setStore(res.data)
@@ -63,7 +62,7 @@ export const ManageUsers: React.FC = () => {
     const User_type = localStorage.getItem('user_type')
     try {
       message.loading('正在配置中...', 3)
-      setOmitLoading(true)
+      // setOmitLoading(true)
       if (User_type === '1') {
         adminUsersApi.modifyUsrs({
           userName: username,
@@ -114,7 +113,7 @@ export const ManageUsers: React.FC = () => {
     } catch (err) {
       message.error('配置失败请重试！')
     } finally {
-      setOmitLoading(false)
+      // setOmitLoading(false)
     }
   }
 
@@ -159,9 +158,9 @@ export const ManageUsers: React.FC = () => {
           //   <Button key='ok' type='primary' disabled={}>提交</Button>
           // ]}
           >
-            {((auth === "1" && record.type === 1) || (auth === "2" && record.type === 2)) && (
+            {((auth === "1" && (record.type === 1 || record.type === 2)) || (auth === "2" && record.type === 2)) && (
               <Alert type='warning'
-                message="同等级管理员不允许相互修改"
+                message="同等级管理员不允许相互修改,管理员不允许修改超级管理员信息！"
               />
             )}
             <Row key='state' style={{ padding: '12px' }}>
@@ -173,7 +172,7 @@ export const ManageUsers: React.FC = () => {
                   key='state'
                 >
                   <RadioGroup value={record.state} buttonStyle='solid' style={{ marginLeft: 10, marginBottom: 20 }}
-                    disabled={(auth === "1" && record.type === 1) || (auth === "2" && record.type === 2) ? true : false}>
+                    disabled={(auth === "1" && (record.type === 1 || record.type === 2)) || (auth === "2" && record.type === 2) ? true : false}>
                     <Row key='useable'>
                       <Col>
                         <Radio.Button value={0}>可用</Radio.Button>
@@ -203,7 +202,7 @@ export const ManageUsers: React.FC = () => {
                     }
                   }]}
                 >
-                  <Input disabled={(auth === "1" && record.type === 1) || (auth === "2" && record.type === 2) ? true : false} />
+                  <Input disabled={(auth === "1" && (record.type === 1 || record.type === 2)) || (auth === "2" && record.type === 2) ? true : false} />
                 </FormItem>
               </Col>
             </Row>
@@ -215,7 +214,7 @@ export const ManageUsers: React.FC = () => {
                   name='password'
                   key='password'
                 >
-                  <Input disabled={(auth === "1" && record.type === 1) || (auth === "2" && record.type === 2) ? true : false} />
+                  <Input disabled={(auth === "1" && (record.type === 1 || record.type === 2)) || (auth === "2" && record.type === 2) ? true : false} />
                 </FormItem>
               </Col>
             </Row>

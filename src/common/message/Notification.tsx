@@ -28,5 +28,19 @@ export const notify = (errorCode: any) => {
       icon: <ApiFilled style={{ color: 'red' }} />,
       duration: 3
     })
+  } else if (errorCode === statusCode.registFailure) {
+    notification.open({
+      message: Message.RegisterFailed,
+      description: Description.RegisterFailedMessage,
+      icon: <ApiFilled style={{ color: 'red' }} />,
+      duration: 3
+    })
+  } else if (errorCode === statusCode.notUserAsk) {
+    notification.open({
+      message: Message.WrongInform,
+      description: Description.WrongInform,
+      icon: <ApiFilled style={{ color: 'red' }} />,
+      duration: 3
+    })
   }
 }

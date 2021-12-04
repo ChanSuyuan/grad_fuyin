@@ -21,14 +21,20 @@ export const HeaderCustom: React.FC<HeaderCustomProps> = (props) => {
     const userType = localStorage.getItem('user_type')
     if (userType === "0") {
       behaviorApi.logout()
+      localStorage.removeItem('user_token')
+      localStorage.removeItem('user_type')
+      history.push('/login')
     } else if (userType === '1') {
       adminApi.logOut()
+      localStorage.removeItem('user_token')
+      localStorage.removeItem('user_type')
+      history.push('/loginadmin')
     } else if (userType === '2') {
       superAdminApi.logOut()
+      localStorage.removeItem('user_token')
+      localStorage.removeItem('user_type')
+      history.push('/loginadmin')
     }
-    localStorage.removeItem('user_token')
-    localStorage.removeItem('user_type')
-    history.push('/login')
     message.success('登出成功！')
   }
 

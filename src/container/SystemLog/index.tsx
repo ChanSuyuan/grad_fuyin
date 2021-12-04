@@ -1,4 +1,4 @@
-import { Card, Table } from "antd"
+import { Table } from "antd"
 import React, { Fragment, useEffect, useState } from "react"
 import { adminSystemApi } from "./api/admin"
 import { superAdminSystemApi } from "./api/superAdmin"
@@ -33,7 +33,7 @@ export const SystemLog: React.FC = () => {
 
   return (
     <Fragment>
-      <Card>
+      <div style={{ padding: 24, margin: 0, height: 400, background: "#fff" }}>
         <Table
           pagination={{ pageSize: 5 }}
           bordered={true}
@@ -41,6 +41,12 @@ export const SystemLog: React.FC = () => {
           loading={loading}
           dataSource={store}
           columns={[
+            {
+              title: '用户名',
+              key: 'userName',
+              dataIndex: 'userName',
+              align: 'center'
+            },
             {
               title: 'IP地址',
               key: 'ip',
@@ -73,7 +79,7 @@ export const SystemLog: React.FC = () => {
             }
           ]}
         />
-      </Card>
+      </div>
     </Fragment>
   )
 }
