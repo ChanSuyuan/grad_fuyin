@@ -6,6 +6,8 @@ import axios, { AxiosRequestConfig } from 'axios'
 import queryString from 'query-string'
 import { APIError } from '../model/api'
 
+export const userType = localStorage.getItem('user_type')
+
 let token = window.localStorage.getItem('user_token')
 if (token) {
   axios.defaults.headers.common['Authorization'] = token

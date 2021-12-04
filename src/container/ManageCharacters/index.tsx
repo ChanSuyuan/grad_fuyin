@@ -56,75 +56,103 @@ export const ManageCharacters: React.FC = () => {
     }
   }
 
+  const handleUpdate = (username?: string, type?: number) => {
+    try {
+      message.loading('正在配置中。。。', 3)
+      const User_type = localStorage.getItem('user_type')
+      if (User_type === '1') {
+        adminUsersApi.modifyUsrs({
+          userName: username,
+          type: type
+        }).then(res => {
+          if (res.errorCode === statusCode.success) {
+            message.success('配置成功')
+            loadPage()
+          } else if (res.errorCode === statusCode.tooFrequently) {
+            message.error('操作过于频繁，请稍后再试！')
+          }
+        })
+      } else if (User_type === '2') {
+        superAdminUsersApi.modifyUsrs({
+          userName: username,
+          type: type
+        }).then(res => {
+          if (res.errorCode === statusCode.success) {
+            message.success('配置成功')
+            loadPage()
+          } else if (res.errorCode === statusCode.tooFrequently) {
+            message.error('操作过于频繁，请稍后再试！')
+          }
+        })
+      }
+    } catch (err) {
+      message.error('配置失败请重试！')
+    }
+  }
+
   const UpdateForm = (record: IAllUsersInfo) => {
     return (
       <Fragment>
-        <Form
-          form={form}
-          style={{ padding: 20 }}
-          key='modifyForm'
-          initialValues={{
-            email: record.email,
-            state: record.state
+        <Modal
+          title={<strong>信息编辑</strong>}
+          width={640}
+          visible={updateModalVisible}
+          okButtonProps={(auth === "1" && record.type === 1) || (auth === "2" && record.type === 2) ? { disabled: true } : { disabled: false }}
+          destroyOnClose
+          cancelText="取消"
+          okText="提交"
+          key='modify'
+          centered
+          onCancel={() => {
+            handleUpdateModalVisible(false);
+            setCurrentRow(undefined)
           }}
-        >
-          <Modal
-            title={<strong>信息编辑</strong>}
-            width={640}
-            visible={updateModalVisible}
-            okButtonProps={(auth === "1" && record.type === 1) || (auth === "2" && record.type === 2) ? { disabled: true } : { disabled: false }}
-            destroyOnClose
-            cancelText="取消"
-            okText="提交"
-            key='modify'
-            centered
-            onCancel={() => {
-              handleUpdateModalVisible(false);
-              setCurrentRow(undefined)
-            }}
-            onOk={() => {
-              if (record.email === form.getFieldValue('email')) {
-                message.error('邮箱重复了！')
-              } else {
-                handleUpdateModalVisible(false);
-                setCurrentRow(undefined)
-                // handleUpdate(record.userName, record.email)
-              }
-            }}
+          onOk={() => {
+            handleUpdateModalVisible(false);
+            setCurrentRow(undefined)
+            handleUpdate(record.userName, record.type)
+          }}
 
+        >
+          <Form
+            form={form}
+            style={{ padding: 20 }}
+            layout='vertical'
+            key='modifyForm'
+            initialValues={{
+              email: record.email,
+              state: record.state
+            }}
           >
             {((auth === "1" && (record.type === 1 || record.type === 2)) || (auth === "2" && record.type === 2)) && (
               <Alert type='warning'
                 message="同等级管理员不允许相互修改,管理员不允许修改超级管理员信息！"
+                style={{ marginBottom: 10 }}
               />
             )}
-            <Row key='state' style={{ padding: '12px' }}>
-              <Col span={12} key='state' style={{ marginTop: 20 }}>
-                <FormItem
-                  label={<strong><h3>身份</h3></strong>}
-                  colon={false}
-                  name='state'
-                  key='state'
-                >
-                  <RadioGroup value={record.state} buttonStyle='solid'
-                    disabled={(auth === "1" && (record.type === 1 || record.type === 2)) || (auth === "2" && record.type === 2) ? true : false}>
-                    <Row key='authorize'>
-                      <Col>
-                        <Radio.Button value={0}>普通用户</Radio.Button>
-                      </Col>
-                      <Col>
-                        <Radio.Button value={1}>管理员</Radio.Button>
-                      </Col>
-                      <Col>
-                        <Radio.Button value={2}>超级管理员</Radio.Button>
-                      </Col>
-                    </Row>
-                  </RadioGroup>
-                </FormItem>
-              </Col>
-            </Row>
-          </Modal>
-        </Form>
+            <FormItem
+              label={<strong><h3>身份</h3></strong>}
+              colon={false}
+              name='state'
+              key='state'
+            >
+              <RadioGroup value={record.state} buttonStyle='solid'
+                disabled={(auth === "1" && (record.type === 1 || record.type === 2)) || (auth === "2" && record.type === 2) ? true : false}>
+                <Row key='authorize'>
+                  <Col>
+                    <Radio.Button value={0}>普通用户</Radio.Button>
+                  </Col>
+                  <Col>
+                    <Radio.Button value={1}>管理员</Radio.Button>
+                  </Col>
+                  <Col>
+                    <Radio.Button value={2}>超级管理员</Radio.Button>
+                  </Col>
+                </Row>
+              </RadioGroup>
+            </FormItem>
+          </Form>
+        </Modal>
       </Fragment>
     )
   }
