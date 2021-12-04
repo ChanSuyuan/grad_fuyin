@@ -9,7 +9,7 @@ import { config } from '../../common/utils/config';
 const FormItem = Form.Item
 // eslint-disable-next-line
 const patternReg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-const passwordReg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-,./?#]).{8,16}$/
+const passwordReg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-,./?]).{8,16}$/
 
 export const Regist: React.FC = () => {
   const [form] = Form.useForm()
@@ -63,27 +63,28 @@ export const Regist: React.FC = () => {
             <h1 className="text-form">融资风控后台管理注册系统</h1>
             <div className="form-wrapper">
               <Form form={form}>
-                <FormItem name="userName"
-                  rules={[{
-                    required: true,
-                    message: '请输入FYFC用户名!'
-                  }]}
-                  hasFeedback>
-                  <Tooltip title='请输入小于16位的用户名'>
+                <Tooltip title='请输入小于16位的用户名'>
+                  <FormItem name="userName"
+                    rules={[{
+                      required: true,
+                      message: '请输入FYFC用户名!',
+                    }]}
+                    tooltip="请输入小于16位的用户名"
+                    hasFeedback>
                     <Input type="username" placeholder={`FYFC用户名`} size="large" />
-                  </Tooltip>
-                </FormItem>
-                <FormItem name="password"
-                  rules={[{
-                    required: true,
-                    pattern: passwordReg,
-                    message: '请输入正确格式的密码！'
-                  }]}
-                  hasFeedback>
-                  <Tooltip title='8~16 位，包含数字、大小写字母和字符  # ? ! @ $ % ^ & * - , . / ?'>
-                    <Input type="password" placeholder={`FYFC密码`} size="large" />
-                  </Tooltip>
-                </FormItem>
+                  </FormItem>
+                </Tooltip>
+                <Tooltip title='8~16 位，包含数字、大小写字母和字符  # ? ! @ $ % ^ & * - , . / ?'>
+                  <FormItem name="password"
+                    rules={[{
+                      required: true,
+                      pattern: passwordReg,
+                      message: '请输入正确格式的密码！'
+                    }]}
+                    hasFeedback>
+                    <Input.Password placeholder={`FYFC密码`} size="large" />
+                  </FormItem>
+                </Tooltip>
                 <FormItem name="email" hasFeedback
                   rules={[{
                     required: true,

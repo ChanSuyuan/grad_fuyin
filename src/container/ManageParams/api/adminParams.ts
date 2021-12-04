@@ -1,5 +1,5 @@
 import { FYAPI } from "../../../common/api/api";
-import { IAdminCustomFrc, IAdminCustomFrcFeedBack, IAdminCustomRisk, IAdminCustomRiskFeedBack, IAdminGetMatchDegreeFeedBack } from "../model/adminParams";
+import { IAdminCustomFrc, IAdminCustomFrcFeedBack, IAdminCustomRisk, IAdminCustomRiskFeedBack, IAdminGetMatchDegreeFeedBack, IModifyMatchDegree, IModifyMatchDegreeFeedBack } from "../model/adminParams";
 
 const baseURL = '/admin'
 export class AdminParmsApi {
@@ -20,6 +20,12 @@ export class AdminParmsApi {
    */
   getMatchDegree(): Promise<IAdminGetMatchDegreeFeedBack> {
     return FYAPI.GET(`${baseURL}/getrzppd`)
+  }
+  /**
+   * @name 管理员修改融资匹配度
+   */
+  modifyMatchDegree(params: IModifyMatchDegree[]): Promise<IModifyMatchDegreeFeedBack> {
+    return FYAPI.POST(`${baseURL}/updaterzppd`, params)
   }
 }
 

@@ -6,6 +6,7 @@ import { IAdminGetMatchDegreeFeedBack, IMatchDegree } from '../model/adminParams
 import { adminParamsApi } from '../api/adminParams';
 import { statusCode } from '../../../common/model/statusCode';
 import { useHistory } from 'react-router';
+import _ from 'lodash';
 
 const transFormDegree: any = {
   0: <div style={{ color: 'red' }}>较弱</div>,
@@ -25,13 +26,14 @@ export const MatchDegree = () => {
   const [store, setStore] = useState<IAdminGetMatchDegreeFeedBack>()
   const history = useHistory()
   const userType = localStorage.getItem('user_type')
+  const [resArr, setResArr] = useState<IMatchDegree[]>()
 
   useEffect(() => {
-    getMatchDegree()
+    loadPage()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const getMatchDegree = async () => {
+  const loadPage = async () => {
     setLoading(true)
     try {
       if (userType === '1' || userType === '2') {
@@ -41,6 +43,7 @@ export const MatchDegree = () => {
           history.push('/loginadmin')
         }
         setStore(res)
+        setResArr(res.data)
       }
     } catch (err) {
       console.log(err)
@@ -48,6 +51,41 @@ export const MatchDegree = () => {
       setLoading(false)
     }
   }
+
+  const handleUpdate = (id: number) => {
+    const cznl = form.getFieldValue('debt_ability')
+    const ylnl = form.getFieldValue('profit_ability')
+    const bz = form.getFieldValue('bz_ability')
+    const ppd = form.getFieldValue('ppd')
+    const User_type = localStorage.getItem('user_type')
+    // const resArrFinal: IMatchDegree[] = resArr
+
+    try {
+      message.loading('正在配置中。。。', 3)
+      const resArrFinal = _.cloneDeep(resArr)
+      // eslint-disable-next-line array-callback-return
+      resArrFinal.map((item: IMatchDegree) => {
+        if (item.id === id) {
+          item.cznl = cznl
+          item.ylnl = ylnl
+          item.bz = bz
+          item.ppd = ppd
+        }
+      })
+      if (User_type === '1') {
+        adminParamsApi.modifyMatchDegree(resArrFinal)
+          .then(res => {
+            if (res.errorCode === statusCode.success) {
+              loadPage()
+              message.success('配置成功')
+            }
+          })
+      }
+    } catch (err) {
+
+    }
+  }
+
 
   const UpdateForm = (record: IMatchDegree) => {
     return (
@@ -65,6 +103,11 @@ export const MatchDegree = () => {
             handleUpdateModalVisible(false)
             setCurrentRow(undefined)
           }}
+          onOk={() => {
+            handleUpdateModalVisible(false);
+            setCurrentRow(undefined)
+            handleUpdate(record.id)
+          }}
 
         >
           <Form
@@ -75,7 +118,9 @@ export const MatchDegree = () => {
             colon={false}
             initialValues={{
               profit_ability: record.ylnl,
-              debt_ability: record.cznl
+              debt_ability: record.cznl,
+              bz_ability: record.bz,
+              ppd: record.ppd
             }}
           >
             <FormItem
@@ -85,13 +130,13 @@ export const MatchDegree = () => {
             >
               <RadioGroup value={record.cznl} buttonStyle='solid'>
                 <Row key='cznl'>
-                  <Col>
+                  <Col key='cznl-1'>
                     <Radio.Button value={0}>较弱</Radio.Button>
                   </Col>
-                  <Col>
+                  <Col key='cznl-2'>
                     <Radio.Button value={1}>一般</Radio.Button>
                   </Col>
-                  <Col>
+                  <Col key='cznl-3'>
                     <Radio.Button value={2}>较强</Radio.Button>
                   </Col>
                 </Row>
@@ -115,7 +160,8 @@ export const MatchDegree = () => {
                   </Col>
                 </Row>
               </RadioGroup>
-            </FormItem><FormItem
+            </FormItem>
+            <FormItem
               label={<strong><h3>企业资产与融资金额比例</h3></strong>}
               name='bz_ability'
               key='bz_ability'
@@ -137,7 +183,8 @@ export const MatchDegree = () => {
               }
             >
               <Input style={{ width: '200px' }} />
-            </FormItem><FormItem
+            </FormItem>
+            <FormItem
               label={<strong><h3>融资能力与融资需求匹配度</h3></strong>}
               name='ppd'
               key='ppd'
@@ -162,78 +209,6 @@ export const MatchDegree = () => {
       </Fragment>
     )
   }
-
-  const columns = [
-    {
-      title: '编号',
-      dataIndex: 'id',
-      key: 'id',
-      width: '10%',
-      editable: false,
-      align: 'center' as 'center'
-    },
-    {
-      title: '偿债能力',
-      dataIndex: 'cznl',
-      key: 'cznl',
-      width: '15%',
-      editable: true,
-      align: 'center' as 'center',
-      render: (_: any, v: IMatchDegree) => {
-        return (
-          <span>{transFormDegree[v.cznl]}</span>
-        )
-      }
-    },
-    {
-      title: '盈利能力',
-      dataIndex: 'ylnl',
-      key: 'ylnl',
-      width: '15%',
-      editable: true,
-      align: 'center' as 'center',
-      render: (_: any, v: IMatchDegree) => {
-        return (
-          <span>{transFormDegree[v.ylnl]}</span>
-        )
-      }
-    },
-    {
-      title: '企业资产与融资金额比例',
-      dataIndex: 'bz',
-      key: 'bz',
-      width: '25%',
-      editable: true,
-      align: 'center' as 'center'
-    },
-    {
-      title: '融资能力与融资需求匹配度',
-      dataIndex: 'ppd',
-      key: 'ppd',
-      width: '25%',
-      editable: true,
-      align: 'center' as 'center'
-    },
-    {
-      title: '操作',
-      dataIndex: 'operation',
-      key: 'operation',
-      align: 'center' as 'center',
-      render: (_: any, record: IMatchDegree) => (
-        <Fragment>
-          <a
-            key='operate'
-            onClick={() => {
-              handleUpdateModalVisible(true)
-              setCurrentRow(record)
-            }}
-          >
-            配置
-          </a>
-        </Fragment>
-      )
-    },
-  ];
 
   return (
     <>
@@ -266,21 +241,80 @@ export const MatchDegree = () => {
             </>
           }
         />
-        <Form component={false}>
-          <Table
-            style={{ marginTop: 10, textAlign: 'center' }}
-            bordered
-            size='small'
-            loading={loading}
-            dataSource={store?.data}
-            columns={columns}
-            pagination={{
-              pageSize: 5
-            }}
-          />
-        </Form>
+        <Table
+          style={{ marginTop: 10, textAlign: 'center' }}
+          bordered
+          size='small'
+          loading={loading}
+          dataSource={store?.data}
+          columns={[
+            {
+              title: '编号',
+              dataIndex: 'id',
+              key: 'id',
+              align: 'center',
+              render: (text, record, index) => `${index + 1}`
+            },
+            {
+              title: '偿债能力',
+              dataIndex: 'cznl',
+              key: 'cznl',
+              align: 'center',
+              render: (_: any, v: IMatchDegree) => {
+                return (
+                  <span>{transFormDegree[v.cznl]}</span>
+                )
+              }
+            },
+            {
+              title: '盈利能力',
+              dataIndex: 'ylnl',
+              key: 'ylnl',
+              align: 'center',
+              render: (_: any, v: IMatchDegree) => {
+                return (
+                  <span>{transFormDegree[v.ylnl]}</span>
+                )
+              }
+            },
+            {
+              title: '企业资产与融资金额比例',
+              dataIndex: 'bz',
+              key: 'bz',
+              align: 'center'
+            },
+            {
+              title: '融资能力与融资需求匹配度',
+              dataIndex: 'ppd',
+              key: 'ppd',
+              align: 'center'
+            },
+            {
+              title: '操作',
+              dataIndex: 'operation',
+              key: 'operation',
+              align: 'center',
+              render: (_: any, record: IMatchDegree) => (
+                <Fragment>
+                  <a
+                    key='operate'
+                    onClick={() => {
+                      handleUpdateModalVisible(true)
+                      setCurrentRow(record)
+                    }}
+                  >
+                    配置
+                  </a>
+                </Fragment>
+              )
+            },
+          ]}
+          pagination={{
+            pageSize: 5
+          }}
+        />
       </Card>
-      {currentRow && <UpdateForm id={0} bz={''} cznl={0} ppd={0} ylnl={0} />}
+      {currentRow && <UpdateForm id={currentRow.id} bz={currentRow.bz} cznl={currentRow.cznl} ppd={currentRow.ppd} ylnl={currentRow.ylnl} />}
     </>
   );
 };

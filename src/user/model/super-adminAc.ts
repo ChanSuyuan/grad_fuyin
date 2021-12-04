@@ -7,6 +7,8 @@ export interface ISuperAdminLoginInfo {
   userName: string
   password: string
   hobby?: string
+  code?: string
+  key?: string
 }
 
 export interface ISuperAdminLoginFeedbackInfo {

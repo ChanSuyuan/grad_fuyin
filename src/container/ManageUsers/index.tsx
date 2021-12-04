@@ -120,43 +120,39 @@ export const ManageUsers: React.FC = () => {
   const UpdateForm = (record: IAllUsersInfo) => {
     return (
       <Fragment>
-        <Form
-          form={form}
-          layout="inline"
-          style={{ padding: 20 }}
-          key='modifyForm'
-          initialValues={{
-            email: record.email,
-            state: record.state
+        <Modal
+          title={<strong>信息编辑</strong>}
+          width={640}
+          visible={updateModalVisible}
+          okButtonProps={(auth === "1" && record.type === 1) || (auth === "2" && record.type === 2) ? { disabled: true } : { disabled: false }}
+          destroyOnClose
+          cancelText="取消"
+          okText="提交"
+          key='modify'
+          centered
+          onCancel={() => {
+            handleUpdateModalVisible(false);
+            setCurrentRow(undefined)
           }}
-        >
-          <Modal
-            title={<strong>信息编辑</strong>}
-            width={640}
-            visible={updateModalVisible}
-            okButtonProps={(auth === "1" && record.type === 1) || (auth === "2" && record.type === 2) ? { disabled: true } : { disabled: false }}
-            destroyOnClose
-            cancelText="取消"
-            okText="提交"
-            key='modify'
-            centered
-            onCancel={() => {
+          onOk={() => {
+            if (record.email === form.getFieldValue('email')) {
+              message.error('邮箱重复了！')
+            } else {
               handleUpdateModalVisible(false);
               setCurrentRow(undefined)
+              handleUpdate(record.userName, record.email)
+            }
+          }}
+        >
+          <Form
+            form={form}
+            layout="inline"
+            style={{ padding: 20 }}
+            key='modifyForm'
+            initialValues={{
+              email: record.email,
+              state: record.state
             }}
-            onOk={() => {
-              if (record.email === form.getFieldValue('email')) {
-                message.error('邮箱重复了！')
-              } else {
-                handleUpdateModalVisible(false);
-                setCurrentRow(undefined)
-                handleUpdate(record.userName, record.email)
-              }
-            }}
-          // footer={[
-          //   <Button key='cancel'>取消</Button>,
-          //   <Button key='ok' type='primary' disabled={}>提交</Button>
-          // ]}
           >
             {((auth === "1" && (record.type === 1 || record.type === 2)) || (auth === "2" && record.type === 2)) && (
               <Alert type='warning'
@@ -218,8 +214,8 @@ export const ManageUsers: React.FC = () => {
                 </FormItem>
               </Col>
             </Row>
-          </Modal>
-        </Form>
+          </Form>
+        </Modal>
       </Fragment>
     )
   }

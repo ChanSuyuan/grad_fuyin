@@ -22,6 +22,8 @@ export interface ILoginInfo {
   userName: string
   password: string
   hobby?: string
+  code?: string
+  key?: string
 }
 
 // login feedback

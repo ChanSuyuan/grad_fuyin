@@ -1,4 +1,5 @@
-import React, { Fragment } from 'react'
+/* eslint-disable jsx-a11y/alt-text */
+import React, { Fragment, useEffect, useState } from 'react'
 import { Button, Col, Form, Input, notification, Radio, Row } from "antd"
 
 import './index.less'
@@ -12,6 +13,8 @@ import { adminApi } from '../api/adminAc'
 import { superAdminApi } from '../api/super-adminAc'
 import GlobalFooter from '../../common/component/GlobalFooter'
 import { config } from '../../common/utils/config'
+import axios from 'axios'
+import { verificationApi } from '../api/verification'
 
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
@@ -19,11 +22,38 @@ const RadioGroup = Radio.Group
 export const AdminLogin: React.FC = observer(() => {
   const [form] = Form.useForm()
   const history = useHistory()
+  const [src, setSrc] = useState<any>()
+  const [key, setKey] = useState<any>()
+
   let authLevel = 0
 
   const setAuthLevel = (n: number) => {
     authLevel = n
     return authLevel
+  }
+
+  useEffect(() => {
+    loadPage()
+  }, [])
+
+  const loadPage = async () => {
+    try {
+      verificationApi.getRandomKey()
+        .then(res => {
+          if (res.errorCode === statusCode.success) {
+            setKey(res.data)
+            axios.get(`/verify/verification?key=${res.data}`, {
+              responseType: "arraybuffer"
+            }).then(response => {
+              return 'data:image/png;base64,' + btoa(new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+            }).then(res => {
+              setSrc(res)
+            })
+          }
+        })
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   const handleChange = (e: any) => {
@@ -37,19 +67,23 @@ export const AdminLogin: React.FC = observer(() => {
   async function handleOk() {
     const username = form.getFieldValue('userName')
     const password = form.getFieldValue('password')
+    const code = form.getFieldValue('code')
 
     if (username && password) {
       try {
         if (authLevel === 0) {
           const res = await adminApi.login({
             userName: username,
-            password: password
+            password: password,
+            code: code,
+            key: key
           })
           if (res.errorCode === statusCode.success) {
             if (res.data) {
               removeLocalToken()
               setLocalToken('user_token', `fuyin${res.data.token}`)
               setLocalToken('user_type', res.data.type)
+              setLocalToken('user_name', username)
               ChangeHeader()
               history.push('/fyapp/dashboard')
             } else {
@@ -65,13 +99,15 @@ export const AdminLogin: React.FC = observer(() => {
         } else if (authLevel === 1) {
           const res = await superAdminApi.login({
             userName: username,
-            password: password
+            password: password,
+            code: code
           })
           if (res.errorCode === statusCode.success) {
             if (res.data) {
               removeLocalToken()
               setLocalToken('user_token', `fuyin${res.data.token}`)
               setLocalToken('user_type', res.data.type)
+              setLocalToken('user_name', username)
               ChangeHeader()
               history.push('/fyapp/dashboard')
             } else {
@@ -126,6 +162,16 @@ export const AdminLogin: React.FC = observer(() => {
               hasFeedback>
               <Input type="password" placeholder={`FYFC密码`} size="large" />
             </FormItem>
+            <Row>
+              <Col>
+                <FormItem name="code">
+                  <Input style={{ width: 180, height: 60 }} />
+                </FormItem>
+              </Col>
+              <Col style={{ marginLeft: 10 }}>
+                <img src={src} onClick={loadPage} />
+              </Col>
+            </Row>
             <Link to="/reset" target="_blank">
               <strong>重置密码 / 忘记密码</strong>
             </Link>

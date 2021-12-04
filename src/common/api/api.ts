@@ -15,6 +15,13 @@ if (token) {
   delete axios.defaults.headers.common['Authorization']
 }
 
+let userName = window.localStorage.getItem('user_name')
+if (userName) {
+  axios.defaults.headers.common['userName'] = userName
+} else {
+  delete axios.defaults.headers.common['userName']
+}
+
 fetch('https://api.ipify.org')
   .then(res => res.text())
   .then(res => {

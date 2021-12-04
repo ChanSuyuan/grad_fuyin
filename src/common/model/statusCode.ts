@@ -26,5 +26,8 @@ export enum statusCode {
   ParamsWrong = 400,
 
   // authonToken
-  tokenIsNotVaild = 401
+  tokenIsNotVaild = 401,
+
+  // verification 
+  errorVerification = 423
 }

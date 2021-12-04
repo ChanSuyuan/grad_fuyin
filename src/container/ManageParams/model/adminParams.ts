@@ -51,10 +51,26 @@ export interface IAdminGetMatchDegreeFeedBack {
 }
 
 export interface IMatchDegree {
-  id: number
-  bz: string
-  cznl: number
-  ppd: number
-  ylnl: number
+  id?: number
+  bz?: string
+  cznl?: number
+  ppd?: number
+  ylnl?: number
 }
 
+export interface IModifyMatchDegree {
+  bz?: string
+  createTime?: string
+  cznl?: number
+  id?: number
+  ppd?: number
+  updateTime?: string
+  ylnl?: number
+}
+
+export interface IModifyMatchDegreeFeedBack {
+  data?: string
+  errorCode?: number
+  ok?: boolean
+  text?: string
+}

@@ -1,5 +1,6 @@
-import React, { Fragment } from 'react'
-import { Button, Form, Input, notification } from "antd"
+/* eslint-disable jsx-a11y/alt-text */
+import React, { Fragment, useEffect, useState } from 'react'
+import { Button, Col, Form, Input, notification, Row } from "antd"
 
 import './index.less'
 import { ApiFilled } from '@ant-design/icons'
@@ -11,22 +12,53 @@ import { observer } from 'mobx-react'
 import { notify } from '../../common/message/Notification'
 import GlobalFooter from '../../common/component/GlobalFooter'
 import { config } from '../../common/utils/config'
+import axios from 'axios'
+import { verificationApi } from '../api/verification'
 
 const FormItem = Form.Item
 
 export const Login: React.FC = observer(() => {
   const [form] = Form.useForm()
   const history = useHistory()
+  const [src, setSrc] = useState<any>()
+  const [key, setKey] = useState<any>()
+
+  useEffect(() => {
+    loadPage()
+  }, [])
+
+  const loadPage = async () => {
+    try {
+      verificationApi.getRandomKey()
+        .then(res => {
+          if (res.errorCode === statusCode.success) {
+            setKey(res.data)
+            axios.get(`/verify/verification?key=${res.data}`, {
+              responseType: "arraybuffer"
+            }).then(response => {
+              return 'data:image/png;base64,' + btoa(new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+            }).then(res => {
+              setSrc(res)
+            })
+          }
+        })
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   async function handleOk() {
     const username = form.getFieldValue('userName')
     const password = form.getFieldValue('password')
-
+    const code = form.getFieldValue('code')
+    console.log(code)
     if (username && password) {
       try {
         const res = await behaviorApi.login({
           userName: username,
-          password: password
+          password: password,
+          code: code,
+          key: key
         })
         if (res.errorCode === statusCode.success) {
           if (res.data) {
@@ -75,6 +107,16 @@ export const Login: React.FC = observer(() => {
               hasFeedback>
               <Input type="password" placeholder={`FYFC密码`} size="large" />
             </FormItem>
+            <Row>
+              <Col>
+                <FormItem name="code">
+                  <Input style={{ width: 180, height: 60 }} />
+                </FormItem>
+              </Col>
+              <Col style={{ marginLeft: 10 }}>
+                <img src={src} onClick={loadPage} />
+              </Col>
+            </Row>
             <Link to="/reset" target="_blank">
               <strong>重置密码 / 忘记密码</strong>
             </Link>

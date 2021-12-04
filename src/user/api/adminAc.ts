@@ -6,8 +6,6 @@
 
 import { FYAPI } from "../../common/api/api";
 import {
-  IAdminUpdateIndicatorsInfo,
-  IAdminUpdateIndicatorsFeedBackInfo,
   IAdminUpdatePwdInfo,
   IAdminUpdatePwdFeedBackInfo,
   ILoginFeedBackInfo,
@@ -29,13 +27,6 @@ class AdminApi {
    */
   modify(params: IAdminUpdatePwdInfo): Promise<IAdminUpdatePwdFeedBackInfo> {
     return FYAPI.POST(`${baseURL}/updateiserpassword`, params)
-  }
-
-  /**
-   * @name 管理员自定义指标
-   */
-  ModidyIndicators(params: IAdminUpdateIndicatorsInfo): Promise<IAdminUpdateIndicatorsFeedBackInfo> {
-    return FYAPI.POST(`${baseURL}/updatezb`, params)
   }
 
   /**

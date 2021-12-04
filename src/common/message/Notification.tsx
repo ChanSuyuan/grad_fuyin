@@ -42,5 +42,11 @@ export const notify = (errorCode: any) => {
       icon: <ApiFilled style={{ color: 'red' }} />,
       duration: 3
     })
+  } else if (errorCode === statusCode.errorVerification) {
+    notification.open({
+      message: Message.ErrorVerification,
+      icon: <ApiFilled style={{ color: 'red' }} />,
+      duration: 3
+    })
   }
 }

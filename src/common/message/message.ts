@@ -4,7 +4,8 @@ export enum Message {
   WrongInform = '账户密码错误！',
   DisabledAccount = '账号已被注销',
   RegisterFailed = '该用户已被注册',
-  NotRightAsk = '账户密码错误！'
+  NotRightAsk = '账户密码错误！',
+  ErrorVerification = '验证码错误'
 }
 
 export enum Description {
