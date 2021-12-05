@@ -29,5 +29,6 @@ export enum statusCode {
   tokenIsNotVaild = 401,
 
   // verification 
-  errorVerification = 423
+  errorVerification = 423,
+  verificationTimeOut = 424
 }

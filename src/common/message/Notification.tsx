@@ -48,5 +48,12 @@ export const notify = (errorCode: any) => {
       icon: <ApiFilled style={{ color: 'red' }} />,
       duration: 3
     })
+  } else if (errorCode === statusCode.verificationTimeOut) {
+    notification.open({
+      message: Message.VerificationTimeOut,
+      description: Description.VerificationTimeOutMessage,
+      icon: <ApiFilled style={{ color: 'red' }} />,
+      duration: 3
+    })
   }
 }

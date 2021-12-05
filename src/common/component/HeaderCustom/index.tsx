@@ -65,7 +65,7 @@ export const HeaderCustom: React.FC<HeaderCustomProps> = (props) => {
   ]
 
   return (
-    <LayoutHeader className="header" style={{ position: 'fixed', width: "100%", zIndex: 1 }}>
+    <LayoutHeader className="header" style={{ position: 'fixed', width: "100%", zIndex: 999 }}>
       <div className="rightContainer">{rightContent}</div>
     </LayoutHeader>
   )
