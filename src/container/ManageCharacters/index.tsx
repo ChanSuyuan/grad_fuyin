@@ -56,7 +56,9 @@ export const ManageCharacters: React.FC = () => {
     }
   }
 
-  const handleUpdate = (username?: string, type?: number) => {
+  const handleUpdate = (username?: string) => {
+    const type = form.getFieldValue('type')
+    console.log(type)
     try {
       message.loading('正在配置中。。。', 3)
       const User_type = localStorage.getItem('user_type')
@@ -110,7 +112,7 @@ export const ManageCharacters: React.FC = () => {
           onOk={() => {
             handleUpdateModalVisible(false);
             setCurrentRow(undefined)
-            handleUpdate(record.userName, record.type)
+            handleUpdate(record.userName)
           }}
 
         >
@@ -121,7 +123,7 @@ export const ManageCharacters: React.FC = () => {
             key='modifyForm'
             initialValues={{
               email: record.email,
-              state: record.state
+              type: record.type
             }}
           >
             {((auth === "1" && (record.type === 1 || record.type === 2)) || (auth === "2" && record.type === 2)) && (
@@ -133,10 +135,10 @@ export const ManageCharacters: React.FC = () => {
             <FormItem
               label={<strong><h3>身份</h3></strong>}
               colon={false}
-              name='state'
-              key='state'
+              name='type'
+              key='type'
             >
-              <RadioGroup value={record.state} buttonStyle='solid'
+              <RadioGroup value={record.type} buttonStyle='solid'
                 disabled={(auth === "1" && (record.type === 1 || record.type === 2)) || (auth === "2" && record.type === 2) ? true : false}>
                 <Row key='authorize'>
                   <Col>

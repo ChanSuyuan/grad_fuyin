@@ -6,13 +6,13 @@ const { Dragger } = Upload;
 const RadioGroup = Radio.Group
 
 export const UploadForm: React.FC = () => {
-  const baseURL = '/fuyin'
+  // const baseURL = '/fuyin'
   const [uploadContent, handleUploadContent] = useState<number>(0)
 
   const props = {
     name: 'file',
     multiple: true,
-    action: `${baseURL}/file/upload-excel?type=${uploadContent}`,
+    action: `/file/upload-excel?type=${uploadContent}`,
     headers: {
       authorization: `${localStorage.getItem('user_token')}`,
       userName: `${localStorage.getItem('user_name')}`,

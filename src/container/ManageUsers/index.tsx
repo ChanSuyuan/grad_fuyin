@@ -146,7 +146,7 @@ export const ManageUsers: React.FC = () => {
         >
           <Form
             form={form}
-            layout="inline"
+            layout="vertical"
             style={{ padding: 20 }}
             key='modifyForm'
             initialValues={{
@@ -159,61 +159,43 @@ export const ManageUsers: React.FC = () => {
                 message="同等级管理员不允许相互修改,管理员不允许修改超级管理员信息！"
               />
             )}
-            <Row key='state' style={{ padding: '12px' }}>
-              <Col span={12} key='state' style={{ marginTop: 20 }}>
-                <FormItem
-                  label={<strong><h3>状态</h3></strong>}
-                  colon={false}
-                  name='state'
-                  key='state'
-                >
-                  <RadioGroup value={record.state} buttonStyle='solid' style={{ marginLeft: 10, marginBottom: 20 }}
-                    disabled={(auth === "1" && (record.type === 1 || record.type === 2)) || (auth === "2" && record.type === 2) ? true : false}>
-                    <Row key='useable'>
-                      <Col>
-                        <Radio.Button value={0}>可用</Radio.Button>
-                      </Col>
-                      <Col>
-                        <Radio.Button value={-1}>注销</Radio.Button>
-                      </Col>
-                    </Row>
-                  </RadioGroup>
-                </FormItem>
-              </Col>
-            </Row>
-            <Row key='email' style={{ padding: '12px' }}>
-              <Col span={12} key='email' >
-                <FormItem
-                  label={<strong><h3>邮箱</h3></strong>}
-                  colon={false}
-                  name='email'
-                  key='email'
-                  rules={[{
-                    validator: (_, value) => {
-                      if (record.email === value) {
-                        return Promise.reject(new Error("请勿填入重复邮箱！"))
-                      } else {
-                        return Promise.resolve()
-                      }
-                    }
-                  }]}
-                >
-                  <Input disabled={(auth === "1" && (record.type === 1 || record.type === 2)) || (auth === "2" && record.type === 2) ? true : false} />
-                </FormItem>
-              </Col>
-            </Row>
-            <Row key='password' style={{ padding: '12px' }}>
-              <Col span={12} key='password' >
-                <FormItem
-                  label={<strong><h3>密码</h3></strong>}
-                  colon={false}
-                  name='password'
-                  key='password'
-                >
-                  <Input disabled={(auth === "1" && (record.type === 1 || record.type === 2)) || (auth === "2" && record.type === 2) ? true : false} />
-                </FormItem>
-              </Col>
-            </Row>
+            <FormItem
+              label={<strong><h3>状态</h3></strong>}
+              name='state'
+              key='state'
+            >
+              <RadioGroup value={record.state} buttonStyle='solid'
+                disabled={(auth === "1" && (record.type === 1 || record.type === 2)) || (auth === "2" && record.type === 2) ? true : false}
+              >
+                <Radio.Button value={0}>可用</Radio.Button>
+                <Radio.Button value={-1}>注销</Radio.Button>
+              </RadioGroup>
+            </FormItem>
+            <FormItem
+              label={<strong><h3>邮箱</h3></strong>}
+              colon={false}
+              name='email'
+              key='email'
+              rules={[{
+                validator: (_, value) => {
+                  if (record.email === value) {
+                    return Promise.reject(new Error("请勿填入重复邮箱！"))
+                  } else {
+                    return Promise.resolve()
+                  }
+                }
+              }]}
+            >
+              <Input style={{ width: '200px' }} disabled={(auth === "1" && (record.type === 1 || record.type === 2)) || (auth === "2" && record.type === 2) ? true : false} />
+            </FormItem>
+            <FormItem
+              label={<strong><h3>密码</h3></strong>}
+              colon={false}
+              name='password'
+              key='password'
+            >
+              <Input style={{ width: '200px' }} disabled={(auth === "1" && (record.type === 1 || record.type === 2)) || (auth === "2" && record.type === 2) ? true : false} />
+            </FormItem>
           </Form>
         </Modal>
       </Fragment>
