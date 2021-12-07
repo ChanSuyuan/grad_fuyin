@@ -118,42 +118,42 @@ export interface IMainzbsInfo {
 }
 
 export interface IProfilesInfo {
-  id: number
-  assetDisposalIncome: number // 资产处置收益
-  assetImpairmentIncome: number // 资产减值损失 (新)
-  basicEps: number // 基本每股收益
-  continuedNetprofit: number // 持续经营净利润
-  createTime: string
-  creditImpairmentIncome: number // 信用减值损失 (新)
-  deductParentNetprofit: number // 扣除非经常性损益后的净利润
-  dilutedEps: number // 稀释每股收益
-  feInterestExpense: number // 其中：利息费用
-  feInterestIncome: number // 利息收入
-  financeExpense: number // 财务费用
-  incomeTax: number // 减：所得税
-  investIncome: number // 加：投资收益
-  manageExpense: number // 管理费用
-  netprofit: number // 净利润
-  nonbusinessExpense: number // 减：营业外支出
-  nonbusinessIncome: number // 加：营业外收入
-  operateCost: number // 营业成本
-  operateIncome: number // 营业收入
-  operateProfit: number // 营业利润
-  operateTaxAdd: number // 税金及附加
-  opinionType: string // 审计意见 (境内)
-  otherIncome: number // 其他收益
-  parentNetprofit: number // 归属于母公司股东的净利润
-  parentTci: number // 归属于母公司股东的综合收益总额
-  reportDate: string // 报告时间
-  researchExpense: number // 研发费用
-  saleExpense: number // 销售费用
-  securityCode: string // 股票代码
-  securityNameAbbr: string // 股票名字
-  totalCompreIncome: number // 综合收益总额
-  totalOperateCost: number // 营业总成本
-  totalOperateIncome: number // 营业总收入
-  totalProfit: number // 利润总额
-  updateTime: string
+  id?: number
+  assetDisposalIncome?: number // 资产处置收益
+  assetImpairmentIncome?: number // 资产减值损失 (新)
+  basicEps?: number // 基本每股收益
+  continuedNetprofit?: number // 持续经营净利润
+  createTime?: string
+  creditImpairmentIncome?: number // 信用减值损失 (新)
+  deductParentNetprofit?: number // 扣除非经常性损益后的净利润
+  dilutedEps?: number // 稀释每股收益
+  feInterestExpense?: number // 其中：利息费用
+  feInterestIncome?: number // 利息收入
+  financeExpense?: number // 财务费用
+  incomeTax?: number // 减：所得税
+  investIncome?: number // 加：投资收益
+  manageExpense?: number // 管理费用
+  netprofit?: number // 净利润
+  nonbusinessExpense?: number // 减：营业外支出
+  nonbusinessIncome?: number // 加：营业外收入
+  operateCost?: number // 营业成本
+  operateIncome?: number // 营业收入
+  operateProfit?: number // 营业利润
+  operateTaxAdd?: number // 税金及附加
+  opinionType?: string // 审计意见 (境内)
+  otherIncome?: number // 其他收益
+  parentNetprofit?: number // 归属于母公司股东的净利润
+  parentTci?: number // 归属于母公司股东的综合收益总额
+  reportDate?: string // 报告时间
+  researchExpense?: number // 研发费用
+  saleExpense?: number // 销售费用
+  securityCode?: string // 股票代码
+  securityNameAbbr?: string // 股票名字
+  totalCompreIncome?: number // 综合收益总额
+  totalOperateCost?: number // 营业总成本
+  totalOperateIncome?: number // 营业总收入
+  totalProfit?: number // 利润总额
+  updateTime?: string
 }
 
 export interface IQygqjsInfo {
@@ -248,9 +248,9 @@ export interface IZcfzsInfo {
   noteAccountsPayable: number // 应付票据及应付款帐
   noteAccountsRece: number // 应收票据及应收款帐
   opinionType: string // 审计意见 (境内)
-  otherCurrentAsset: number // 其它流动资产
-  otherCurrentLiab: number // 其它流动负债
-  otherNoncurrentAsset: number // 其它非流动资产
+  otherCurrentAsset: number // 其他流动资产
+  otherCurrentLiab: number // 其他流动负债
+  otherNoncurrentAsset: number // 其他非流动资产
   predictLiab: number // 预计负债
   prepayment: number // 预付款项
   reportDate: string // 报告时间
@@ -270,8 +270,8 @@ export interface IZcfzsInfo {
   totalLiabilities: number // 负债合计
   totalNoncurrentAssets: number // 非流动资产合计
   totalNoncurrentLiab: number // 非流动负债合计
-  totalOtherPayable: number // 其它应付款合计
-  totalOtherRece: number // 其它应收款合计
+  totalOtherPayable: number // 其他应付款合计
+  totalOtherRece: number // 其他应收款合计
   totalParentEquity: number //归属于母公司股东权益总计
   tradeFinassetNotfvtpl: number // 交易性金融资产
   unassignRpofit: number // 未分配利润

@@ -12,7 +12,7 @@ export class SuperAdminParmsApi {
   /**
    * @name 超级管理员自定义模型指标
    */
-  customFrc(params: ISuperAdminCustomFrc): Promise<ISuperAdminCustomFrcFeedBack> {
+  customFc(params: ISuperAdminCustomFrc): Promise<ISuperAdminCustomFrcFeedBack> {
     return FYAPI.POST(`${baseURL}/updatezdyzbmodel`, params)
   }
 }

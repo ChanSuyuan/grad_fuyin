@@ -1,5 +1,6 @@
 export enum Message {
   UnExpectedError = '发生了意想不到的错误啦！',
+  AllMissParams = '参数不能全为空',
   NotExistAccount = '当前用户不存在！',
   WrongInform = '账户密码错误！',
   DisabledAccount = '账号已被注销',
@@ -15,5 +16,6 @@ export enum Description {
   WrongInform = '请查看用户名与密码是否填写正确！',
   DiabledMessage = '请联系管理员！',
   RegisterFailedMessage = '请使用其他用户名进行注册！',
-  VerificationTimeOutMessage = '请点击验证码获图片获取新的验证码'
+  VerificationTimeOutMessage = '请点击验证码获图片获取新的验证码',
+  AllMissParamsMessage = '请至少输入一个讯息！'
 }

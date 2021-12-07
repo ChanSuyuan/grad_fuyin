@@ -1,5 +1,5 @@
 import { FYAPI } from "../../../common/api/api";
-import { IAdminCustomFrc, IAdminCustomFrcFeedBack, IAdminCustomRisk, IAdminCustomRiskFeedBack, IAdminGetMatchDegreeFeedBack, IModifyMatchDegree, IModifyMatchDegreeFeedBack } from "../model/adminParams";
+import { IAdminCustomFrc, IAdminCustomFrcFeedBack, IAdminCustomRisk, IAdminCustomRiskFeedBack, IAdminGetMatchDegreeFeedBack, IModifyMatchDegree, IModifyMatchDegreeFeedBack, IRiskZb } from "../model/adminParams";
 
 const baseURL = '/admin'
 export class AdminParmsApi {
@@ -12,7 +12,7 @@ export class AdminParmsApi {
   /**
    * @name 管理员自定义模型指标
    */
-  customFrc(params: IAdminCustomFrc): Promise<IAdminCustomFrcFeedBack> {
+  customFc(params: IAdminCustomFrc): Promise<IAdminCustomFrcFeedBack> {
     return FYAPI.POST(`${baseURL}/updatezdyzbmodel`, params)
   }
   /**
@@ -26,6 +26,12 @@ export class AdminParmsApi {
    */
   modifyMatchDegree(params: IModifyMatchDegree[]): Promise<IModifyMatchDegreeFeedBack> {
     return FYAPI.POST(`${baseURL}/updaterzppd`, params)
+  }
+  /**
+   * @name 管理员获取风险指标
+   */
+  getRiskZb(): Promise<IRiskZb> {
+    return FYAPI.GET(`${baseURL}/getzb`)
   }
 }
 

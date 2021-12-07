@@ -55,5 +55,12 @@ export const notify = (errorCode: any) => {
       icon: <ApiFilled style={{ color: 'red' }} />,
       duration: 3
     })
+  } else if (errorCode === statusCode.missParams) {
+    notification.open({
+      message: Message.AllMissParams,
+      description: Description.AllMissParamsMessage,
+      icon: <ApiFilled style={{ color: 'red' }} />,
+      duration: 3
+    })
   }
 }

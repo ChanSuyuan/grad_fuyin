@@ -17,6 +17,8 @@ import { verificationApi } from '../api/verification'
 
 const FormItem = Form.Item
 
+// const baseURL = '/fuyin/verify'
+
 export const Login: React.FC = observer(() => {
   const [form] = Form.useForm()
   const history = useHistory()
@@ -65,6 +67,7 @@ export const Login: React.FC = observer(() => {
             removeLocalToken()
             setLocalToken('user_token', `fuyin${res.data.token}`)
             setLocalToken('user_type', res.data.type)
+            setLocalToken('user_name', username)
             ChangeHeader()
             history.push('/fyapp/dashboard')
           } else {

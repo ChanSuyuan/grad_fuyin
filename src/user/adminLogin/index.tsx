@@ -36,6 +36,8 @@ export const AdminLogin: React.FC = observer(() => {
     loadPage()
   }, [])
 
+  // const baseURL = '/fuyin/verify'
+
   const loadPage = async () => {
     try {
       verificationApi.getRandomKey()

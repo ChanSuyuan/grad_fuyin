@@ -19,7 +19,7 @@ export const FcParams = () => {
     const zbKey = form.getFieldValue('zbKey')
 
     try {
-      localStorage.getItem('user_type') === '1' && adminParamsApi.customFrc({
+      localStorage.getItem('user_type') === '1' && adminParamsApi.customFc({
         equation: equation,
         score: score,
         type: type,
@@ -37,7 +37,7 @@ export const FcParams = () => {
         }
       })
 
-      localStorage.getItem('user_type') === '2' && superAdminParamsApi.customFrc({
+      localStorage.getItem('user_type') === '2' && superAdminParamsApi.customFc({
         equation: equation,
         score: score,
         type: type,

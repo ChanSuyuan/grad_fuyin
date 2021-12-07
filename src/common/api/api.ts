@@ -25,6 +25,7 @@ if (userName) {
 fetch('https://api.ipify.org')
   .then(res => res.text())
   .then(res => {
+    localStorage.setItem('ip_address', res)
     axios.defaults.headers.common['ip_address'] = res
   })
 
