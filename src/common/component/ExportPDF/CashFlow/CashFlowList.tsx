@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import { IParamsFcModel, IParamsRisk } from "../../../../container/IntellAnalysis/model/analysis";
+import { IXjjlsInfo } from "../../../../container/IntellAnalysis/model/analysis";
 import { numberTrans } from "../utils/numberTrans";
 
 interface ICashFlowOriginDataProps {
@@ -11,7 +11,7 @@ interface ICashFlowOriginDataProps {
   cashflow3?: string
 }
 
-export const CashFlowReportData = (store: IParamsRisk | IParamsFcModel) => {
+export const CashFlowReportData = (store: IXjjlsInfo[]) => {
   const originData: ICashFlowOriginDataProps[] = []
   originData.push(
     // 经营活动产生的现金流量
@@ -228,7 +228,7 @@ export const CashFlowReportData = (store: IParamsRisk | IParamsFcModel) => {
     },
   )
   // eslint-disable-next-line array-callback-return
-  store.gpDetails.xjlls.map((item, i) => {
+  store.map((item, i) => {
     if (item.reportDate) {
       // eslint-disable-next-line array-callback-return
       originData.map(e => {

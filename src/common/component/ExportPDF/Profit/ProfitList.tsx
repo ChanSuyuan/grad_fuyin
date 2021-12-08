@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
 import React, { ReactNode } from "react";
-import { IParamsFcModel, IParamsRisk } from "../../../../container/IntellAnalysis/model/analysis";
+import { IProfilesInfo } from "../../../../container/IntellAnalysis/model/analysis";
 import { numberTrans } from "../utils/numberTrans";
 
 interface IProfitOriginDataProps {
@@ -12,7 +12,7 @@ interface IProfitOriginDataProps {
   profit3?: string
 }
 
-export const ProfitReportData = (store: IParamsRisk | IParamsFcModel) => {
+export const ProfitReportData = (store: IProfilesInfo[]) => {
   const originData: IProfitOriginDataProps[] = [];
   originData.push(
     // 营业总收入
@@ -156,7 +156,7 @@ export const ProfitReportData = (store: IParamsRisk | IParamsFcModel) => {
       key: 'opinionType'
     },
   )
-  store.gpDetails.profiles.map((item, i) => {
+  store.map((item, i) => {
     if (item.reportDate) {
       originData.map(e => {
         if (i === 0) {

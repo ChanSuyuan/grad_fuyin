@@ -1,6 +1,6 @@
-import { IParamsFcModel, IParamsRisk } from "../../../../../container/IntellAnalysis/model/analysis"
+import { IMainzbsInfo } from "../../../../../container/IntellAnalysis/model/analysis"
 
-export const ProfitZbReportColumns = (store: IParamsRisk | IParamsFcModel) => {
+export const ProfitZbReportColumns = (store: IMainzbsInfo[]) => {
   const columns = [
     {
       title: '盈利能力指标',
@@ -10,7 +10,7 @@ export const ProfitZbReportColumns = (store: IParamsRisk | IParamsFcModel) => {
   ]
 
   // eslint-disable-next-line array-callback-return
-  store.gpDetails.mainzbs.map((item, i) => {
+  store.map((item, i) => {
     if (item.reportDate) {
       columns.push({
         dataIndex: `profitzb${i}`,

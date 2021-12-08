@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import ApiFilled from '@ant-design/icons/lib/icons/ApiFilled'
-import { Alert, Col, Form, Input, message, Modal, notification, Radio, Row, Table, Tag } from 'antd'
+import { Alert, Form, Input, message, Modal, notification, Radio, Table, Tag } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import React, { Fragment, useEffect, useState } from 'react'
 import { useHistory } from 'react-router'

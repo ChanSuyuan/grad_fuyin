@@ -1,7 +1,7 @@
 /* eslint-disable array-callback-return */
 import { BackTop, Button, Card, Col, message, Row, Table } from "antd"
 import React, { useState } from "react"
-import { IParamsFcModel, IParamsRisk } from "../../../container/IntellAnalysis/model/analysis"
+import { IComponyInfo, IGPDetail, IMainzbsInfo, IParamsFcModel, IParamsRisk, IProfilesInfo, IQygqjsInfo, IResultZbDtos, IXjjlsInfo, IZcfzsInfo } from "../../../container/IntellAnalysis/model/analysis"
 import html2PDF from './js-pdf/js-pdf.js'
 import './index.less'
 import { ProfitReportColumns } from "./Profit/ProfitColumns"
@@ -18,18 +18,64 @@ import { FinancialReportData } from "./MainZb/FinancialZb/FinancialList"
 import { FinancialZbReportColumns } from "./MainZb/FinancialZb/FinancialZbColumns"
 import { ProfitZbReportData } from "./MainZb/ProfitZb/ProfitZbList"
 import { ProfitZbReportColumns } from "./MainZb/ProfitZb/ProfitZbColumns"
+import { adminExportPdfApi } from "./api/admin"
+import { superAdminExportPdfApi } from "./api/superAdmin"
+import { userExportPdfApi } from "./api/user"
 
 interface IExportPDFProps {
   data?: IParamsRisk
   fcdata?: IParamsFcModel
+  mainZbArr: IMainzbsInfo[]
+  profitArr: IProfilesInfo[]
+  cashFlowArr: IXjjlsInfo[]
+  balanceSheet: IZcfzsInfo[]
+  companyInf: IComponyInfo
+  companyStruct: IQygqjsInfo[]
+  analysisResult?: any
 }
 
 export const ExportPDFModal: React.FC<IExportPDFProps> = (props) => {
 
   const [loading, setLoading] = useState<boolean>(false)
+  const details: IGPDetail = {
+    companyInfo: props.companyInf,
+    mainzbs: props.mainZbArr,
+    profiles: props.profitArr,
+    qygqjgs: props.companyStruct,
+    xjlls: props.cashFlowArr,
+    zcfzs: props.balanceSheet
+  }
 
   const exportPdf = async () => {
-
+    const userType = localStorage.getItem('user_type')
+    try {
+      if (typeof props.analysisResult === 'object') {
+        if (userType === '1') {
+          adminExportPdfApi.createRiskReportInfo({
+            analysis: props.analysisResult,
+            gpDetails: details
+          }).then(res => {
+            console.log(res.errorCode)
+          })
+        } else if (userType === '2') {
+          superAdminExportPdfApi.createRiskReportInfo({
+            analysis: props.analysisResult,
+            gpDetails: details
+          }).then(res => {
+            console.log(res.errorCode)
+          })
+        } else if (userType === '0') {
+          userExportPdfApi.createRiskReportInfo({
+            analysis: props.analysisResult,
+            gpDetails: details
+          }).then(res => {
+            console.log(res.errorCode)
+          })
+        }
+      }
+    } catch (err) {
+      message.error('出现了出乎意料的问题')
+    }
     try {
       setLoading(true)
       html2PDF([
@@ -39,6 +85,7 @@ export const ExportPDFModal: React.FC<IExportPDFProps> = (props) => {
         document.getElementById('company-cashflow'),
         document.getElementById('company-balancesheet'),
         document.getElementById('company-mainzb'),
+        document.getElementById('company-analysis')
       ],
         {
           jsPDF: {
@@ -114,40 +161,40 @@ export const ExportPDFModal: React.FC<IExportPDFProps> = (props) => {
             {!props.fcdata ?
               <>
                 <div className='company-struct' id='company-struct'>
-                  <CompanyStructure analysis={props.data.analysis} gpDetails={props.data.gpDetails} />
+                  <CompanyStructure companyInfo={props.companyInf} mainzbs={props.mainZbArr} profiles={props.profitArr} qygqjgs={props.companyStruct} xjlls={props.cashFlowArr} zcfzs={props.balanceSheet} />
                 </div>
                 <div className='company-profit' id='company-profit'>
-                  <CompanyProfit analysis={props.data.analysis} gpDetails={props.data.gpDetails} />
+                  <CompanyProfit companyInfo={props.companyInf} mainzbs={props.mainZbArr} profiles={props.profitArr} qygqjgs={props.companyStruct} xjlls={props.cashFlowArr} zcfzs={props.balanceSheet} />
                 </div>
                 <div className='company-cashflow' id='company-cashflow'>
-                  <CompanyCashflow analysis={props.data.analysis} gpDetails={props.data.gpDetails} />
+                  <CompanyCashflow companyInfo={props.companyInf} mainzbs={props.mainZbArr} profiles={props.profitArr} qygqjgs={props.companyStruct} xjlls={props.cashFlowArr} zcfzs={props.balanceSheet} />
                 </div>
                 <div className='company-balancesheet' id='company-balancesheet'>
-                  <CompanyBalanceSheet analysis={props.data.analysis} gpDetails={props.data.gpDetails} />
+                  <CompanyBalanceSheet companyInfo={props.companyInf} mainzbs={props.mainZbArr} profiles={props.profitArr} qygqjgs={props.companyStruct} xjlls={props.cashFlowArr} zcfzs={props.balanceSheet} />
                 </div>
                 <div className='company-mainzb' id='company-mainzb'>
-                  <CompanyMainZb analysis={props.data.analysis} gpDetails={props.data.gpDetails} />
+                  <CompanyMainZb companyInfo={props.companyInf} mainzbs={props.mainZbArr} profiles={props.profitArr} qygqjgs={props.companyStruct} xjlls={props.cashFlowArr} zcfzs={props.balanceSheet} />
                 </div>
                 <div className='company-analysis' id='company-analysis'>
-                  <CompanyRiskResultAnalysis analysis={props.data.analysis} gpDetails={props.data.gpDetails} />
+                  <CompanyRiskResultAnalysis analysis={props.analysisResult} gpDetails={props.data.gpDetails} />
                 </div>
               </>
               :
               <>
                 <div className='company-struct' id='company-struct'>
-                  <CompanyStructure analysis={props.fcdata.analysis} gpDetails={props.fcdata.gpDetails} />
+                  <CompanyStructure companyInfo={props.companyInf} mainzbs={props.mainZbArr} profiles={props.profitArr} qygqjgs={props.companyStruct} xjlls={props.cashFlowArr} zcfzs={props.balanceSheet} />
                 </div>
                 <div className='company-profit' id='company-profit'>
-                  <CompanyProfit analysis={props.fcdata.analysis} gpDetails={props.fcdata.gpDetails} />
+                  <CompanyProfit companyInfo={props.companyInf} mainzbs={props.mainZbArr} profiles={props.profitArr} qygqjgs={props.companyStruct} xjlls={props.cashFlowArr} zcfzs={props.balanceSheet} />
                 </div>
                 <div className='company-cashflow' id='company-cashflow'>
-                  <CompanyCashflow analysis={props.fcdata.analysis} gpDetails={props.fcdata.gpDetails} />
+                  <CompanyCashflow companyInfo={props.companyInf} mainzbs={props.mainZbArr} profiles={props.profitArr} qygqjgs={props.companyStruct} xjlls={props.cashFlowArr} zcfzs={props.balanceSheet} />
                 </div>
                 <div className='company-balancesheet' id='company-balancesheet'>
-                  <CompanyBalanceSheet analysis={props.fcdata.analysis} gpDetails={props.fcdata.gpDetails} />
+                  <CompanyBalanceSheet companyInfo={props.companyInf} mainzbs={props.mainZbArr} profiles={props.profitArr} qygqjgs={props.companyStruct} xjlls={props.cashFlowArr} zcfzs={props.balanceSheet} />
                 </div>
                 <div className='company-mainzb' id='company-mainzb'>
-                  <CompanyMainZb analysis={props.fcdata.analysis} gpDetails={props.fcdata.gpDetails} />
+                  <CompanyMainZb companyInfo={props.companyInf} mainzbs={props.mainZbArr} profiles={props.profitArr} qygqjgs={props.companyStruct} xjlls={props.cashFlowArr} zcfzs={props.balanceSheet} />
                 </div>
                 <div className='company-analysis' id='company-analysis'>
                   <CompanyFcResultAnalysis gpDetails={props.fcdata.gpDetails} analysis={props.fcdata.analysis} />
@@ -161,7 +208,7 @@ export const ExportPDFModal: React.FC<IExportPDFProps> = (props) => {
   )
 }
 
-const CompanyStructure = (store: IParamsRisk | IParamsFcModel) => {
+const CompanyStructure = (store: IGPDetail) => {
   return (
     <Card title={<strong><span style={{ fontSize: '24px' }}>企业股权结构</span></strong>} bordered={false}>
       <Table
@@ -170,7 +217,7 @@ const CompanyStructure = (store: IParamsRisk | IParamsFcModel) => {
         bordered
         size="small"
         pagination={false}
-        dataSource={store.gpDetails.qygqjgs}
+        dataSource={store.qygqjgs}
         columns={[
           {
             title: '股东名称',
@@ -238,10 +285,10 @@ const CompanyStructure = (store: IParamsRisk | IParamsFcModel) => {
 
 
 
-const CompanyProfit = (store: IParamsRisk | IParamsFcModel) => {
+const CompanyProfit = (store: IGPDetail) => {
 
-  const originData = ProfitReportData(store)
-  const columns = ProfitReportColumns(store)
+  const originData = ProfitReportData(store.profiles)
+  const columns = ProfitReportColumns(store.profiles)
   return (
     <Card title={<strong><span style={{ fontSize: '24px' }}>利润表</span></strong>} bordered={false} >
       <Table
@@ -254,9 +301,9 @@ const CompanyProfit = (store: IParamsRisk | IParamsFcModel) => {
   )
 }
 
-const CompanyCashflow = (store: IParamsRisk | IParamsFcModel) => {
-  const originData = CashFlowReportData(store)
-  const columns = CashFlowReportColumns(store)
+const CompanyCashflow = (store: IGPDetail) => {
+  const originData = CashFlowReportData(store.xjlls)
+  const columns = CashFlowReportColumns(store.xjlls)
   return (
     <Card title={<strong><span style={{ fontSize: '24px' }}>现金流量表</span></strong>} bordered={false} >
       <Table
@@ -269,9 +316,9 @@ const CompanyCashflow = (store: IParamsRisk | IParamsFcModel) => {
   )
 }
 
-const CompanyBalanceSheet = (store: IParamsRisk | IParamsFcModel) => {
-  const originData = BalanceSheetReportData(store)
-  const columns = BalanceSheetColumns(store)
+const CompanyBalanceSheet = (store: IGPDetail) => {
+  const originData = BalanceSheetReportData(store.zcfzs)
+  const columns = BalanceSheetColumns(store.zcfzs)
   return (
     <Card title={<strong><span style={{ fontSize: '24px' }}>资产负债表</span></strong>} bordered={false} >
       <Table
@@ -284,15 +331,16 @@ const CompanyBalanceSheet = (store: IParamsRisk | IParamsFcModel) => {
   )
 }
 
-const CompanyMainZb = (store: IParamsRisk | IParamsFcModel) => {
-  const perOriginData = PerZbReportData(store)
-  const perColumns = PerZbReportColumns(store)
-  const AbilityOriginData = AbilityZbReportData(store)
-  const AbilityColumns = AbilityZbReportColumns(store)
-  const ProfitOriginData = ProfitZbReportData(store)
-  const ProfitColumns = ProfitZbReportColumns(store)
-  const FinancialOriginData = FinancialReportData(store)
-  const FinancialColumns = FinancialZbReportColumns(store)
+const CompanyMainZb = (store: IGPDetail) => {
+  console.log(store.mainzbs)
+  const perOriginData = PerZbReportData(store.mainzbs)
+  const perColumns = PerZbReportColumns(store.mainzbs)
+  const AbilityOriginData = AbilityZbReportData(store.mainzbs)
+  const AbilityColumns = AbilityZbReportColumns(store.mainzbs)
+  const ProfitOriginData = ProfitZbReportData(store.mainzbs)
+  const ProfitColumns = ProfitZbReportColumns(store.mainzbs)
+  const FinancialOriginData = FinancialReportData(store.mainzbs)
+  const FinancialColumns = FinancialZbReportColumns(store.mainzbs)
   return (
     <Card title={<strong><span style={{ fontSize: '24px' }}>主要指标</span></strong>} bordered={false} >
       <Table
@@ -336,43 +384,56 @@ const CompanyRiskResultAnalysis = (store: IParamsRisk) => {
   return (
     <>
       {store.analysis.map((item => {
-        <>
-          <h1><strong>{transform[item.type]}</strong></h1>
-          <Row key='advice'>
-            <Col span={12} key='exist_risk'><strong>存在的风险：</strong><span style={{ color: 'red' }}>{item.risk}</span></Col>
-            <Col span={12} key='risk_advice'><strong>风险控制建议：</strong>{item.advise}</Col>
-          </Row>
-          <br />
-          <Table
-            key='operate'
-            size="small"
-            pagination={{ pageSize: 3 }}
-            dataSource={item.resultZbDtos}
-            columns={[
-              {
-                title: '指标',
-                dataIndex: 'zbKey',
-                key: 'zbKey',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '评估结果',
-                dataIndex: 'evaluateResult',
-                key: 'evaluateResulet',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '最新值',
-                dataIndex: 'newestValue',
-                key: 'newestValue',
-                width: 150,
-                align: 'center'
-              },
-            ]}
-          />
-        </>
+        let color = 'black'
+        if (item.risk === '营运能力不稳定') {
+          color = 'red'
+        } else if (item.risk === '营运能力稳定') {
+          color = 'green'
+        } else if (item.risk === '营运能力一般') {
+          color = 'pink'
+        }
+        return (
+          <Card style={{ marginTop: 20 }} bordered={false} title={<strong><span style={{ fontSize: '24px' }}>{transform[item.type]}</span></strong>}>
+            <p style={{ fontSize: '18px' }}><strong>存在的风险：</strong><span style={{ color: `${color}` }}>{item.risk ? item.risk : '暂无'}</span></p>
+            <p style={{ fontSize: '18px' }}><strong>风险控制建议：</strong>{item.advise ? item.advise : '暂无'}</p>
+            <Table
+              key='operate'
+              size="small"
+              pagination={false}
+              dataSource={item.resultZbDtos}
+              columns={[
+                {
+                  title: '指标',
+                  dataIndex: 'zbKey',
+                  key: 'zbKey',
+                  width: 150,
+                  align: 'center'
+                },
+                {
+                  title: '评估结果',
+                  dataIndex: 'evaluateResult',
+                  key: 'evaluateResulet',
+                  width: 150,
+                  align: 'center'
+                },
+                {
+                  title: '最新值',
+                  dataIndex: 'newestValue',
+                  key: 'newestValue',
+                  width: 150,
+                  align: 'center',
+                  render: (_: any, item: IResultZbDtos) => {
+                    if (item.newestValue) {
+                      return item.newestValue
+                    } else {
+                      return "-"
+                    }
+                  }
+                },
+              ]}
+            />
+          </Card>
+        )
       }))}
     </>
   )
@@ -380,6 +441,6 @@ const CompanyRiskResultAnalysis = (store: IParamsRisk) => {
 
 const CompanyFcResultAnalysis = (store: IParamsFcModel) => {
   return (
-    <h1><strong>{store.analysis}</strong></h1>
+    <div style={{ marginTop: 20 }}><strong>{store.analysis}</strong></div>
   )
 }

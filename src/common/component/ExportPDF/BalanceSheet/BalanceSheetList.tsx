@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { IParamsFcModel, IParamsRisk } from "../../../../container/IntellAnalysis/model/analysis";
+import { IZcfzsInfo } from "../../../../container/IntellAnalysis/model/analysis";
 import { numberTrans } from "../utils/numberTrans";
 
 interface IBalanceSheetOriginDataProps {
@@ -12,7 +12,7 @@ interface IBalanceSheetOriginDataProps {
 }
 
 
-export const BalanceSheetReportData = (store: IParamsRisk | IParamsFcModel) => {
+export const BalanceSheetReportData = (store: IZcfzsInfo[]) => {
   const originData: IBalanceSheetOriginDataProps[] = []
   originData.push(
     // 流动资产
@@ -210,7 +210,7 @@ export const BalanceSheetReportData = (store: IParamsRisk | IParamsFcModel) => {
     },
   )
   // eslint-disable-next-line array-callback-return
-  store.gpDetails.zcfzs.map((item, i) => {
+  store.map((item, i) => {
     // eslint-disable-next-line array-callback-return
     originData.map(e => {
       if (i === 0) {

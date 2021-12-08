@@ -1,6 +1,6 @@
-import { IParamsFcModel, IParamsRisk } from "../../../../../container/IntellAnalysis/model/analysis";
+import { IMainzbsInfo } from "../../../../../container/IntellAnalysis/model/analysis";
 
-export const AbilityZbReportColumns = (store: IParamsRisk | IParamsFcModel) => {
+export const AbilityZbReportColumns = (store: IMainzbsInfo[]) => {
   const columns = [
     {
       title: '成长能力指标',
@@ -10,7 +10,7 @@ export const AbilityZbReportColumns = (store: IParamsRisk | IParamsFcModel) => {
   ]
 
   // eslint-disable-next-line array-callback-return
-  store.gpDetails.mainzbs.map((item, i) => {
+  store.map((item, i) => {
     if (item.reportDate) {
       columns.push({
         dataIndex: `growthzb${i}`,

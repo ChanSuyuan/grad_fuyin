@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import { IParamsFcModel, IParamsRisk } from '../../../../../container/IntellAnalysis/model/analysis'
+import { IMainzbsInfo } from '../../../../../container/IntellAnalysis/model/analysis'
 import { numberTrans } from '../../utils/numberTrans'
 
 interface IprofitzbZbOriginDataProps {
@@ -11,7 +11,7 @@ interface IprofitzbZbOriginDataProps {
   profitzb3?: string
 }
 
-export const ProfitZbReportData = (store: IParamsRisk | IParamsFcModel) => {
+export const ProfitZbReportData = (store: IMainzbsInfo[]) => {
   const originData: IprofitzbZbOriginDataProps[] = []
   originData.push(
     {
@@ -36,7 +36,7 @@ export const ProfitZbReportData = (store: IParamsRisk | IParamsFcModel) => {
     },
   )
   // eslint-disable-next-line array-callback-return
-  store.gpDetails.mainzbs.map((item, i) => {
+  store.map((item, i) => {
     if (item.reportDate) {
       // eslint-disable-next-line array-callback-return
       originData.map(e => {

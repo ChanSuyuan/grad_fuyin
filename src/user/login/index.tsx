@@ -91,7 +91,7 @@ export const Login: React.FC = observer(() => {
         <span>富银LOGO 预留位置</span>
       </div>
       <div className="form-container">
-        <h1 className="text-form">FYFC&FC</h1>
+        <h1 className="text-form">融资风控系统</h1>
         <div className="form-wrapper">
           <Form form={form}>
             <FormItem name="userName"

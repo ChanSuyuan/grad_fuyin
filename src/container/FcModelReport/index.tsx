@@ -1,14 +1,15 @@
 /* eslint-disable array-callback-return */
-import { Button, Card, Col, Modal, Radio, Row, Steps, Table } from "antd"
-import React, { useState } from "react"
+import { Alert, Button, Card, Col, Modal, Radio, Row, Steps, Table } from "antd"
+import React, { useEffect, useState } from "react"
 import { ExportPDFModal } from "../../common/component/ExportPDF/exportPDF"
-import { UploadForm } from "../../common/component/Upload"
+import { UploadForm } from "../../common/component/Upload/upload"
 import { IParamsFcModelReportFeedBackInfo } from "../IntellAnalysis/model/analysis"
 import { AnalysisMode } from "../RiskReport/model/mode"
 import "./index.less"
 
 interface IRiskReportProps {
   store: IParamsFcModelReportFeedBackInfo | undefined
+  gpName?: string
 }
 const { Step } = Steps
 
@@ -120,23 +121,49 @@ export const FcModelReport: React.FC<IRiskReportProps> = (props) => {
   const RadioGroup = Radio.Group
 
   const CompanyReportInfo = () => {
-
+    const [uploadContent, handleUploadContent] = useState<number>(0)
     const handleChange = (e: any) => {
       if (e.target.value) {
         setAnalysisMode(e.target.value)
       }
     }
 
+    const changeUploadContent = (e: any) => {
+      if (e.target.value === 0) {
+        handleUploadContent(0)
+      } else if (e.target.value === 1) {
+        handleUploadContent(1)
+      } else if (e.target.value === 2) {
+        handleUploadContent(2)
+      } else if (e.target.value === 3) {
+        handleUploadContent(3)
+      } else if (e.target.value === 4) {
+        handleUploadContent(4)
+      } else if (e.target.value === 5) {
+        handleUploadContent(5)
+      }
+    }
+
     const ModeSelect = () => {
+      const gpName = props.gpName
+      const type = uploadContent
+      const href = `http://59.110.169.28:8075/fuyin/file/download-excel?type=${type}&gpName=${gpName}`
       return (
         <div style={{ padding: '12px' }}>
-          <RadioGroup value={analysisMode} buttonStyle='solid' onChange={handleChange}>
+          {analysisMode === AnalysisMode.byUploadMode && (
+            <Alert type='info'
+              message="下载当前模板，首先选择类型，然后直接点击下载模板即可！"
+            />
+          )}
+          <RadioGroup value={analysisMode} buttonStyle='solid' onChange={handleChange} style={{ marginTop: 10 }}>
             <Radio.Button value='bynetmode'>使用网址爬取内容</Radio.Button>
             <Radio.Button value='byuploadmode'>自上传excel表格</Radio.Button>
           </RadioGroup>
-          <div style={{ float: 'right' }}>
-            <Button type='primary' >下载Excel模板</Button>
-          </div>
+          {analysisMode === AnalysisMode.byUploadMode && (
+            <div style={{ float: 'right', marginTop: 10 }}>
+              <Button target="_blank" href={href} type='primary'>下载Excel模板</Button>
+            </div>
+          )}
         </div>
       )
     }
@@ -1089,290 +1116,319 @@ export const FcModelReport: React.FC<IRiskReportProps> = (props) => {
                   }
                 ]}
               />
+              <Table
+                key='MainZb'
+                bordered
+                size="small"
+                dataSource={props.store?.data.gpDetails.mainzbs}
+                pagination={{ pageSize: 5 }}
+                scroll={{ x: 1000 }}
+                columns={[
+                  {
+                    title: '总资产周转天数（天）',
+                    dataIndex: 'zzczzts',
+                    key: 'zzczzts',
+                    width: 200,
+                    align: 'center',
+                    fixed: 'left'
+                  },
+                  {
+                    title: '总资产收益率 (加权)(%)',
+                    dataIndex: 'zzcjll',
+                    key: 'zzcjll',
+                    width: 200,
+                    align: 'center',
+                    fixed: 'left'
+                  },
+                  {
+                    title: '报告时间',
+                    dataIndex: 'reportDate',
+                    key: 'reportDate',
+                    width: 150,
+                    fixed: 'left',
+                    align: 'center'
+                  },
+                  {
+                    title: '资产负债率 (%)',
+                    dataIndex: 'zcfzl',
+                    key: 'zcfzl',
+                    width: 150,
+                    align: 'center'
+                  },
+                  {
+                    title: '营业总收入滚动环比增长 (%)',
+                    dataIndex: 'yyzsrgdhbzc',
+                    key: 'yyzsrgdhbzc',
+                    width: 200,
+                    align: 'center'
+                  },
+                  {
+                    title: '应收账款周转天数 (天)',
+                    dataIndex: 'yszkzzts',
+                    key: 'yszkzzts',
+                    width: 200,
+                    align: 'center'
+                  },
+                  {
+                    title: '应收账款周转率 (次)',
+                    dataIndex: 'yszkzzl',
+                    key: 'yszkzzl',
+                    width: 150,
+                    align: 'center'
+                  },
+                  {
+                    title: '毛利率 ',
+                    dataIndex: 'xsmll',
+                    key: 'xsmll',
+                    width: 150,
+                    align: 'center'
+                  },
+                  {
+                    title: '净利率 (%)',
+                    dataIndex: 'xsjll',
+                    key: 'xsjll',
+                    width: 150,
+                    align: 'center'
+                  },
+                  {
+                    title: '现金流量比率',
+                    dataIndex: 'xjllb',
+                    key: 'xjllb',
+                    width: 150,
+                    align: 'center'
+                  },
+                  {
+                    title: '营业总收入同比增长 (%)',
+                    dataIndex: 'totaloperaterevetz',
+                    key: 'totaloperaterevetz',
+                    width: 200,
+                    align: 'center'
+                  },
+                  {
+                    title: '营业总收入 (元)',
+                    dataIndex: 'toazzl',
+                    key: 'toazzl',
+                    width: 150,
+                    align: 'center'
+                  },
+                  {
+                    title: '股票名字',
+                    dataIndex: 'securityNameAbbr',
+                    key: 'securityNameAbbr',
+                    width: 150,
+                    align: 'center'
+                  },
+                  {
+                    title: '股票代码',
+                    dataIndex: 'securityCode',
+                    key: 'securityCode',
+                    width: 150,
+                    align: 'center'
+                  },
+                  {
+                    title: '速动比率',
+                    dataIndex: 'sd',
+                    key: 'sd',
+                    width: 150,
+                    align: 'center'
+                  },
+                  {
+                    title: '净资产收益率 (扣非 / 加权)(%)',
+                    dataIndex: 'roekcjq',
+                    key: 'roekcjq',
+                    width: 250,
+                    align: 'center'
+                  },
+                  {
+                    title: '净资产收益率 (加权)(%)',
+                    dataIndex: 'roejq',
+                    key: 'roejq',
+                    width: 200,
+                    align: 'center'
+                  },
+                  {
+                    title: '权益乘数',
+                    dataIndex: 'qycs',
+                    key: 'qycs',
+                    width: 150,
+                    align: 'center'
+                  },
+                  {
+                    title: '归属净利润同比增长 (%)',
+                    dataIndex: 'parentnetprofittz',
+                    key: 'parentnetprofittz',
+                    width: 200,
+                    align: 'center'
+                  },
+                  {
+                    title: '归属净利润 (元)',
+                    dataIndex: 'parentnetprofit',
+                    key: 'parentnetprofit',
+                    width: 150,
+                    align: 'center'
+                  },
+                  {
+                    title: '归属净利润滚动环比增长 (%)',
+                    dataIndex: 'parentnetprofit',
+                    key: 'parentnetprofit',
+                    width: 200,
+                    align: 'center'
+                  },
+                  {
+                    title: '每股公积金 (元)',
+                    dataIndex: 'mgzbgj',
+                    key: 'mgzbgj',
+                    width: 150,
+                    align: 'center'
+                  },
+                  {
+                    title: '每股未分配利润 (元)',
+                    dataIndex: 'mgwfplr',
+                    key: 'mgwfplr',
+                    width: 150,
+                    align: 'center'
+                  },
+                  {
+                    title: '每股经营现金流 (元)',
+                    dataIndex: 'mgjyxjje',
+                    key: 'mgjyxjje',
+                    width: 150,
+                    align: 'center'
+                  },
+                  {
+                    title: '流动比率',
+                    dataIndex: 'ld',
+                    key: 'ld',
+                    width: 150,
+                    align: 'center'
+                  },
+                  {
+                    title: '扣非净利润滚动环比增长 (%)',
+                    dataIndex: 'kfjlrgdhbzc',
+                    key: 'kfjlrgdhbzc',
+                    width: 200,
+                    align: 'center'
+                  },
+                  {
+                    title: '扣非净利润同比增长 (%)',
+                    dataIndex: 'kcfjcxsyjlrtz',
+                    key: 'kcfjcxsyjlrtz',
+                    width: 200,
+                    align: 'center'
+                  },
+                  {
+                    title: '扣非净利润 (元)',
+                    dataIndex: 'kcfjcxsyjlr',
+                    key: 'kcfjcxsyjlr',
+                    width: 150,
+                    align: 'center'
+                  },
+                  {
+                    title: '稀释每股收益 (元)',
+                    dataIndex: 'epsxs',
+                    key: 'epsxs',
+                    width: 150,
+                    align: 'center'
+                  },
+                  {
+                    title: '扣非每股收益 (元)',
+                    dataIndex: 'epskcjb',
+                    key: 'epskcjb',
+                    width: 150,
+                    align: 'center'
+                  },
+                  {
+                    title: '基本每股收益 (元)',
+                    dataIndex: 'epsjb',
+                    key: 'epsjb',
+                    width: 150,
+                    align: 'center'
+                  },
+                  {
+                    title: '产权比率',
+                    dataIndex: 'cqbl',
+                    key: 'cqbl',
+                    width: 150,
+                    align: 'center'
+                  },
+                  {
+                    title: '存货周转天数 (天)',
+                    dataIndex: 'chzzts',
+                    key: 'chzzts',
+                    width: 150,
+                    align: 'center'
+                  },
+                  {
+                    title: '存货周转率 (次)',
+                    dataIndex: 'chzzl',
+                    key: 'chzzl',
+                    width: 150,
+                    align: 'center'
+                  },
+                  {
+                    title: '每股净资产 (元)',
+                    dataIndex: 'bps',
+                    key: 'bps',
+                    width: 150,
+                    align: 'center'
+                  }
+                ]}
+              />
             </Card>
           </>
           :
-          <UploadForm />
+          <>
+            <RadioGroup style={{ padding: '12px' }} defaultValue={0} onChange={changeUploadContent}>
+              <Radio value={0}>利润表</Radio>
+              <Radio value={1}>资产负债表</Radio>
+              <Radio value={2}>现金流量表</Radio>
+              <Radio value={3}>资产负债表</Radio>
+              <Radio value={4}>企业基本信息</Radio>
+              <Radio value={5}>企业股权结构信息</Radio>
+            </RadioGroup>
+            <UploadForm uploadContent={uploadContent} />
+          </>
         }
       </>
     )
   }
 
-  const CompanyMainZBInfo = () => {
-    return (
-      <>
-        {analysisMode === AnalysisMode.byNetMode ?
-          <Table
-            key='MainZb'
-            bordered
-            size="small"
-            dataSource={props.store?.data.gpDetails.mainzbs}
-            pagination={{ pageSize: 5 }}
-            scroll={{ x: 1000 }}
-            columns={[
-              {
-                title: '总资产周转天数（天）',
-                dataIndex: 'zzczzts',
-                key: 'zzczzts',
-                width: 200,
-                align: 'center',
-                fixed: 'left'
-              },
-              {
-                title: '总资产收益率 (加权)(%)',
-                dataIndex: 'zzcjll',
-                key: 'zzcjll',
-                width: 200,
-                align: 'center',
-                fixed: 'left'
-              },
-              {
-                title: '报告时间',
-                dataIndex: 'reportDate',
-                key: 'reportDate',
-                width: 150,
-                fixed: 'left',
-                align: 'center'
-              },
-              {
-                title: '资产负债率 (%)',
-                dataIndex: 'zcfzl',
-                key: 'zcfzl',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '营业总收入滚动环比增长 (%)',
-                dataIndex: 'yyzsrgdhbzc',
-                key: 'yyzsrgdhbzc',
-                width: 200,
-                align: 'center'
-              },
-              {
-                title: '应收账款周转天数 (天)',
-                dataIndex: 'yszkzzts',
-                key: 'yszkzzts',
-                width: 200,
-                align: 'center'
-              },
-              {
-                title: '应收账款周转率 (次)',
-                dataIndex: 'yszkzzl',
-                key: 'yszkzzl',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '毛利率 ',
-                dataIndex: 'xsmll',
-                key: 'xsmll',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '净利率 (%)',
-                dataIndex: 'xsjll',
-                key: 'xsjll',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '现金流量比率',
-                dataIndex: 'xjllb',
-                key: 'xjllb',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '营业总收入同比增长 (%)',
-                dataIndex: 'totaloperaterevetz',
-                key: 'totaloperaterevetz',
-                width: 200,
-                align: 'center'
-              },
-              {
-                title: '营业总收入 (元)',
-                dataIndex: 'toazzl',
-                key: 'toazzl',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '股票名字',
-                dataIndex: 'securityNameAbbr',
-                key: 'securityNameAbbr',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '股票代码',
-                dataIndex: 'securityCode',
-                key: 'securityCode',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '速动比率',
-                dataIndex: 'sd',
-                key: 'sd',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '净资产收益率 (扣非 / 加权)(%)',
-                dataIndex: 'roekcjq',
-                key: 'roekcjq',
-                width: 250,
-                align: 'center'
-              },
-              {
-                title: '净资产收益率 (加权)(%)',
-                dataIndex: 'roejq',
-                key: 'roejq',
-                width: 200,
-                align: 'center'
-              },
-              {
-                title: '权益乘数',
-                dataIndex: 'qycs',
-                key: 'qycs',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '归属净利润同比增长 (%)',
-                dataIndex: 'parentnetprofittz',
-                key: 'parentnetprofittz',
-                width: 200,
-                align: 'center'
-              },
-              {
-                title: '归属净利润 (元)',
-                dataIndex: 'parentnetprofit',
-                key: 'parentnetprofit',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '归属净利润滚动环比增长 (%)',
-                dataIndex: 'parentnetprofit',
-                key: 'parentnetprofit',
-                width: 200,
-                align: 'center'
-              },
-              {
-                title: '每股公积金 (元)',
-                dataIndex: 'mgzbgj',
-                key: 'mgzbgj',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '每股未分配利润 (元)',
-                dataIndex: 'mgwfplr',
-                key: 'mgwfplr',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '每股经营现金流 (元)',
-                dataIndex: 'mgjyxjje',
-                key: 'mgjyxjje',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '流动比率',
-                dataIndex: 'ld',
-                key: 'ld',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '扣非净利润滚动环比增长 (%)',
-                dataIndex: 'kfjlrgdhbzc',
-                key: 'kfjlrgdhbzc',
-                width: 200,
-                align: 'center'
-              },
-              {
-                title: '扣非净利润同比增长 (%)',
-                dataIndex: 'kcfjcxsyjlrtz',
-                key: 'kcfjcxsyjlrtz',
-                width: 200,
-                align: 'center'
-              },
-              {
-                title: '扣非净利润 (元)',
-                dataIndex: 'kcfjcxsyjlr',
-                key: 'kcfjcxsyjlr',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '稀释每股收益 (元)',
-                dataIndex: 'epsxs',
-                key: 'epsxs',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '扣非每股收益 (元)',
-                dataIndex: 'epskcjb',
-                key: 'epskcjb',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '基本每股收益 (元)',
-                dataIndex: 'epsjb',
-                key: 'epsjb',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '产权比率',
-                dataIndex: 'cqbl',
-                key: 'cqbl',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '存货周转天数 (天)',
-                dataIndex: 'chzzts',
-                key: 'chzzts',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '存货周转率 (次)',
-                dataIndex: 'chzzl',
-                key: 'chzzl',
-                width: 150,
-                align: 'center'
-              },
-              {
-                title: '每股净资产 (元)',
-                dataIndex: 'bps',
-                key: 'bps',
-                width: 150,
-                align: 'center'
-              }
-            ]}
-          />
-          : <>HelloWorld</>}
-      </>
-    )
-  }
+  const mainZbArr = JSON.parse(localStorage.getItem('mainZb')) ? JSON.parse(localStorage.getItem('mainZb')) : props.store.data.gpDetails.mainzbs
+  const profitArr = JSON.parse(localStorage.getItem('profit')) ? JSON.parse(localStorage.getItem('profit')) : props.store.data.gpDetails.profiles
+  const cashFlowArr = JSON.parse(localStorage.getItem('cashFlow')) ? JSON.parse(localStorage.getItem('cashFlow')) : props.store.data.gpDetails.xjlls
+  const balanceSheet = JSON.parse(localStorage.getItem('balanceSheet')) ? JSON.parse(localStorage.getItem('balanceSheet')) : props.store.data.gpDetails.zcfzs
+  const companyInf = JSON.parse(localStorage.getItem('companyInfo')) ? JSON.parse(localStorage.getItem('companyInfo')) : props.store.data.gpDetails.companyInfo
+  const companyStruct = JSON.parse(localStorage.getItem('companyStruct')) ? JSON.parse(localStorage.getItem('companyStruct')) : props.store.data.gpDetails.qygqjgs
 
   const CompanyAnalysisOperatingInfo = () => {
+    // const [analysis, setAnalysis] = useState<IGpDetailsFeedBack[]>()
+
+    // useEffect(() => {
+    //   loadPage()
+    //   // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [])
+
+    // const loadPage = () => {
+    //   try {
+    //     riskApi.getRiskAnalysis({
+    //       companyInfo: companyInf,
+    //       mainzbs: mainZbArr,
+    //       profiles: profitArr,
+    //       xjlls: cashFlowArr,
+    //       zcfzs: balanceSheet,
+    //       qygqjgs: companyStruct
+    //     }).then(res => {
+    //       setAnalysis(res.data)
+    //       localStorage.setItem('analysis', JSON.stringify(res.data))
+    //     })
+    //   } catch (err) {
+    //     message.error('发送了意想不到的问题！')
+    //   }
+    // }
+
     return (
       <>
-        {analysisMode === AnalysisMode.byNetMode ?
-          <h1><strong>{props.store?.data.analysis}</strong></h1>
-          :
-          <div>HelloWorld</div>
-        }
+        <h1><strong>{props.store?.data.analysis}</strong></h1>
       </>
     )
   }
@@ -1389,10 +1445,6 @@ export const FcModelReport: React.FC<IRiskReportProps> = (props) => {
     {
       title: '报表',
       content: <CompanyReportInfo />,
-    },
-    {
-      title: '主要指标',
-      content: <CompanyMainZBInfo />,
     },
     {
       title: '能力分析',
@@ -1439,7 +1491,7 @@ export const FcModelReport: React.FC<IRiskReportProps> = (props) => {
             footer={[]}
             onCancel={() => handleModalVisible(false)}
           >
-            <ExportPDFModal fcdata={props.store.data} />
+            <ExportPDFModal fcdata={props.store.data} cashFlowArr={cashFlowArr} balanceSheet={balanceSheet} companyInf={companyInf} companyStruct={companyStruct} mainZbArr={mainZbArr} profitArr={profitArr} />
           </Modal>
         </div>
       </Card>

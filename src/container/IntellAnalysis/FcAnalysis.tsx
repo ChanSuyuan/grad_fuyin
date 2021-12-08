@@ -16,6 +16,7 @@ export const FcAnalysis: React.FC = () => {
   const [isShow, setShow] = useState<boolean>(false)
   const history = useHistory()
   const [store, setStore] = useState<IParamsFcModelReportFeedBackInfo>()
+  const [companyName, setCompanyName] = useState<string>()
 
   async function handleOk() {
     const gpName = form.getFieldValue('gpName')
@@ -26,6 +27,8 @@ export const FcAnalysis: React.FC = () => {
     const repayMode = form.getFieldValue('repayMode')
     const guarantee = form.getFieldValue('guarantee')
     const period = form.getFieldValue('period')
+
+    setCompanyName(gpName)
 
     if (gpName) {
       setShow(true)
@@ -201,7 +204,7 @@ export const FcAnalysis: React.FC = () => {
         {isShow && (
           <>
             {loading ? <div style={{ textAlign: "center" }}><Spin tip="数据正在加载中，请稍后。" size="default" /></div> :
-              store ? <FcModelReport store={store} /> : notification.open({
+              store ? <FcModelReport store={store} gpName={companyName} /> : notification.open({
                 message: '爬取不到该公司信息！',
                 description: '请稍等，后台小哥哥正在努力解决问题中！',
                 icon: <ApiFilled style={{ color: '#108ee9' }} />,

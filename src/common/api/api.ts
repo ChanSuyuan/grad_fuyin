@@ -73,7 +73,8 @@ export class FYAPI {
       url: FYAPI.genURLStr(url),
       method,
       headers: {
-        'Content-Type': 'application/json;charset=utf-8',
+        'Content-Type': 'application/json;charset=utf-8;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'Accept': 'application/json;charset=utf-8;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       },
       withCredentials: true,
       data: bodyObj

@@ -35,7 +35,7 @@ export interface IGPDetail {
   qygqjgs: IQygqjsInfo[]
   xjlls: IXjjlsInfo[]
   zcfzs: IZcfzsInfo[]
-  id: number
+  id?: number
 }
 
 export interface IComponyInfo {
@@ -73,48 +73,53 @@ export interface IComponyInfo {
   zczb: string // 注册资本 (元)
   zjl: string // 总经理
   zqlb: string // 证券类别
+  zcd: string //注册地
+  gsms: string // 公司秘书
+  njr: string // 年结日
+  ygrs: string //员工人数
+  hss: string // 核数师
 }
 
 export interface IMainzbsInfo {
-  id: number // id
-  bps: number // 每股净资产 (元)
-  chzzl: number // 存货周转率 (次)
-  chzzts: number // 存货周转天数 (天)
-  cqbl: number // 产权比率
-  createTime: string
-  epsjb: number // 基本每股收益 (元)
-  epskcjb: number // 扣非每股收益 (元)
-  epsxs: number // 稀释每股收益 (元)
-  kcfjcxsyjlr: number // 扣非净利润 (元)
-  kcfjcxsyjlrtz: number // 扣非净利润同比增长 (%)
-  kfjlrgdhbzc: number // 扣非净利润滚动环比增长 (%)
-  ld: number // 流动比率
-  mgjyxjje: number // 每股经营现金流 (元)
-  mgwfplr: number // 每股未分配利润 (元)
-  mgzbgj: number // 每股公积金 (元)
-  netprofitrphbzc: number // 归属净利润滚动环比增长 (%)
-  parentnetprofit: number // 归属净利润 (元)
-  parentnetprofittz: number // 归属净利润同比增长 (%)
-  qycs: number // 权益乘数
-  reportDate: string // 报告时间
-  roejq: number // 净资产收益率 (加权)(%)
-  roekcjq: number // 净资产收益率 (扣非 / 加权)(%)
-  sd: number  // 速动比率
-  securityCode: string  // 股票代码
-  securityNameAbbr: string // 股票名字
-  toazzl: number // 总资产周转率 (次)
-  totaloperatereve: number // 营业总收入 (元)
-  totaloperaterevetz: number // 营业总收入同比增长 (%)
-  updateTime: string
-  xjllb: number  // 现金流量比率
-  xsjll: number // 净利率 (%)
-  xsmll: number // 毛利率 (%)
-  yszkzzl: number // 应收账款周转率 (次)
-  yszkzzts: number // 应收账款周转天数 (天)
-  yyzsrgdhbzc: number // 营业总收入滚动环比增长 (%)
-  zcfzl: number // 资产负债率 (%)
-  zzcjll: number // 总资产收益率 (加权)(%)
-  zzczzts: number // 总资产周转天数 (天)
+  id?: number // id
+  bps?: number // 每股净资产 (元)
+  chzzl?: number // 存货周转率 (次)
+  chzzts?: number // 存货周转天数 (天)
+  cqbl?: number // 产权比率
+  createTime?: string
+  epsjb?: number // 基本每股收益 (元)
+  epskcjb?: number // 扣非每股收益 (元)
+  epsxs?: number // 稀释每股收益 (元)
+  kcfjcxsyjlr?: number // 扣非净利润 (元)
+  kcfjcxsyjlrtz?: number // 扣非净利润同比增长 (%)
+  kfjlrgdhbzc?: number // 扣非净利润滚动环比增长 (%)
+  ld?: number // 流动比率
+  mgjyxjje?: number // 每股经营现金流 (元)
+  mgwfplr?: number // 每股未分配利润 (元)
+  mgzbgj?: number // 每股公积金 (元)
+  netprofitrphbzc?: number // 归属净利润滚动环比增长 (%)
+  parentnetprofit?: number // 归属净利润 (元)
+  parentnetprofittz?: number // 归属净利润同比增长 (%)
+  qycs?: number // 权益乘数
+  reportDate?: string // 报告时间
+  roejq?: number // 净资产收益率 (加权)(%)
+  roekcjq?: number // 净资产收益率 (扣非 / 加权)(%)
+  sd?: number  // 速动比率
+  securityCode?: string  // 股票代码
+  securityNameAbbr?: string // 股票名字
+  toazzl?: number // 总资产周转率 (次)
+  totaloperatereve?: number // 营业总收入 (元)
+  totaloperaterevetz?: number // 营业总收入同比增长 (%)
+  updateTime?: string
+  xjllb?: number  // 现金流量比率
+  xsjll?: number // 净利率 (%)
+  xsmll?: number // 毛利率 (%)
+  yszkzzl?: number // 应收账款周转率 (次)
+  yszkzzts?: number // 应收账款周转天数 (天)
+  yyzsrgdhbzc?: number // 营业总收入滚动环比增长 (%)
+  zcfzl?: number // 资产负债率 (%)
+  zzcjll?: number // 总资产收益率 (加权)(%)
+  zzczzts?: number // 总资产周转天数 (天)
 }
 
 export interface IProfilesInfo {

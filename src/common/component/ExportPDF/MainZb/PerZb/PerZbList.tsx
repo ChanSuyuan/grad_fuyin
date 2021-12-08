@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { IParamsFcModel, IParamsRisk } from "../../../../../container/IntellAnalysis/model/analysis";
+import { IMainzbsInfo, IParamsFcModel, IParamsRisk } from "../../../../../container/IntellAnalysis/model/analysis";
 import { numberTrans } from "../../utils/numberTrans";
 
 interface IPerZbOriginDataProps {
@@ -11,7 +11,7 @@ interface IPerZbOriginDataProps {
   permainzb3?: string
 }
 
-export const PerZbReportData = (store: IParamsRisk | IParamsFcModel) => {
+export const PerZbReportData = (store: IMainzbsInfo[]) => {
   const originData: IPerZbOriginDataProps[] = [];
   originData.push(
     {
@@ -44,7 +44,7 @@ export const PerZbReportData = (store: IParamsRisk | IParamsFcModel) => {
     },
   )
   // eslint-disable-next-line array-callback-return
-  store.gpDetails.mainzbs.map((item, i) => {
+  store.map((item, i) => {
     if (item.reportDate) {
       // eslint-disable-next-line array-callback-return
       originData.map(e => {
