@@ -23,7 +23,7 @@ export interface IAnaylsis {
 }
 
 export interface IResultZbDtos {
-  evalluateResult: string
+  evaluateResult: string
   newestValue: string
   zbKey: string
 }

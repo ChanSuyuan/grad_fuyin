@@ -1,4 +1,4 @@
-import { Table } from "antd"
+import { Card, Table } from "antd"
 import React, { Fragment, useEffect, useState } from "react"
 import { adminSystemApi } from "./api/admin"
 import { superAdminSystemApi } from "./api/superAdmin"
@@ -33,9 +33,8 @@ export const SystemLog: React.FC = () => {
 
   return (
     <Fragment>
-      <div style={{ padding: 24, margin: 0, height: 400, background: "#fff" }}>
+      <Card title='操作日志'>
         <Table
-          pagination={{ pageSize: 5 }}
           bordered={true}
           size='middle'
           loading={loading}
@@ -79,7 +78,7 @@ export const SystemLog: React.FC = () => {
             }
           ]}
         />
-      </div>
+      </Card>
     </Fragment>
   )
 }

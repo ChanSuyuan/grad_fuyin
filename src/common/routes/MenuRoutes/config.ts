@@ -95,8 +95,12 @@ export const menus = [
             path: '/fyapp/params/FRC/guarantee',
             title: '担保能力',
             icon: 'team'
+          },
+          {
+            path: '/fyapp/params/FRC/summary',
+            title: '总分内容配置',
+            icon: 'team'
           }
-
         ]
       }
     ]

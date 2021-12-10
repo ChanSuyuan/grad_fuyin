@@ -63,3 +63,18 @@ export interface ISuperAdminCustomMathcDegreeFeedBack {
   ok?: boolean
   text?: string
 }
+
+export interface ISuperAdminGetMatchDegreeFeedBack {
+  data?: IMatchDegree[]
+  errorCode?: number
+  ok?: boolean
+  text?: string
+}
+
+export interface IMatchDegree {
+  id?: number
+  bz?: string
+  cznl?: number
+  ppd?: number
+  ylnl?: number
+}

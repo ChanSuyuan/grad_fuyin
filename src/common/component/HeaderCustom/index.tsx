@@ -51,7 +51,7 @@ export const HeaderCustom: React.FC<HeaderCustomProps> = (props) => {
               你好!
             </span>
             <span style={{ color: '#999' }}>
-              Test3
+              {localStorage.getItem('user_name')}
             </span>
             <Avatar style={{ marginLeft: 8 }} />
           </Fragment>

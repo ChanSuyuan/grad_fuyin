@@ -2,8 +2,8 @@ import { FYAPI } from "../../../common/api/api"
 import { ISystemLog } from "../model/admin"
 
 
-const pageSize = 10000
-const pageNum = 10000
+const pageSize = 1000
+const pageNum = 10
 
 const baseURL = '/admin'
 export class AdminSystemApi {

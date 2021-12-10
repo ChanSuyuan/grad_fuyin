@@ -16,6 +16,7 @@ import { FcProfit } from "../../../container/ManageParams/FcParams/profit";
 import { ManageUsers } from "../../../container/ManageUsers";
 import { ManageCharacters } from "../../../container/ManageCharacters";
 import { SystemLog } from "../../../container/SystemLog";
+import { Score } from "../../../container/ManageParams/FrcParams/Score";
 
 
 export const routes = [
@@ -32,6 +33,7 @@ export const routes = [
   { path: '/fyapp/params/FRC/profit', component: Profit },
   { path: '/fyapp/params/FRC/paydebt', component: PayDebt },
   { path: '/fyapp/params/FRC/guarantee', component: Guarantee },
+  { path: '/fyapp/params/FRC/summary', component: Score },
   { path: '/fyapp/systemlog', component: SystemLog },
   { path: '/fyapp/users', component: ManageUsers },
   { path: '/fyapp/characters', component: ManageCharacters },

@@ -3,10 +3,10 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { Table, Form, Card, Alert, message, Modal, Row, Col, Input, Radio, Button } from 'antd';
 import { IAdminGetMatchDegreeFeedBack, IMatchDegree } from '../model/adminParams';
-import { adminParamsApi } from '../api/adminParams';
 import { statusCode } from '../../../common/model/statusCode';
 import { useHistory } from 'react-router';
 import _ from 'lodash';
+import { customFcParamsApi } from './api';
 
 const transFormDegree: any = {
   0: <div style={{ color: 'red' }}>较弱</div>,
@@ -22,7 +22,7 @@ export const MatchDegree = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false)
   const [addRulesVisible, handleAddRulesVisible] = useState<boolean>(false)
-  const [currentRow, setCurrentRow] = useState<IMatchDegree>()
+  const [currentRow, setCurrentRow] = useState<IMatchDegree>(undefined)
   const [store, setStore] = useState<IAdminGetMatchDegreeFeedBack>()
   const history = useHistory()
   const userType = localStorage.getItem('user_type')
@@ -37,8 +37,16 @@ export const MatchDegree = () => {
   const loadPage = async () => {
     setLoading(true)
     try {
-      if (userType === '1' || userType === '2') {
-        const res = await adminParamsApi.getMatchDegree()
+      if (userType === '1') {
+        const res = await customFcParamsApi.getMatchDegree()
+        if (res.errorCode === statusCode.tokenIsNotVaild) {
+          message.error('登录信息过期，请重新登陆！')
+          history.push('/loginadmin')
+        }
+        setStore(res)
+        setResArr(res.data)
+      } else {
+        const res = await customFcParamsApi.getSuperAdminMatchDegree()
         if (res.errorCode === statusCode.tokenIsNotVaild) {
           message.error('登录信息过期，请重新登陆！')
           history.push('/loginadmin')
@@ -83,7 +91,15 @@ export const MatchDegree = () => {
       })
 
       if (User_type === '1') {
-        adminParamsApi.modifyMatchDegree(resArrFinal)
+        customFcParamsApi.modifyMatchDegree(resArrFinal)
+          .then(res => {
+            if (res.errorCode === statusCode.success) {
+              loadPage()
+              message.success('配置成功')
+            }
+          })
+      } else {
+        customFcParamsApi.superAdminModifyMatchDegree(resArrFinal)
           .then(res => {
             if (res.errorCode === statusCode.success) {
               loadPage()
@@ -98,6 +114,7 @@ export const MatchDegree = () => {
 
 
   const UpdateForm = (record: IMatchDegree) => {
+    console.log(record.bz, record.cznl, record.ppd, record.ylnl)
     return (
       <Fragment>
         <Modal
@@ -126,19 +143,13 @@ export const MatchDegree = () => {
             style={{ padding: 20 }}
             key='modifyForm'
             colon={false}
-            initialValues={{
-              profit_ability: record.ylnl,
-              debt_ability: record.cznl,
-              bz_ability: record.bz,
-              ppd: record.ppd
-            }}
           >
             <FormItem
               label={<strong><h3>偿债能力</h3></strong>}
               name='debt_ability'
               key='debt_ability'
             >
-              <RadioGroup value={record.cznl} buttonStyle='solid'>
+              <RadioGroup buttonStyle='solid'>
                 <Row key='cznl'>
                   <Col key='cznl-1'>
                     <Radio.Button value={0}>较弱</Radio.Button>
@@ -157,7 +168,7 @@ export const MatchDegree = () => {
               name='profit_ability'
               key='profit_ability'
             >
-              <RadioGroup value={record.ylnl} buttonStyle='solid'>
+              <RadioGroup buttonStyle='solid'>
                 <Row key='ylnl'>
                   <Col>
                     <Radio.Button value={0}>较弱</Radio.Button>
@@ -374,7 +385,7 @@ export const MatchDegree = () => {
           <Button type='primary' onClick={() => handleAddRulesVisible(true)}>添加规则</Button>
         </div>
         <Table
-          style={{ marginTop: 10, textAlign: 'center' }}
+          style={{ marginTop: 10, textAlign: 'center', height: 270 }}
           bordered
           size='small'
           loading={loading}

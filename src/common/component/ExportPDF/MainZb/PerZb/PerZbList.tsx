@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { IMainzbsInfo, IParamsFcModel, IParamsRisk } from "../../../../../container/IntellAnalysis/model/analysis";
+import { IMainzbsInfo } from "../../../../../container/IntellAnalysis/model/analysis";
 import { numberTrans } from "../../utils/numberTrans";
 
 interface IPerZbOriginDataProps {

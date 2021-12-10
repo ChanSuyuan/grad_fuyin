@@ -20,7 +20,6 @@ export const ManageUsers: React.FC = () => {
   const [store, setStore] = useState<IAllUsersInfo[]>()
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false)
   const [currentRow, setCurrentRow] = useState<IAllUsersInfo>()
-  // const [omitLoading, setOmitLoading] = useState<boolean>(false)
   const auth = localStorage.getItem('user_type')
   const history = useHistory()
 
@@ -62,7 +61,6 @@ export const ManageUsers: React.FC = () => {
     const User_type = localStorage.getItem('user_type')
     try {
       message.loading('正在配置中...', 3)
-      // setOmitLoading(true)
       if (User_type === '1') {
         adminUsersApi.modifyUsrs({
           userName: username,
@@ -112,8 +110,6 @@ export const ManageUsers: React.FC = () => {
       }
     } catch (err) {
       message.error('配置失败请重试！')
-    } finally {
-      // setOmitLoading(false)
     }
   }
 
@@ -216,19 +212,22 @@ export const ManageUsers: React.FC = () => {
             title: "用户名",
             dataIndex: 'userName',
             key: 'userName',
-            align: 'center'
+            align: 'center',
+            width: '20%'
           },
           {
             title: "邮箱",
             dataIndex: 'email',
             key: 'email',
-            align: 'center'
+            align: 'center',
+            width: '20%'
           },
           {
             title: "状态",
             dataIndex: 'state',
             key: 'state',
             align: 'center',
+            width: '20%',
             render: (_: any, record: IAllUsersInfo) => {
               if (record.state === 0) {
                 return (
@@ -247,6 +246,7 @@ export const ManageUsers: React.FC = () => {
             dataIndex: 'type',
             key: 'type',
             align: 'center',
+            width: '20%',
             render: (_: any, record: IAllUsersInfo) => {
               if (record.type === 1) {
                 if (record.state !== -1) {
@@ -286,6 +286,7 @@ export const ManageUsers: React.FC = () => {
             dataIndex: 'operate',
             key: 'operate',
             align: 'center',
+            width: '20%',
             render: (_: any, record: IAllUsersInfo) => (
               // eslint-disable-next-line jsx-a11y/anchor-is-valid
               <Fragment>

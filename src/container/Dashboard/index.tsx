@@ -1,14 +1,26 @@
 import React, { useEffect } from "react"
 import { useHistory } from "react-router"
+import { authTokenApi } from "./api"
 
 
 export const Dashboard: React.FC = () => {
   const history = useHistory()
+  const token = localStorage.getItem('user_token')
   const isLogin = () => {
-    if (!localStorage.getItem('user_token')) {
+    if (!token) {
       history.push('/login')
-    } else {
-
+    } else if (token) {
+      authTokenApi.checkoutState()
+        .then(res => {
+          if (res.data === -1) {
+            const userType = localStorage.getItem('user_type')
+            if (userType === '0') {
+              history.push('/login')
+            } else {
+              history.push('/loginadmin')
+            }
+          }
+        })
     }
   }
 

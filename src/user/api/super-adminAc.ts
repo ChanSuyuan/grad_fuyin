@@ -12,7 +12,7 @@ import {
   ISuperAdminModifyUpdatePwdInfo
 } from "../model/super-adminAc";
 
-const baseURL = 'superadmin'
+const baseURL = '/superadmin'
 
 class SuperAdminApi {
   /**

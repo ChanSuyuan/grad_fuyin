@@ -21,6 +21,8 @@ import { ProfitZbReportColumns } from "./MainZb/ProfitZb/ProfitZbColumns"
 import { adminExportPdfApi } from "./api/admin"
 import { superAdminExportPdfApi } from "./api/superAdmin"
 import { userExportPdfApi } from "./api/user"
+import { OperateZbReportColumns } from "./MainZb/OperateZb/OperateZbColumns"
+import { OperateZbReportData } from "./MainZb/OperateZb/OperateZbList"
 
 interface IExportPDFProps {
   data?: IParamsRisk
@@ -47,6 +49,15 @@ export const ExportPDFModal: React.FC<IExportPDFProps> = (props) => {
   }
 
   const exportPdf = async () => {
+
+    localStorage.removeItem('mainZb')
+    localStorage.removeItem('profit')
+    localStorage.removeItem('cashFlow')
+    localStorage.removeItem('balanceSheet')
+    localStorage.removeItem('companyInfo')
+    localStorage.removeItem('companyStruct')
+    localStorage.removeItem('analysis')
+
     const userType = localStorage.getItem('user_type')
     try {
       if (typeof props.analysisResult === 'object') {
@@ -66,6 +77,29 @@ export const ExportPDFModal: React.FC<IExportPDFProps> = (props) => {
           })
         } else if (userType === '0') {
           userExportPdfApi.createRiskReportInfo({
+            analysis: props.analysisResult,
+            gpDetails: details
+          }).then(res => {
+            console.log(res.errorCode)
+          })
+        }
+      } else {
+        if (userType === '1') {
+          adminExportPdfApi.createFcReportInfo({
+            analysis: props.analysisResult,
+            gpDetails: details
+          }).then(res => {
+            console.log(res.errorCode)
+          })
+        } else if (userType === '2') {
+          superAdminExportPdfApi.createFcReportInfo({
+            analysis: props.analysisResult,
+            gpDetails: details
+          }).then(res => {
+            console.log(res.errorCode)
+          })
+        } else if (userType === '0') {
+          userExportPdfApi.createFcReportInfo({
             analysis: props.analysisResult,
             gpDetails: details
           }).then(res => {
@@ -341,6 +375,8 @@ const CompanyMainZb = (store: IGPDetail) => {
   const ProfitColumns = ProfitZbReportColumns(store.mainzbs)
   const FinancialOriginData = FinancialReportData(store.mainzbs)
   const FinancialColumns = FinancialZbReportColumns(store.mainzbs)
+  const OperateColumns = OperateZbReportColumns(store.mainzbs)
+  const OperateOriginData = OperateZbReportData(store.mainzbs)
   return (
     <Card title={<strong><span style={{ fontSize: '24px' }}>主要指标</span></strong>} bordered={false} >
       <Table
@@ -370,6 +406,13 @@ const CompanyMainZb = (store: IGPDetail) => {
         dataSource={FinancialOriginData}
         columns={FinancialColumns}
       />
+      <Table
+        style={{ marginTop: 20 }}
+        size='middle'
+        pagination={false}
+        dataSource={OperateOriginData}
+        columns={OperateColumns}
+      />
     </Card>
   )
 }
@@ -393,9 +436,9 @@ const CompanyRiskResultAnalysis = (store: IParamsRisk) => {
           color = 'pink'
         }
         return (
-          <Card style={{ marginTop: 20 }} bordered={false} title={<strong><span style={{ fontSize: '24px' }}>{transform[item.type]}</span></strong>}>
-            <p style={{ fontSize: '18px' }}><strong>存在的风险：</strong><span style={{ color: `${color}` }}>{item.risk ? item.risk : '暂无'}</span></p>
-            <p style={{ fontSize: '18px' }}><strong>风险控制建议：</strong>{item.advise ? item.advise : '暂无'}</p>
+          <Card style={{ marginTop: 20 }} bordered={false} title={<strong><span style={{ fontSize: '20px' }}>{transform[item.type]}</span></strong>}>
+            <p style={{ fontSize: '16px' }}><strong>存在的风险：</strong><span style={{ color: `${color}` }}>{item.risk ? item.risk : '暂无'}</span></p>
+            <p style={{ fontSize: '16px' }}><strong>风险控制建议：</strong>{item.advise ? item.advise : '暂无'}</p>
             <Table
               key='operate'
               size="small"
@@ -406,21 +449,25 @@ const CompanyRiskResultAnalysis = (store: IParamsRisk) => {
                   title: '指标',
                   dataIndex: 'zbKey',
                   key: 'zbKey',
-                  width: 150,
                   align: 'center'
                 },
                 {
                   title: '评估结果',
                   dataIndex: 'evaluateResult',
                   key: 'evaluateResulet',
-                  width: 150,
-                  align: 'center'
+                  align: 'center',
+                  render: (_: any, item: IResultZbDtos) => {
+                    if (item.evaluateResult === '正常') {
+                      return <div style={{ color: 'green' }}>正常</div>
+                    } else if (item.evaluateResult === '不正常') {
+                      return <div style={{ color: 'red' }}>不正常</div>
+                    }
+                  }
                 },
                 {
                   title: '最新值',
                   dataIndex: 'newestValue',
                   key: 'newestValue',
-                  width: 150,
                   align: 'center',
                   render: (_: any, item: IResultZbDtos) => {
                     if (item.newestValue) {
@@ -441,6 +488,6 @@ const CompanyRiskResultAnalysis = (store: IParamsRisk) => {
 
 const CompanyFcResultAnalysis = (store: IParamsFcModel) => {
   return (
-    <div style={{ marginTop: 20 }}><strong>{store.analysis}</strong></div>
+    <div style={{ marginTop: 20, fontSize: '20px', padding: '12px' }}><strong>{store.analysis}</strong></div>
   )
 }

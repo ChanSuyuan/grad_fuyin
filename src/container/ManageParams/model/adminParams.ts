@@ -77,42 +77,61 @@ export interface IModifyMatchDegreeFeedBack {
 
 
 export interface IRiskZb {
-  zdyzb: IZdyzb[]
-  zdyzbFzs: IZdyzbFzs[]
-  errorCode: number
-  ok: boolean
-  text: string
+  data?: IResultZb
+  errorCode?: number
+  ok?: boolean
+  text?: string
 }
 
+export interface IResultZb {
+  zdyzb: IZdyzb
+  zdyzbFzs: IZdyzbFzs[]
+}
 export interface IZdyzb {
-  chzzl: string
-  chzzts: string
-  createTime: string
-  dbnl: string
-  id: number
-  ld: string
-  lszfbs: string
-  qsjzbl: string
-  roejq: string
-  sd: string
-  toazzl: string
-  updateTime: string
-  xjllb: string
-  xsjll: string
-  xsmll: string
-  yszkzzl: string
-  yszkzzts: string
-  zbzzl: string
-  zcfzl: string
-  zzcjll: string
-  zzczzts: string
+  chzzl?: string
+  chzzts?: string
+  createTime?: string
+  dbnl?: string
+  id?: number
+  ld?: string
+  lszfbs?: string
+  qsjzbl?: string
+  roejq?: string
+  sd?: string
+  toazzl?: string
+  updateTime?: string
+  xjllb?: string
+  xsjll?: string
+  xsmll?: string
+  yszkzzl?: string
+  yszkzzts?: string
+  zbzzl?: string
+  zcfzl?: string
+  zzcjll?: string
+  zzczzts?: string
 }
 
 export interface IZdyzbFzs {
-  createTime: string
-  id: number
-  normal: number
-  unnormal: number
-  updateTime: string
-  zbKey: string
+  createTime?: string
+  id?: number
+  normal?: number
+  unnormal?: number
+  updateTime?: string
+  zbKey?: string
+}
+
+export interface IZdyzbModelFeedback {
+  data: IZdyzbModel[]
+  errorCode?: number
+  ok?: boolean
+  text?: string
+}
+
+export interface IZdyzbModel {
+  createTime?: string
+  equation?: string
+  score?: number
+  type?: number
+  updateTime?: string
+  zbKey?: string
 }

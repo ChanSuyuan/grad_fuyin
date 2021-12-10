@@ -35,18 +35,20 @@ export const ManageCharacters: React.FC = () => {
         setLoading(true)
         if (type === "1") {
           const res = await adminUsersApi.getAllUser()
-          if (res.errorCode === statusCode.tokenIsNotVaild) {
+          if (res.errorCode === statusCode.success) {
+            setStore(res)
+          } else if (res.errorCode === statusCode.tokenIsNotVaild) {
             message.error('登录信息过期，请重新登陆！')
             history.push('/loginadmin')
           }
-          setStore(res)
         } else if (type === "2") {
           const res = await superAdminUsersApi.getAllUser()
-          if (res.errorCode === statusCode.tokenIsNotVaild) {
+          if (res.errorCode === statusCode.success) {
+            setStore(res)
+          } else if (res.errorCode === statusCode.tokenIsNotVaild) {
             message.error('登录信息过期，请重新登陆！')
             history.push('/loginadmin')
           }
-          setStore(res)
         }
       }
     } catch (err) {
@@ -173,13 +175,15 @@ export const ManageCharacters: React.FC = () => {
             title: "用户名",
             dataIndex: 'userName',
             key: 'userName',
-            align: 'center'
+            align: 'center',
+            width: '33%'
           },
           {
             title: "角色",
             dataIndex: 'type',
             key: 'type',
             align: 'center',
+            width: '33%',
             render: (_: any, record: IAllUsersInfo) => {
               if (record.type === 1) {
                 if (record.state !== -1) {
@@ -219,6 +223,7 @@ export const ManageCharacters: React.FC = () => {
             dataIndex: "operate",
             key: "operate",
             align: "center",
+            width: '33%',
             render: (_: any, record: IAllUsersInfo) => (
               <Fragment>
                 <a

@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import { IParamsFcModel, IParamsRisk } from '../../../../../container/IntellAnalysis/model/analysis'
+import { IMainzbsInfo } from '../../../../../container/IntellAnalysis/model/analysis'
 import { numberTrans } from '../../utils/numberTrans'
 
 interface IOperateZbOriginDataProps {
@@ -12,7 +12,7 @@ interface IOperateZbOriginDataProps {
 }
 
 
-export const OperateZbReportData = (store: IParamsRisk | IParamsFcModel) => {
+export const OperateZbReportData = (store: IMainzbsInfo[]) => {
   const originData: IOperateZbOriginDataProps[] = []
   originData.push(
     {
@@ -41,7 +41,7 @@ export const OperateZbReportData = (store: IParamsRisk | IParamsFcModel) => {
     },
   )
   // eslint-disable-next-line array-callback-return
-  store.gpDetails.mainzbs.map((item, i) => {
+  store.map((item, i) => {
     if (item.reportDate) {
       // eslint-disable-next-line array-callback-return
       originData.map(e => {
@@ -129,4 +129,5 @@ export const OperateZbReportData = (store: IParamsRisk | IParamsFcModel) => {
       })
     }
   })
+  return originData
 }

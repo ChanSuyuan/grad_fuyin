@@ -59,9 +59,10 @@ export const AdminLogin: React.FC = observer(() => {
   }
 
   const handleChange = (e: any) => {
+    console.log(e.target.value)
     if (e.target.value === 'admin') {
       setAuthLevel(0)
-    } else {
+    } else if (e.target.value === 'super-admin') {
       setAuthLevel(1)
     }
   }
@@ -98,11 +99,12 @@ export const AdminLogin: React.FC = observer(() => {
             }
           }
           notify(res.errorCode)
-        } else if (authLevel === 1) {
+        } else {
           const res = await superAdminApi.login({
             userName: username,
             password: password,
-            code: code
+            code: code,
+            key: key
           })
           if (res.errorCode === statusCode.success) {
             if (res.data) {
@@ -134,7 +136,7 @@ export const AdminLogin: React.FC = observer(() => {
         <span>富银LOGO 预留位置</span>
       </div>
       <div className="form-container">
-        <h1 className="text-form">FYFC&FC</h1>
+        <h1 className="text-form">融资风控系统</h1>
         <div className="form-wrapper">
           <Form form={form}>
             <strong>账号类型：</strong>

@@ -88,7 +88,7 @@ export const TableForm: React.FC<ITableForm> = (props) => {
                 align: 'center'
               },
               {
-                title: '毛利率 ',
+                title: '毛利率（%） ',
                 dataIndex: 'xsmll',
                 key: 'xsmll',
                 width: 150,

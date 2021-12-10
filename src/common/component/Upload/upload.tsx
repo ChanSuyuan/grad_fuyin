@@ -14,10 +14,11 @@ export const UploadForm: React.FC<IUploadFormProps> = (prop) => {
   const [balanceSheetStore, setBalanceSheetStore] = useState(undefined)
   const [companyInfoStore, setCompanyInfoStore] = useState(undefined)
   const [companySturctStore, setCompanyStruceStore] = useState(undefined)
+  // const baseURL = `/fuyin`
   const props = {
     name: 'file',
     multiple: true,
-    action: `/file/upload-excel?type=${prop.uploadContent}`,
+    action: `file/upload-excel?type=${prop.uploadContent}`,
     headers: {
       authorization: `${localStorage.getItem('user_token')}`,
       userName: `${localStorage.getItem('user_name')}`,

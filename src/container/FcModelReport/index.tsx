@@ -1,10 +1,13 @@
 /* eslint-disable array-callback-return */
-import { Alert, Button, Card, Col, Modal, Radio, Row, Steps, Table } from "antd"
+import { Alert, Button, Card, Col, message, Modal, Radio, Row, Spin, Steps, Table } from "antd"
 import React, { useEffect, useState } from "react"
 import { ExportPDFModal } from "../../common/component/ExportPDF/exportPDF"
 import { UploadForm } from "../../common/component/Upload/upload"
 import { IParamsFcModelReportFeedBackInfo } from "../IntellAnalysis/model/analysis"
 import { AnalysisMode } from "../RiskReport/model/mode"
+import { adminFcApi } from "./api/adminFc"
+import { superAdminFcApi } from "./api/superadminFc"
+import { userFcApi } from "./api/userFc"
 import "./index.less"
 
 interface IRiskReportProps {
@@ -1401,34 +1404,65 @@ export const FcModelReport: React.FC<IRiskReportProps> = (props) => {
   const companyStruct = JSON.parse(localStorage.getItem('companyStruct')) ? JSON.parse(localStorage.getItem('companyStruct')) : props.store.data.gpDetails.qygqjgs
 
   const CompanyAnalysisOperatingInfo = () => {
-    // const [analysis, setAnalysis] = useState<IGpDetailsFeedBack[]>()
+    const [analysis, setAnalysis] = useState<string>()
 
-    // useEffect(() => {
-    //   loadPage()
-    //   // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [])
+    useEffect(() => {
+      loadPage()
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
-    // const loadPage = () => {
-    //   try {
-    //     riskApi.getRiskAnalysis({
-    //       companyInfo: companyInf,
-    //       mainzbs: mainZbArr,
-    //       profiles: profitArr,
-    //       xjlls: cashFlowArr,
-    //       zcfzs: balanceSheet,
-    //       qygqjgs: companyStruct
-    //     }).then(res => {
-    //       setAnalysis(res.data)
-    //       localStorage.setItem('analysis', JSON.stringify(res.data))
-    //     })
-    //   } catch (err) {
-    //     message.error('发送了意想不到的问题！')
-    //   }
-    // }
+    const loadPage = () => {
+      const userType = localStorage.getItem('user_type')
+      try {
+        if (userType === '1') {
+          adminFcApi.getFcAnalysis({
+            companyInfo: companyInf,
+            mainzbs: mainZbArr,
+            profiles: profitArr,
+            xjlls: cashFlowArr,
+            zcfzs: balanceSheet,
+            qygqjgs: companyStruct
+          }).then(res => {
+            setAnalysis(res.data)
+            localStorage.setItem('analysis', JSON.stringify(res.data))
+          })
+        } else if (userType === '2') {
+          superAdminFcApi.getFcAnalysis({
+            companyInfo: companyInf,
+            mainzbs: mainZbArr,
+            profiles: profitArr,
+            xjlls: cashFlowArr,
+            zcfzs: balanceSheet,
+            qygqjgs: companyStruct
+          }).then(res => {
+            setAnalysis(res.data)
+            localStorage.setItem('analysis', JSON.stringify(res.data))
+          })
+        } else {
+          userFcApi.getFcAnalysis({
+            companyInfo: companyInf,
+            mainzbs: mainZbArr,
+            profiles: profitArr,
+            xjlls: cashFlowArr,
+            zcfzs: balanceSheet,
+            qygqjgs: companyStruct
+          }).then(res => {
+            setAnalysis(res.data)
+            localStorage.setItem('analysis', JSON.stringify(res.data))
+          })
+        }
+      } catch (err) {
+        message.error('发送了意想不到的问题！')
+      }
+    }
 
     return (
       <>
-        <h1><strong>{props.store?.data.analysis}</strong></h1>
+        {analysis ?
+          <h1><strong>{analysis}</strong></h1>
+          // eslint-disable-next-line react/jsx-no-undef
+          : <div style={{ textAlign: 'center' }}><Spin /></div>
+        }
       </>
     )
   }
@@ -1457,6 +1491,8 @@ export const FcModelReport: React.FC<IRiskReportProps> = (props) => {
 
   // 窗口
   const [createModalVisible, handleModalVisible] = useState<boolean>(false)
+  const analysis = JSON.parse(localStorage.getItem('analysis')) ? JSON.parse(localStorage.getItem('analysis')) : props.store.data.analysis
+
   return (
     <>
       <Card>
@@ -1480,7 +1516,7 @@ export const FcModelReport: React.FC<IRiskReportProps> = (props) => {
           {current === steps.length - 1 && (
             <>
               <Button type="primary" size="middle" onClick={() => handleModalVisible(true)}>
-                生成报告 TODO
+                生成报告
               </Button>
             </>
           )}
@@ -1491,7 +1527,7 @@ export const FcModelReport: React.FC<IRiskReportProps> = (props) => {
             footer={[]}
             onCancel={() => handleModalVisible(false)}
           >
-            <ExportPDFModal fcdata={props.store.data} cashFlowArr={cashFlowArr} balanceSheet={balanceSheet} companyInf={companyInf} companyStruct={companyStruct} mainZbArr={mainZbArr} profitArr={profitArr} />
+            <ExportPDFModal fcdata={props.store.data} cashFlowArr={cashFlowArr} balanceSheet={balanceSheet} companyInf={companyInf} companyStruct={companyStruct} mainZbArr={mainZbArr} profitArr={profitArr} analysisResult={analysis} />
           </Modal>
         </div>
       </Card>

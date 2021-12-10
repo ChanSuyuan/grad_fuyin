@@ -131,6 +131,14 @@ export const RiskReport: React.FC<IRiskReportProps> = (props) => {
       if (e.target.value) {
         setAnalysisMode(e.target.value)
       }
+      if (e.target.value === 'bynetmode') {
+        localStorage.removeItem('mainZb')
+        localStorage.removeItem('profit')
+        localStorage.removeItem('cashFlow')
+        localStorage.removeItem('balanceSheet')
+        localStorage.removeItem('companyInfo')
+        localStorage.removeItem('companyStruct')
+      }
     }
 
     const changeUploadContent = (e: any) => {
